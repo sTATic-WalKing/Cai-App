@@ -119,7 +119,6 @@ ApplicationWindow {
         currentIndex: 0
         anchors.fill: parent
         anchors.leftMargin: !window.portraitMode ? drawer.width : undefined
-        leftPadding: 10
 
         Component.onCompleted: {
             furnitures.onEnter()
