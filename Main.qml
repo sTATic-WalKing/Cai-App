@@ -8,60 +8,51 @@ import "." as App
 ApplicationWindow {
     id: window
     width: 360
-    height: 768
+    height: 600
     // width: 768
     // height: 480
     visible: true
 
     readonly property var typeTexts: [ qsTr("Light") ]
+    readonly property var typeIcons: [ "/icons/bulb.svg" ]
     readonly property bool portraitMode: !landscapeCheckBox.checked || window.width < window.height
 
     header: ToolBar {
         id: toolBar
         height: 104
 
-        RowLayout {
-            spacing: 20
+        ToolButton {
             anchors.left: parent.left
+            anchors.top: parent.top
+            anchors.bottom: parent.verticalCenter
+            visible: window.portraitMode
+            icon.source: "/icons/overview.svg"
+            Material.foreground: "white"
+            action: Action {
+                onTriggered: {
+                    drawer.open()
+                }
+            }
+        }
+        RowLayout {
             anchors.right: parent.right
             anchors.top: parent.top
             anchors.bottom: parent.verticalCenter
-            anchors.leftMargin: !window.portraitMode ? drawer.width : undefined
 
             ToolButton {
-                visible: window.portraitMode
-                icon.source: "/icons/overview.svg"
                 Material.foreground: "white"
-                Layout.alignment: Qt.AlignLeft
-                action: Action {
-                    onTriggered: {
-                        drawer.open()
-                    }
-                }
+                icon.source: "/icons/bluetooth.svg"
             }
-
+            ToolButton {
+                Material.foreground: "white"
+                icon.source: "/icons/qr.svg"
+            }
             ToolButton {
                 Material.foreground: "white"
                 icon.source: "/icons/settings.svg"
-                Layout.alignment: Qt.AlignRight
                 action: Action {
                     onTriggered: {
-                        menu.open()
-                    }
-                }
-
-                Menu {
-                    id: menu
-                    x: parent.width - width
-                    transformOrigin: Menu.TopRight
-
-                    Action {
-                        text: qsTr("Settings")
-                        onTriggered: settingsDialog.open()
-                    }
-                    Action {
-                        text: qsTr("About")
-                        onTriggered: aboutDialog.open()
+                        settingsDialog.open()
                     }
                 }
             }
@@ -153,15 +144,16 @@ ApplicationWindow {
 
     Dialog {
         id: settingsDialog
-        x: Math.round((window.width - width) / 2)
-        y: Math.round(window.height / 6)
-        width: Math.round(Math.min(window.width, window.height) / 3 * 2)
+        anchors.centerIn: parent
+        width: parent.width
+        Material.roundedScale: Material.NotRounded
         modal: true
         focus: true
         title: qsTr("Settings")
 
-        contentItem: ColumnLayout {
-            spacing: 20
+        ColumnLayout {
+            anchors.fill: parent
+            spacing: 10
 
             CheckBox {
                 id: landscapeCheckBox
@@ -172,25 +164,4 @@ ApplicationWindow {
         }
     }
 
-    Dialog {
-        id: aboutDialog
-        modal: true
-        focus: true
-        title: qsTr("About")
-        x: (window.width - width) / 2
-        y: window.height / 6
-        width: Math.min(window.width, window.height) / 3 * 2
-        contentHeight: aboutColumn.height
-
-        Column {
-            id: aboutColumn
-            spacing: 20
-
-            Label {
-                width: aboutDialog.availableWidth
-                wrapMode: Label.Wrap
-                font.pixelSize: 12
-            }
-        }
-    }
 }

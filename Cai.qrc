@@ -4,5 +4,11 @@
         <file>icons/settings.svg</file>
         <file>icons/overview.svg</file>
         <file>icons/tap.svg</file>
+        <file>icons/bulb.svg</file>
+        <file>icons/connect.svg</file>
+        <file>icons/disconnect.svg</file>
+        <file>icons/config.svg</file>
+        <file>icons/bluetooth.svg</file>
+        <file>icons/qr.svg</file>
     </qresource>
 </RCC>

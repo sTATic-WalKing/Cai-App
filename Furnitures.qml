@@ -22,8 +22,10 @@ Flickable {
         headerPositioning: ListView.PullBackHeader
 
         model: ListModel {
-            ListElement { e: "s" }
-            ListElement { e: "s" }
+            // Component.onCompleted: {
+            //     append({ "config": { "connected": true, "address": "sssss", "type": 0 } })
+            //     append({ "config": { "connected": false, "address": "dfasfadfafdf", "type": 0, "alias": "新买的台灯", "loc": "大房间" } })
+            // }
         }
 
         Component {
@@ -86,19 +88,102 @@ Flickable {
             id: delegateComponent
             Button {
                 width: listView.width
-                height: 87
+                height: 60
                 flat: true
                 topInset: 0
                 bottomInset: 0
                 Material.roundedScale: Material.NotRounded
+
+                IconLabel {
+                    id: iconLabel
+                    height: parent.height / 2
+                    width: height
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.left: parent.left
+                    icon.source: window.typeIcons[config["type"]]
+                    anchors.leftMargin: 10
+                }
+                Label {
+                    height: iconLabel.height / 5 * 3
+                    width: contentWidth
+                    anchors.bottom: iconLabel.bottom
+                    fontSizeMode: Text.VerticalFit
+                    minimumPixelSize: 10
+                    font.pixelSize: 72
+                    anchors.left: iconLabel.right
+                    anchors.leftMargin: 10
+
+                    function updateLabel() {
+                        text = ""
+                        var entries = Object.entries(config)
+                        for (var i = 0; i < entries.length; ++i) {
+                            if (entries[i][0] === "address" || entries[i][0] === "type" || entries[i][0] === "connected") {
+                                continue
+                            }
+                            if (text !== "") {
+                                text += qsTr(", ")
+                            }
+                            text += entries[i][1]
+                        }
+                        if (text === "") {
+                            text = config["address"]
+                        }
+                    }
+
+                    Component.onCompleted: {
+                        updateLabel()
+                    }
+                }
+                Button {
+                    id: connectButton
+                    height: parent.height / 2
+                    width: height
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.right: parent.right
+                    anchors.rightMargin: 10
+                    flat: true
+                    topInset: 0
+                    bottomInset: 0
+                    Material.roundedScale: Material.FullScale
+                    highlighted: config["connected"]
+
+                    IconLabel {
+                        anchors.centerIn: parent
+                        icon.width: parent.width / 5 * 4
+                        icon.height: parent.width / 5 * 4
+                        icon.source: config["connected"] ? "/icons/connect.svg" : "/icons/disconnect.svg"
+                        icon.color: parent.icon.color
+                    }
+                }
+
+                Button {
+                    height: parent.height / 2
+                    width: height
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.right: connectButton.left
+                    anchors.rightMargin: 10
+                    flat: true
+                    topInset: 0
+                    bottomInset: 0
+                    Material.roundedScale: Material.FullScale
+                    highlighted: config["connected"]
+                    enabled: config["connected"]
+
+                    IconLabel {
+                        anchors.centerIn: parent
+                        icon.width: parent.width / 5 * 4
+                        icon.height: parent.width / 5 * 4
+                        icon.source: "/icons/config.svg"
+                        icon.color: parent.icon.color
+                    }
+                }
             }
         }
     }
 
     data: Dialog {
         id: filterDialog
-        x: (parent.width - width) / 2
-        y: (parent.height - height) / 2
+        anchors.centerIn: parent
         parent: Overlay.overlay
         focus: true
         modal: true
