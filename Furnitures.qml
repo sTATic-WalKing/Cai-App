@@ -38,29 +38,8 @@ Flickable {
                 topInset: 0
                 bottomInset: 0
                 Material.roundedScale: Material.NotRounded
-                Component.onCompleted: {
-                    updateFilterLabel()
-                }
                 onClicked: {
                     filterDialog.open()
-                }
-
-                function updateFilterLabel(){
-                    filterLabel.text = ""
-                    var entries = Object.entries(filters)
-                    for (var i = 0; i < entries.length; ++i) {
-                        if (i > 0) {
-                            filterLabel.text += qsTr(", ")
-                        }
-                        if (entries[i][0] === "type") {
-                            filterLabel.text += window.typeTexts[entries[i][1]]
-                        } else {
-                            filterLabel.text += entries[i][1]
-                        }
-                    }
-                    if (filterLabel.text === "") {
-                        filterLabel.text = qsTr("No filter")
-                    }
                 }
 
                 Label {
@@ -72,6 +51,24 @@ Flickable {
                     font.pixelSize: 72
                     anchors.left: parent.left
                     anchors.leftMargin: 10
+                    text: {
+                        var ret = ""
+                        var entries = Object.entries(filters)
+                        for (var i = 0; i < entries.length; ++i) {
+                            if (i > 0) {
+                                ret += qsTr(", ")
+                            }
+                            if (entries[i][0] === "type") {
+                                ret += window.typeTexts[entries[i][1]]
+                            } else {
+                                ret += entries[i][1]
+                            }
+                        }
+                        if (ret === "") {
+                            ret = qsTr("No filter")
+                        }
+                        return ret
+                    }
                 }
                 IconLabel {
                     height: filterLabel.height
@@ -112,26 +109,22 @@ Flickable {
                     font.pixelSize: 72
                     anchors.left: iconLabel.right
                     anchors.leftMargin: 10
-
-                    function updateLabel() {
-                        text = ""
+                    text: {
+                        var ret = ""
                         var entries = Object.entries(config)
                         for (var i = 0; i < entries.length; ++i) {
                             if (entries[i][0] === "address" || entries[i][0] === "type" || entries[i][0] === "connected") {
                                 continue
                             }
-                            if (text !== "") {
-                                text += qsTr(", ")
+                            if (ret !== "") {
+                                ret += qsTr(", ")
                             }
-                            text += entries[i][1]
+                            ret += entries[i][1]
                         }
-                        if (text === "") {
-                            text = config["address"]
+                        if (ret === "") {
+                            ret = config["address"]
                         }
-                    }
-
-                    Component.onCompleted: {
-                        updateLabel()
+                        return ret
                     }
                 }
                 Button {

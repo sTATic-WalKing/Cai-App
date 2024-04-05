@@ -42,6 +42,11 @@ ApplicationWindow {
             ToolButton {
                 Material.foreground: "white"
                 icon.source: "/icons/bluetooth.svg"
+                action: Action {
+                    onTriggered: {
+                        discoverDialog.open()
+                    }
+                }
             }
             ToolButton {
                 Material.foreground: "white"
@@ -164,4 +169,28 @@ ApplicationWindow {
         }
     }
 
+    Dialog {
+        id: discoverDialog
+        anchors.centerIn: parent
+        width: parent.width
+        Material.roundedScale: Material.NotRounded
+        modal: true
+        focus: true
+        title: qsTr("Discover")
+
+        ColumnLayout {
+            anchors.fill: parent
+            spacing: 10
+            property int count
+            IconLabel {
+                icon.source: {
+                }
+            }
+
+            ProgressBar {
+                indeterminate: true
+                Layout.fillWidth: true
+            }
+        }
+    }
 }
