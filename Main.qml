@@ -72,6 +72,7 @@ ApplicationWindow {
             anchors.right: parent.right
             anchors.top: parent.verticalCenter
             anchors.bottom: parent.bottom
+            contentHeight: height
             currentIndex: swipeView.currentIndex
             spacing: 0
             Material.accent: "white"
@@ -79,9 +80,9 @@ ApplicationWindow {
             Repeater {
                 id: barRepeater
                 model: [
-                    { "text": qsTr("FURNITURES"), "iconSource": "/icons/furnitures.svg" },
-                    { "text": qsTr("VIEWS"), "iconSource": "/icons/views.svg" },
-                    { "text": qsTr("AUTOS"), "iconSource": "/icons/autos.svg" }
+                    { "text": qsTr("FURNITURES") },
+                    { "text": qsTr("VIEWS") },
+                    { "text": qsTr("AUTOS") }
                 ]
 
                 TabButton {
@@ -118,12 +119,34 @@ ApplicationWindow {
         currentIndex: 0
         anchors.fill: parent
         anchors.leftMargin: !window.portraitMode ? drawer.width : undefined
+        leftPadding: 10
+
+        Component.onCompleted: {
+            furnitures.onEnter()
+        }
+
+        onCurrentIndexChanged: {
+            if (currentIndex === 0) {
+                furnitures.onEnter()
+            }
+            if (currentIndex === 1) {
+                views.onEnter()
+            }
+            if (currentIndex === 2) {
+                autos.onEnter()
+            }
+        }
 
         App.Furnitures {
+            id: furnitures
+            foreground: Material.foreground
+            furnitures: []
         }
         App.Views {
+            id: views
         }
         App.Autos {
+            id: autos
         }
 
     }
