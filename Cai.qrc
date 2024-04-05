@@ -3,7 +3,6 @@
         <file>qtquickcontrols2.conf</file>
         <file>icons/settings.svg</file>
         <file>icons/overview.svg</file>
-        <file>icons/triangle_downward.svg</file>
-        <file>icons/triangle_upward.svg</file>
+        <file>icons/tap.svg</file>
     </qresource>
 </RCC>

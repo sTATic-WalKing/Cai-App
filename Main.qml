@@ -13,6 +13,7 @@ ApplicationWindow {
     // height: 480
     visible: true
 
+    readonly property var typeTexts: [ qsTr("Light") ]
     readonly property bool portraitMode: !landscapeCheckBox.checked || window.width < window.height
 
     header: ToolBar {
