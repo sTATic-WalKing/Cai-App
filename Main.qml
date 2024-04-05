@@ -44,7 +44,9 @@ ApplicationWindow {
                 icon.source: "/icons/bluetooth.svg"
                 action: Action {
                     onTriggered: {
+                        discoverColumnLayout.count = -1
                         discoverDialog.open()
+
                     }
                 }
             }
@@ -179,14 +181,27 @@ ApplicationWindow {
         title: qsTr("Discover")
 
         ColumnLayout {
+            id: discoverColumnLayout
             anchors.fill: parent
             spacing: 10
             property int count
-            IconLabel {
-                icon.source: {
-                }
+            property real rowHeight: 20
+            Shortcut {
+                sequence: "Ctrl+E"
+                onActivated: ++discoverColumnLayout.count
             }
 
+            Label {
+                text: {
+                    if (discoverColumnLayout.count < 0) {
+                        return qsTr("Sending discover request...")
+                    }
+                    if (discoverColumnLayout.count < 10) {
+                        return qsTr("Checking the result and ") + discoverColumnLayout.count + qsTr(" times checked.")
+                    }
+                    return qsTr("We have checked the result too many times.")
+                }
+            }
             ProgressBar {
                 indeterminate: true
                 Layout.fillWidth: true
