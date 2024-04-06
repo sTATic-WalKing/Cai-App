@@ -1,33 +1,58 @@
 ﻿import QtQuick
 import QtQuick.Controls
-import QtQuick.Layouts
 
-Flickable {
-    id: flickable
+ListView {
+    id: listView
+    headerPositioning: ListView.PullBackHeader
 
-    property var delegate: Item {}
-    property var model: ListModel {}
-    property var header
+    readonly property real duration: 150
+    add: Transition {
+        NumberAnimation { properties: "x"; from: listView.width; duration: duration }
+    }
+    remove: Transition {
+        NumberAnimation { properties: "x"; to: -listView.width; duration: duration }
+    }
+    displaced: Transition {
+        NumberAnimation { properties: "y"; duration: duration }
+    }
 
-    contentHeight: listView.height
-    ListView {
-        id: listView
-        width: flickable.width
-        height: flickable.height
-        delegate: flickable.delegate
-        header: flickable.header
-        headerPositioning: ListView.PullBackHeader
-        model: flickable.model
-        readonly property real duration: 150
-        add: Transition {
-            NumberAnimation { properties: "x"; from: listView.width; duration: duration }
+    property bool bRefresh
+    readonly property real overContentY: -80
+    readonly property bool bOver: {
+        var offset = 0
+        if (listView.headerItem) {
+            offset = listView.headerItem.height
         }
-        remove: Transition {
-            NumberAnimation { properties: "x"; to: -listView.width; duration: duration }
+        return contentY + offset <= overContentY
+    }
+    signal refresh()
+    onMovementEnded: {
+        if (atYBeginning && bRefresh) {
+            refresh()
         }
-        displaced: Transition {
-            NumberAnimation { properties: "y"; duration: duration }
-        }
+    }
+    onDragEnded: {
+        bRefresh = bOver
+    }
 
+    Item {
+        anchors.bottom: contentItem.top
+        anchors.left: contentItem.left
+        anchors.right: contentItem.right
+        clip: true
+        height: {
+            var offset = 0
+            if (listView.headerItem) {
+                offset = -listView.headerItem.height
+            }
+            return Math.max(0, listView.contentItem.y + offset)
+        }
+        IconLabel {
+            anchors.bottom: parent.bottom
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.bottomMargin: 10
+            height: 36
+            icon.source: listView.bOver ? "/icons/refresh.svg" : "/icons/down.svg"
+        }
     }
 }

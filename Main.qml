@@ -6,7 +6,7 @@ import QtQuick.Controls.Material
 import "." as App
 
 ApplicationWindow {
-    id: window
+    id: root
     width: 360
     height: 600
     // width: 768
@@ -15,7 +15,7 @@ ApplicationWindow {
 
     readonly property var typeTexts: [ qsTr("Light") ]
     readonly property var typeIcons: [ "/icons/bulb.svg" ]
-    readonly property bool portraitMode: !landscapeCheckBox.checked || window.width < window.height
+    readonly property bool portraitMode: !landscapeCheckBox.checked || root.width < root.height
 
     header: ToolBar {
         id: toolBar
@@ -25,7 +25,7 @@ ApplicationWindow {
             anchors.left: parent.left
             anchors.top: parent.top
             anchors.bottom: parent.verticalCenter
-            visible: window.portraitMode
+            visible: root.portraitMode
             icon.source: "/icons/overview.svg"
             Material.foreground: "white"
             action: Action {
@@ -103,12 +103,12 @@ ApplicationWindow {
     Drawer {
         id: drawer
 
-        width: Math.min(window.width, window.height) / 3 * 2
-        height: window.height
-        modal: window.portraitMode
-        interactive: window.portraitMode
-        position: window.portraitMode ? 0 : 1
-        visible: !window.portraitMode
+        width: Math.min(root.width, root.height) / 3 * 2
+        height: root.height
+        modal: root.portraitMode
+        interactive: root.portraitMode
+        position: root.portraitMode ? 0 : 1
+        visible: !root.portraitMode
         Material.roundedScale: Material.NotRounded
     }
 
@@ -117,7 +117,7 @@ ApplicationWindow {
 
         currentIndex: 0
         anchors.fill: parent
-        anchors.leftMargin: !window.portraitMode ? drawer.width : undefined
+        anchors.leftMargin: !root.portraitMode ? drawer.width : undefined
 
         App.Furnitures {
             id: furnitures

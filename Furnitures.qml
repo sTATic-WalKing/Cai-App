@@ -17,6 +17,9 @@ C.List {
     Component.onCompleted: {
         Common.updateModelData(listModel, furnitures, "furniture", "address")
     }
+    onRefresh: {
+        console.log("refresh")
+    }
 
     Shortcut {
         sequence: "Ctrl+N"
@@ -92,7 +95,7 @@ C.List {
                     width: height
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.left: parent.left
-                    icon.source: window.typeIcons[furniture["type"]]
+                    icon.source: root.typeIcons[furniture["type"]]
                 }
                 Label {
                     height: iconLabel.height / 5 * 3
@@ -145,7 +148,7 @@ C.List {
         }
     }
 
-    data: Dialog {
+    Dialog {
         id: filterDialog
         anchors.centerIn: parent
         parent: Overlay.overlay
