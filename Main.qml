@@ -123,15 +123,14 @@ ApplicationWindow {
             id: furnitures
             furnitures: [
                 { "address": "11:11:11:11:11:11", "type": 0, "connected": true, "alias": "台灯", "loc": "客厅" },
+                { "address": "44:44:44:44:44:44", "type": 0, "connected": false },
                 { "address": "22:22:22:22:22:22", "type": 0, "connected": true, "alias": "刚买的台灯" },
-                { "address": "33:33:33:33:33:33", "type": 0, "connected": true, "loc": "大房间" },
-                { "address": "44:44:44:44:44:44", "type": 0, "connected": false }
+                { "address": "33:33:33:33:33:33", "type": 0, "connected": true, "loc": "大房间" }
             ]
             autos: []
         }
         App.Views {
             id: views
-            views: []
         }
         App.Autos {
             id: autos
