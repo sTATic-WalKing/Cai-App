@@ -119,29 +119,13 @@ ApplicationWindow {
         anchors.fill: parent
         anchors.leftMargin: !window.portraitMode ? drawer.width : undefined
 
-        Component.onCompleted: {
-            furnitures.onEnter()
-        }
-
-        onCurrentIndexChanged: {
-            if (currentIndex === 0) {
-                furnitures.onEnter()
-            }
-            if (currentIndex === 1) {
-                views.onEnter()
-            }
-            if (currentIndex === 2) {
-                autos.onEnter()
-            }
-        }
-
         App.Furnitures {
             id: furnitures
-            foreground: Material.foreground
             furnitures: []
         }
         App.Views {
             id: views
+            views: []
         }
         App.Autos {
             id: autos

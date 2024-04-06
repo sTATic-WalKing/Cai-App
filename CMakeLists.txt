@@ -16,7 +16,7 @@ qt_add_executable(appCai
 
 qt_add_qml_module(appCai
     URI Cai
-    QML_FILES Main.qml Furnitures.qml Views.qml Autos.qml
+    QML_FILES Main.qml Furnitures.qml Views.qml Autos.qml components/Touch.qml components/Rounded.qml
 )
 
 qt_add_translations(appCai

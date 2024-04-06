@@ -10,5 +10,7 @@
         <file>icons/config.svg</file>
         <file>icons/bluetooth.svg</file>
         <file>icons/qr.svg</file>
+        <file>components/Touch.qml</file>
+        <file>components/Rounded.qml</file>
     </qresource>
 </RCC>
