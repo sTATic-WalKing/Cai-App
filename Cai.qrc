@@ -12,5 +12,6 @@
         <file>icons/qr.svg</file>
         <file>components/Touch.qml</file>
         <file>components/Rounded.qml</file>
+        <file>common.js</file>
     </qresource>
 </RCC>

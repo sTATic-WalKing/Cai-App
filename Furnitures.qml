@@ -2,11 +2,13 @@
 import QtQuick.Controls
 import QtQuick.Layouts
 import "components" as C
+import "qrc:/common.js" as Common
 
 Flickable {
     id: flickable
 
     required property var furnitures
+    required property var autos
     property var filters: ({})
 
     contentHeight: listView.height
@@ -22,10 +24,22 @@ Flickable {
             id: listModel
         }
 
-        // Component.onCompleted: {
-        //     listModel.append( { "config": { "address": "11:22:33:44:55:66", "type": 0, "connected": true } } )
-        //     listModel.append( { "config": { "address": "aa:bb:cc:dd:ee:ff", "type": 0, "connected": false } } )
-        // }
+        Component.onCompleted: {
+            Common.updateModelData(listModel, furnitures, "furniture", "address")
+        }
+
+        Shortcut {
+            sequence: "Ctrl+N"
+            onActivated: {
+                var datas = [
+                    { "address": "11:11:11:11:11:11", "type": 0, "connected": true, "alias": "刚修好的台灯", "loc": "客厅" },
+                    { "address": "22:22:22:22:22:22", "type": 0, "connected": true, "alias": "刚买的台灯" },
+                    { "address": "33:33:33:33:33:33", "type": 0, "connected": false, "loc": "大房间" },
+                    { "address": "55:55:55:55:55:55", "type": 0, "connected": true, "alias": "新添加的台灯" }
+                ]
+                Common.updateModelData(listModel, datas, "furniture", "address")
+            }
+        }
 
         Component {
             id: headerComponent
@@ -88,7 +102,7 @@ Flickable {
                         width: height
                         anchors.verticalCenter: parent.verticalCenter
                         anchors.left: parent.left
-                        icon.source: window.typeIcons[config["type"]]
+                        icon.source: window.typeIcons[furniture["type"]]
                     }
                     Label {
                         height: iconLabel.height / 5 * 3
@@ -101,7 +115,7 @@ Flickable {
                         anchors.leftMargin: 10
                         text: {
                             var ret = ""
-                            var entries = Object.entries(config)
+                            var entries = Object.entries(furniture)
                             for (var i = 0; i < entries.length; ++i) {
                                 if (entries[i][0] === "address" || entries[i][0] === "type" || entries[i][0] === "connected") {
                                     continue
@@ -112,7 +126,7 @@ Flickable {
                                 ret += entries[i][1]
                             }
                             if (ret === "") {
-                                ret = config["address"]
+                                ret = furniture["address"]
                             }
                             return ret
                         }
@@ -126,15 +140,15 @@ Flickable {
                         C.Rounded {
                             Layout.fillHeight: true
                             Layout.preferredWidth: height
-                            highlighted: config["connected"]
-                            enabled: config["connected"]
+                            highlighted: furniture["connected"]
+                            enabled: furniture["connected"]
                             icon.source: "/icons/config.svg"
                         }
                         C.Rounded {
                             Layout.fillHeight: true
                             Layout.preferredWidth: height
-                            highlighted: config["connected"]
-                            icon.source: config["connected"] ? "/icons/connect.svg" : "/icons/disconnect.svg"
+                            highlighted: furniture["connected"]
+                            icon.source: furniture["connected"] ? "/icons/connect.svg" : "/icons/disconnect.svg"
                         }
                     }
                 }
