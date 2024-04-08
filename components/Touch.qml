@@ -9,4 +9,5 @@ Button {
     rightInset: 0
     Material.roundedScale: Material.NotRounded
     padding: 10
+
 }

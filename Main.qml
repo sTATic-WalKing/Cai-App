@@ -13,8 +13,13 @@ ApplicationWindow {
     // height: 480
     visible: true
 
+    readonly property var host: hostTextField.text
     readonly property var typeTexts: [ qsTr("Light") ]
     readonly property var typeIcons: [ "/icons/bulb.svg" ]
+    readonly property var stateIcons: [
+        [ Material.accent, "orange" ]
+    ]
+
     readonly property bool portraitMode: !landscapeCheckBox.checked || root.width < root.height
 
     header: ToolBar {
@@ -67,7 +72,7 @@ ApplicationWindow {
 
         TabBar {
             id: bar
-            anchors.left: parent.left
+            width: toolBar.width - (root.portraitMode ? 0 : drawer.width)
             anchors.right: parent.right
             anchors.top: parent.verticalCenter
             anchors.bottom: parent.bottom
@@ -86,7 +91,7 @@ ApplicationWindow {
 
                 TabButton {
                     text: modelData["text"]
-                    width: toolBar.width / barRepeater.count
+                    width: bar.width / barRepeater.count
                     Material.accent: bar.Material.accent
                     Material.foreground: Qt.tint(Material.primary, "#aaffffff")
                     background: Rectangle {
@@ -122,10 +127,10 @@ ApplicationWindow {
         App.Furnitures {
             id: furnitures
             furnitures: [
-                { "address": "11:11:11:11:11:11", "type": 0, "connected": true, "alias": "台灯", "loc": "客厅" },
-                { "address": "44:44:44:44:44:44", "type": 0, "connected": false },
-                { "address": "22:22:22:22:22:22", "type": 0, "connected": true, "alias": "刚买的台灯" },
-                { "address": "33:33:33:33:33:33", "type": 0, "connected": true, "loc": "大房间" }
+                { "address": "11:11:11:11:11:11", "type": 0, "connected": true, "state": 1, "alias": "台灯", "loc": "客厅" },
+                { "address": "44:44:44:44:44:44", "type": 0, "connected": false, "state": 0 },
+                { "address": "22:22:22:22:22:22", "type": 0, "connected": true, "state": 0, "alias": "刚买的台灯" },
+                { "address": "33:33:33:33:33:33", "type": 0, "connected": true, "state": 1, "loc": "大房间" }
             ]
             autos: []
         }
@@ -155,6 +160,11 @@ ApplicationWindow {
                 id: landscapeCheckBox
                 text: qsTr("Landscape")
                 checked: false
+                Layout.fillWidth: true
+            }
+            TextField {
+                id: hostTextField
+                placeholderText: qsTr("Host")
                 Layout.fillWidth: true
             }
         }
@@ -192,5 +202,9 @@ ApplicationWindow {
                 Layout.fillWidth: true
             }
         }
+    }
+
+    function xhrErrorHandle(xhr) {
+        console.log(xhr.responseURL, xhr.status)
     }
 }

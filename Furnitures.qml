@@ -17,21 +17,53 @@ C.List {
     Component.onCompleted: {
         Common.updateModelData(listModel, furnitures, "furniture", "address")
     }
+
+    function onDownloadConfigsComplete(list) {
+        furnitures = list
+        Common.updateModelData(listModel, furnitures, "furniture", "address")
+    }
+    function downloadConfigs(list) {
+        var xhr = new XMLHttpRequest()
+        xhr.onreadystatechange = function() {
+            if(xhr.readyState !== 4) {
+                return
+            }
+            if (xhr.status !== 200) {
+                root.xhrErrorHandle(xhr)
+                return
+            }
+            console.log(xhr.responseURL, xhr.responseText.toString())
+            var addresses = JSON.parse(xhr.responseText.toString())["addresses"]
+            for (var i = 0; i < list.length; ++i) {
+                list[i]["connected"] = addresses.indexOf(list[i]["address"]) !== -1
+            }
+            for (i = 0; i < addresses.length; ++i) {
+                xhr = new XMLHttpRequest()
+                var local_i = i
+                xhr.onreadystatechange = function() {
+                    if(xhr.readyState !== 4) {
+                        return
+                    }
+                    if (xhr.status !== 200) {
+                        root.xhrErrorHandle(xhr)
+                    } else {
+                        console.log(xhr.responseURL, xhr.responseText.toString())
+                        list[Common.find(list, "address", addresses[local_i])]["state"] = JSON.parse(xhr.responseText.toString())["state"]
+                    }
+                    if (addresses.length - 1 === local_i) {
+                        onDownloadConfigsComplete(list)
+                    }
+                }
+                xhr.open("POST", "http://192.168.29.176:11151" + "/state");
+                xhr.send(JSON.stringify({ address: list[i]["address"] }));
+            }
+        }
+        xhr.open("POST", "http://192.168.29.176:11151" + "/addresses");
+        xhr.send(JSON.stringify({}));
+    }
     onRefresh: {
         console.log("refresh")
-    }
-
-    Shortcut {
-        sequence: "Ctrl+N"
-        onActivated: {
-            var datas = [
-                { "address": "11:11:11:11:11:11", "type": 0, "connected": true, "alias": "刚修好的台灯", "loc": "客厅" },
-                { "address": "22:22:22:22:22:22", "type": 0, "connected": true, "alias": "刚买的台灯" },
-                { "address": "33:33:33:33:33:33", "type": 0, "connected": false, "loc": "大房间" },
-                { "address": "55:55:55:55:55:55", "type": 0, "connected": true, "alias": "新添加的台灯" }
-            ]
-            Common.updateModelData(listModel, datas, "furniture", "address")
-        }
+        Common.downloadModelData("http://192.168.29.176:11151", "config", "address", downloadConfigs, root.xhrErrorHandle)
     }
 
     Component {
@@ -77,6 +109,7 @@ C.List {
                     anchors.top: filterLabel.top
                     anchors.right: parent.right
                     icon.source: "/icons/tap.svg"
+                    icon.color: filterLabel.color
                 }
             }
         }
@@ -89,18 +122,20 @@ C.List {
             height: 60
 
             contentItem: Item {
-                IconLabel {
+                C.Rounded {
                     id: iconLabel
-                    height: parent.parent.height / 2
+                    height: 32
                     width: height
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.left: parent.left
                     icon.source: root.typeIcons[furniture["type"]]
+                    highlighted: furniture["state"] > 0
+                    Material.accent: root.stateIcons[furniture["type"]][furniture["state"]]
                 }
                 Label {
-                    height: iconLabel.height / 5 * 3
+                    height: 15
                     width: contentWidth
-                    anchors.bottom: iconLabel.bottom
+                    anchors.top: iconLabel.verticalCenter
                     fontSizeMode: Text.VerticalFit
                     minimumPixelSize: 10
                     font.pixelSize: 72
@@ -110,7 +145,7 @@ C.List {
                         var ret = ""
                         var entries = Object.entries(furniture)
                         for (var i = 0; i < entries.length; ++i) {
-                            if (entries[i][0] === "address" || entries[i][0] === "type" || entries[i][0] === "connected") {
+                            if (entries[i][0] === "address" || entries[i][0] === "type" || entries[i][0] === "connected" || entries[i][0] === "state") {
                                 continue
                             }
                             if (ret !== "") {
@@ -145,6 +180,13 @@ C.List {
                     }
                 }
             }
+            Rectangle {
+                anchors.left: parent.left
+                anchors.right: parent.right
+                anchors.top: parent.top
+                height: 1
+                color: "#eeeeee"
+            }
         }
     }
 
@@ -155,7 +197,7 @@ C.List {
         focus: true
         modal: true
         title: qsTr("Filter")
-        standardButtons: Dialog.Ok | Dialog.Reset | Dialog.Cancel
+        standardButtons: Dialog.Ok | Dialog.Reset
         width: parent.width
         Material.roundedScale: Material.NotRounded
 

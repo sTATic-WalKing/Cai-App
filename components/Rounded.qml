@@ -5,6 +5,7 @@ import QtQuick.Layouts
 
 C.Touch {
     Material.roundedScale: Material.FullScale
+    display: AbstractButton.TextOnly
 
     IconLabel {
         anchors.centerIn: parent
