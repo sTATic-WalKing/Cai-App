@@ -5,11 +5,12 @@ import QtQuick.Controls
 import QtQuick.Controls.Material
 import "." as App
 import "qrc:/common.js" as Common
+import "components" as C
 
 ApplicationWindow {
     id: root
     width: 360
-    height: 768
+    height: 600
     // width: 768
     // height: 480
     visible: true
@@ -31,6 +32,9 @@ ApplicationWindow {
         id: toolBar
         height: 104
 
+        function showToolTip(text) {
+            ToolTip.show(text)
+        }
         ToolButton {
             anchors.left: parent.left
             anchors.top: parent.top
@@ -167,16 +171,10 @@ ApplicationWindow {
         App.Autos {
             id: autos
         }
-
     }
 
-    Dialog {
+    C.Popup {
         id: settingsDialog
-        anchors.centerIn: parent
-        width: parent.width
-        Material.roundedScale: Material.NotRounded
-        modal: true
-        focus: true
         title: qsTr("Settings")
 
         ColumnLayout {
@@ -200,13 +198,8 @@ ApplicationWindow {
         }
     }
 
-    Dialog {
+    C.Popup {
         id: discoverDialog
-        anchors.centerIn: parent
-        width: parent.width
-        Material.roundedScale: Material.NotRounded
-        modal: true
-        focus: true
         title: qsTr("Discover")
 
         ColumnLayout {
@@ -214,7 +207,6 @@ ApplicationWindow {
             anchors.fill: parent
             spacing: 10
             property int count
-            property real rowHeight: 20
 
             Label {
                 text: {
@@ -235,5 +227,12 @@ ApplicationWindow {
     }
 
     function xhrErrorHandle(xhr) {
+        var toolTipText
+        if (xhr.status === 0) {
+            toolTipText = qsTr("来到了没有网络的荒原~")
+        } else {
+            toolTipText = qsTr("不知道服务器说了个啥")
+        }
+        toolBar.showToolTip(toolTipText)
     }
 }

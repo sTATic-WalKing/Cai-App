@@ -15,5 +15,6 @@
         <file>icons/refresh.svg</file>
         <file>i18n/qml_en.ts</file>
         <file>i18n/qml_zh.ts</file>
+        <file>components/Popup.qml</file>
     </qresource>
 </RCC>

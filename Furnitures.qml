@@ -14,9 +14,6 @@ C.List {
     model: ListModel {
         id: listModel
     }
-    Component.onCompleted: {
-        Common.downloadModelData(settings.host, "config", "address", downloadConfigs, root.xhrErrorHandle)
-    }
 
     function onDownloadConfigsComplete(list) {
         furnitures = list
@@ -58,6 +55,7 @@ C.List {
                     minimumPixelSize: 10
                     font.pixelSize: 72
                     anchors.left: parent.left
+                    font.italic: true
                     text: {
                         var ret = ""
                         var entries = Object.entries(filters)
@@ -192,16 +190,10 @@ C.List {
                 height: 1
                 color: "#eeeeee"
             }
-            Dialog {
+            C.Popup {
                 id: configDialog
-                anchors.centerIn: parent
-                parent: Overlay.overlay
-                focus: true
-                modal: true
                 title: qsTr("Config")
                 standardButtons: Dialog.Ok | Dialog.Cancel
-                width: root.width
-                Material.roundedScale: Material.NotRounded
                 ColumnLayout {
                     anchors.fill: parent
                     spacing: 10
@@ -234,16 +226,10 @@ C.List {
         }
     }
 
-    Dialog {
+    C.Popup {
         id: filterDialog
-        anchors.centerIn: parent
-        parent: Overlay.overlay
-        focus: true
-        modal: true
         title: qsTr("Filter")
         standardButtons: Dialog.Ok | Dialog.Reset
-        width: parent.width
-        Material.roundedScale: Material.NotRounded
 
         ColumnLayout {
             anchors.fill: parent
@@ -274,6 +260,34 @@ C.List {
             }
             TextField {
                 placeholderText: qsTr("Location")
+                Layout.fillWidth: true
+            }
+        }
+    }
+
+    C.Popup {
+        id: refreshPopup
+        title: qsTr("刷新")
+
+        ColumnLayout {
+            id: refreshColumnLayout
+            anchors.fill: parent
+            spacing: 10
+            property int count
+
+            Label {
+                text: {
+                    if (discoverColumnLayout.count < 0) {
+                        return qsTr("Sending discover request...")
+                    }
+                    if (discoverColumnLayout.count < 10) {
+                        return qsTr("Checking the result and ") + discoverColumnLayout.count + qsTr(" times checked.")
+                    }
+                    return qsTr("We have checked the result too many times.")
+                }
+            }
+            ProgressBar {
+                indeterminate: true
                 Layout.fillWidth: true
             }
         }
