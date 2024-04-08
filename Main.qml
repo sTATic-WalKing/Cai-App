@@ -4,18 +4,23 @@ import QtQuick.Layouts
 import QtQuick.Controls
 import QtQuick.Controls.Material
 import "." as App
+import "qrc:/common.js" as Common
 
 ApplicationWindow {
     id: root
     width: 360
-    height: 600
+    height: 768
     // width: 768
     // height: 480
     visible: true
 
-    readonly property var host: hostTextField.text
+    Settings {
+        id: settings
+        property var host: hostTextField.text
+    }
     readonly property var typeTexts: [ qsTr("Light") ]
     readonly property var typeIcons: [ "/icons/bulb.svg" ]
+    readonly property var stateTexts: [ qsTr("Off"), qsTr("On") ]
     readonly property var stateIcons: [
         [ Material.accent, "orange" ]
     ]
@@ -45,13 +50,40 @@ ApplicationWindow {
             anchors.bottom: parent.verticalCenter
 
             ToolButton {
+                id: discoverToolButton
                 Material.foreground: "white"
                 icon.source: "/icons/bluetooth.svg"
                 action: Action {
                     onTriggered: {
                         discoverColumnLayout.count = -1
+                        var onPostJSONComplete = function(rsp) {
+                            ++discoverColumnLayout.count
+                            discoverTimer.before = rsp["count"]
+                            discoverTimer.current = discoverTimer.before
+                            discoverTimer.start()
+                        }
+                        Common.postJSON(settings.host + "/discover", {}, true, onPostJSONComplete, root.xhrErrorHandle)
                         discoverDialog.open()
-
+                    }
+                }
+                Timer {
+                    id: discoverTimer
+                    repeat: true
+                    property int before
+                    property int current
+                    onTriggered: {
+                        console.log("before", before, "current", current)
+                        if (before !== current) {
+                            stop()
+                            discoverDialog.close()
+                            furnitures.refresh()
+                            return
+                        }
+                        var onPostJSONComplete = function(rsp) {
+                            ++discoverColumnLayout.count
+                            current = rsp["count"]
+                        }
+                        Common.postJSON(settings.host + "/peek", {}, false, onPostJSONComplete, root.xhrErrorHandle)
                     }
                 }
             }
@@ -126,12 +158,7 @@ ApplicationWindow {
 
         App.Furnitures {
             id: furnitures
-            furnitures: [
-                { "address": "11:11:11:11:11:11", "type": 0, "connected": true, "state": 1, "alias": "台灯", "loc": "客厅" },
-                { "address": "44:44:44:44:44:44", "type": 0, "connected": false, "state": 0 },
-                { "address": "22:22:22:22:22:22", "type": 0, "connected": true, "state": 0, "alias": "刚买的台灯" },
-                { "address": "33:33:33:33:33:33", "type": 0, "connected": true, "state": 1, "loc": "大房间" }
-            ]
+            furnitures: []
             autos: []
         }
         App.Views {
@@ -166,6 +193,9 @@ ApplicationWindow {
                 id: hostTextField
                 placeholderText: qsTr("Host")
                 Layout.fillWidth: true
+                Component.onCompleted: {
+                    text = settings.host
+                }
             }
         }
     }
@@ -205,6 +235,5 @@ ApplicationWindow {
     }
 
     function xhrErrorHandle(xhr) {
-        console.log(xhr.responseURL, xhr.status)
     }
 }

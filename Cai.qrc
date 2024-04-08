@@ -5,13 +5,15 @@
         <file>icons/overview.svg</file>
         <file>icons/tap.svg</file>
         <file>icons/bulb.svg</file>
-        <file>icons/connect.svg</file>
-        <file>icons/disconnect.svg</file>
+        <file>icons/connected.svg</file>
+        <file>icons/disconnected.svg</file>
         <file>icons/config.svg</file>
         <file>icons/bluetooth.svg</file>
         <file>icons/qr.svg</file>
         <file>common.js</file>
         <file>icons/down.svg</file>
         <file>icons/refresh.svg</file>
+        <file>i18n/qml_en.ts</file>
+        <file>i18n/qml_zh.ts</file>
     </qresource>
 </RCC>

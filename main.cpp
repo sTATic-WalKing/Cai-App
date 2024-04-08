@@ -4,6 +4,11 @@
 int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
+
+    app.setOrganizationName("CQUPT");
+    app.setOrganizationDomain("www.cqupt.edu.cn");
+    app.setApplicationName("Cai");
+
     QQmlApplicationEngine engine;
     const QUrl url(QStringLiteral("qrc:/qt/qml/Cai/Main.qml"));
 

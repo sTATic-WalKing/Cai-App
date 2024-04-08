@@ -23,8 +23,9 @@ qt_add_translations(appCai
     RESOURCE_PREFIX /qt/qml/Cai/i18n
     TS_FILE_BASE qml
     TS_FILE_DIR i18n
-    SOURCE_TARGETS appCai
 )
+add_dependencies(appCai update_translations)
+add_dependencies(appCai release_translations)
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
 # If you are developing for iOS or macOS you should consider setting an

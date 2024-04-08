@@ -15,7 +15,7 @@ C.List {
         id: listModel
     }
     Component.onCompleted: {
-        Common.updateModelData(listModel, furnitures, "furniture", "address")
+        Common.downloadModelData(settings.host, "config", "address", downloadConfigs, root.xhrErrorHandle)
     }
 
     function onDownloadConfigsComplete(list) {
@@ -23,47 +23,21 @@ C.List {
         Common.updateModelData(listModel, furnitures, "furniture", "address")
     }
     function downloadConfigs(list) {
-        var xhr = new XMLHttpRequest()
-        xhr.onreadystatechange = function() {
-            if(xhr.readyState !== 4) {
-                return
+        for (var i = 0; i < list.length; ++i) {
+            var current = list[i]
+            if (!current["connected"]) {
+                continue
             }
-            if (xhr.status !== 200) {
-                root.xhrErrorHandle(xhr)
-                return
+            var onInnerPostJsonComplete = function(rsp) {
+                list[Common.find(list, "address", current["address"])]["state"] = rsp["state"]
             }
-            console.log(xhr.responseURL, xhr.responseText.toString())
-            var addresses = JSON.parse(xhr.responseText.toString())["addresses"]
-            for (var i = 0; i < list.length; ++i) {
-                list[i]["connected"] = addresses.indexOf(list[i]["address"]) !== -1
-            }
-            for (i = 0; i < addresses.length; ++i) {
-                xhr = new XMLHttpRequest()
-                var local_i = i
-                xhr.onreadystatechange = function() {
-                    if(xhr.readyState !== 4) {
-                        return
-                    }
-                    if (xhr.status !== 200) {
-                        root.xhrErrorHandle(xhr)
-                    } else {
-                        console.log(xhr.responseURL, xhr.responseText.toString())
-                        list[Common.find(list, "address", addresses[local_i])]["state"] = JSON.parse(xhr.responseText.toString())["state"]
-                    }
-                    if (addresses.length - 1 === local_i) {
-                        onDownloadConfigsComplete(list)
-                    }
-                }
-                xhr.open("POST", "http://192.168.29.176:11151" + "/state");
-                xhr.send(JSON.stringify({ address: list[i]["address"] }));
-            }
+            Common.postJSON(settings.host + "/state", { address: current["address"] }, false, onInnerPostJsonComplete, root.xhrErrorHandle)
         }
-        xhr.open("POST", "http://192.168.29.176:11151" + "/addresses");
-        xhr.send(JSON.stringify({}));
+        onDownloadConfigsComplete(list)
     }
     onRefresh: {
         console.log("refresh")
-        Common.downloadModelData("http://192.168.29.176:11151", "config", "address", downloadConfigs, root.xhrErrorHandle)
+        Common.downloadModelData(settings.host, "config", "address", downloadConfigs, root.xhrErrorHandle)
     }
 
     Component {
@@ -131,8 +105,23 @@ C.List {
                     icon.source: root.typeIcons[furniture["type"]]
                     highlighted: furniture["state"] > 0
                     Material.accent: root.stateIcons[furniture["type"]][furniture["state"]]
+
+                    onClicked: {
+                        var onPostJsonComplete = function(rsp) {
+                            var obj = furnitures[Common.find(furnitures, "address", furniture["address"])]
+                            obj["state"] = rsp["state"]
+                            var tmp = {}
+                            tmp["furniture"] = obj
+                            listModel.set(Common.findModelData(listModel, "furniture", "address", furniture["address"]), tmp)
+                        }
+                        var content = {}
+                        content["state"] = furniture["state"] > 0 ? 0 : 1
+                        content["address"] = furniture["address"]
+                        Common.postJSON(settings.host + "/state", content, true, onPostJsonComplete, root.xhrErrorHandle)
+                    }
                 }
                 Label {
+                    id: displayLabel
                     height: 15
                     width: contentWidth
                     anchors.top: iconLabel.verticalCenter
@@ -159,6 +148,18 @@ C.List {
                         return ret
                     }
                 }
+                Label {
+                    height: 12
+                    anchors.left: displayLabel.left
+                    anchors.bottom: displayLabel.top
+                    width: contentWidth
+                    fontSizeMode: Text.VerticalFit
+                    minimumPixelSize: 10
+                    font.pixelSize: 72
+                    text: qsTr("No Associated Autos")
+                    color: "#aaaaaa"
+                }
+
                 RowLayout {
                     height: iconLabel.height
                     anchors.verticalCenter: parent.verticalCenter
@@ -171,12 +172,16 @@ C.List {
                         highlighted: furniture["connected"]
                         enabled: furniture["connected"]
                         icon.source: "/icons/config.svg"
+
+                        onClicked: {
+                            configDialog.open()
+                        }
                     }
                     C.Rounded {
                         Layout.fillHeight: true
                         Layout.preferredWidth: height
                         highlighted: furniture["connected"]
-                        icon.source: furniture["connected"] ? "/icons/connect.svg" : "/icons/disconnect.svg"
+                        icon.source: furniture["connected"] ? "/icons/connected.svg" : "/icons/disconnected.svg"
                     }
                 }
             }
@@ -186,6 +191,45 @@ C.List {
                 anchors.top: parent.top
                 height: 1
                 color: "#eeeeee"
+            }
+            Dialog {
+                id: configDialog
+                anchors.centerIn: parent
+                parent: Overlay.overlay
+                focus: true
+                modal: true
+                title: qsTr("Config")
+                standardButtons: Dialog.Ok | Dialog.Cancel
+                width: root.width
+                Material.roundedScale: Material.NotRounded
+                ColumnLayout {
+                    anchors.fill: parent
+                    spacing: 10
+
+                    TextField {
+                        id: aliasTextField
+                        placeholderText: qsTr("Alias")
+                        Layout.fillWidth: true
+                    }
+                    TextField {
+                        id: locTextField
+                        placeholderText: qsTr("Location")
+                        Layout.fillWidth: true
+                    }
+                }
+                onAccepted: {
+                    var onPostJsonComplete = function(rsp) {
+                        rsp["state"] = furniture["state"]
+                        var tmp = {}
+                        tmp["furniture"] = rsp
+                        listModel.set(Common.findModelData(listModel, "furniture", "address", furniture["address"]), tmp)
+                    }
+                    var content = {}
+                    content["address"] = furniture["address"]
+                    content["alias"] = aliasTextField.text
+                    content["loc"] = locTextField.text
+                    Common.postJSON(settings.host + "/config", content, true, onPostJsonComplete, root.xhrErrorHandle)
+                }
             }
         }
     }
@@ -206,7 +250,21 @@ C.List {
             spacing: 10
 
             ComboBox {
-                model: [ qsTr("Light"), qsTr("Void") ]
+                model: {
+                    var ret = root.typeTexts.concat()
+                    ret.push(qsTr("Void"))
+                    return ret
+                }
+
+                currentIndex: model.length - 1
+                Layout.fillWidth: true
+            }
+            ComboBox {
+                model: {
+                    var ret = root.stateTexts.concat()
+                    ret.push(qsTr("Void"))
+                    return ret
+                }
                 currentIndex: model.length - 1
                 Layout.fillWidth: true
             }
