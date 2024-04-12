@@ -93,8 +93,9 @@ function updateModelData(listModel, objs, mod, key) {
     console.log("before", before, "current", current, "toRemove", toRemove, "toAppend", toAppend, "inter", inter, "toUpdate", toUpdate)
 }
 
-function postJSON(url, body, async, onComplete, onError) {
+function postJSON(url, onComplete, onError, body={}, async=true, xhrs=[]) {
     var xhr = new XMLHttpRequest()
+    xhrs.push(xhr)
     var bodyJSON = JSON.stringify(body)
     xhr.onreadystatechange = function() {
         if(xhr.readyState !== 4) {
@@ -112,9 +113,7 @@ function postJSON(url, body, async, onComplete, onError) {
     xhr.send(bodyJSON);
 }
 
-function downloadModelData(host, mod, key, onComplete, onError)
-{
-    var list = []
+function downloadModelData(host, mod, key, onComplete, onError, xhrs) {
     var onPostJSONComplete = function(rsp) {
         var s_key = key
         if (s_key.substr(s_key.length - 1) === "s") {
@@ -123,15 +122,16 @@ function downloadModelData(host, mod, key, onComplete, onError)
             s_key += "s"
         }
         var keys = rsp[s_key]
+        var list = []
         for (var i = 0; i < keys.length; ++i) {
             var onInnerPostJSONComplete = function(rsp) {
                 list.push(rsp)
             }
             var content = {}
             content[key] = keys[i]
-            postJSON(host + "/" + mod, content, false, onInnerPostJSONComplete, onError)
+            postJSON(host + "/" + mod, onInnerPostJSONComplete, onError, content, false, xhrs)
         }
         onComplete(list)
     }
-    postJSON(host + "/" + mod +"s", {}, true, onPostJSONComplete, onError)
+    postJSON(host + "/" + mod +"s", onPostJSONComplete, onError, {}, true, xhrs)
 }

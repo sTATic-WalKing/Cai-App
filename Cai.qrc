@@ -15,6 +15,10 @@
         <file>icons/refresh.svg</file>
         <file>i18n/qml_en.ts</file>
         <file>i18n/qml_zh.ts</file>
-        <file>components/Popup.qml</file>
+        <file>icons/autos.svg</file>
+        <file>icons/furnitures.svg</file>
+        <file>icons/views.svg</file>
+        <file>icons/play.svg</file>
+        <file>icons/timeout.svg</file>
     </qresource>
 </RCC>

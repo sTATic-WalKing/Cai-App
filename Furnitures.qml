@@ -2,93 +2,22 @@
 import QtQuick.Controls
 import QtQuick.Layouts
 import "components" as C
-import "qrc:/common.js" as Common
+import "qrc:/common.js" as J
 
 C.List {
     id: furnituresList
-    required property var furnitures
-    required property var autos
     property var filters: ({})
-    delegate: delegateComponent
-    header: headerComponent
     model: ListModel {
         id: listModel
     }
-
-    function onDownloadConfigsComplete(list) {
-        furnitures = list
-        Common.updateModelData(listModel, furnitures, "furniture", "address")
-    }
-    function downloadConfigs(list) {
-        for (var i = 0; i < list.length; ++i) {
-            var current = list[i]
-            if (!current["connected"]) {
-                continue
-            }
-            var onInnerPostJsonComplete = function(rsp) {
-                list[Common.find(list, "address", current["address"])]["state"] = rsp["state"]
-            }
-            Common.postJSON(settings.host + "/state", { address: current["address"] }, false, onInnerPostJsonComplete, root.xhrErrorHandle)
-        }
-        onDownloadConfigsComplete(list)
-    }
     onRefresh: {
-        console.log("refresh")
-        Common.downloadModelData(settings.host, "config", "address", downloadConfigs, root.xhrErrorHandle)
+        refreshPopup.open()
+    }
+    Component.onCompleted: {
+        J.updateModelData(listModel, root.furnitures, "furniture", "address")
     }
 
-    Component {
-        id: headerComponent
-        C.Touch {
-            height: 56
-            width: furnituresList.width
-            onClicked: {
-                filterDialog.open()
-            }
-
-            contentItem: Item {
-                Label {
-                    id: filterLabel
-                    height: parent.parent.height / 3
-                    anchors.verticalCenter: parent.verticalCenter
-                    fontSizeMode: Text.VerticalFit
-                    minimumPixelSize: 10
-                    font.pixelSize: 72
-                    anchors.left: parent.left
-                    font.italic: true
-                    text: {
-                        var ret = ""
-                        var entries = Object.entries(filters)
-                        for (var i = 0; i < entries.length; ++i) {
-                            if (i > 0) {
-                                ret += qsTr(", ")
-                            }
-                            if (entries[i][0] === "type") {
-                                ret += window.typeTexts[entries[i][1]]
-                            } else {
-                                ret += entries[i][1]
-                            }
-                        }
-                        if (ret === "") {
-                            ret = qsTr("No filter")
-                        }
-                        return ret
-                    }
-                }
-                IconLabel {
-                    height: filterLabel.height
-                    width: height
-                    anchors.top: filterLabel.top
-                    anchors.right: parent.right
-                    icon.source: "/icons/tap.svg"
-                    icon.color: filterLabel.color
-                }
-            }
-        }
-    }
-
-    Component {
-        id: delegateComponent
+    delegate: Component {
         C.Touch {
             width: furnituresList.width
             height: 60
@@ -101,31 +30,28 @@ C.List {
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.left: parent.left
                     icon.source: root.typeIcons[furniture["type"]]
-                    highlighted: furniture["state"] > 0
-                    Material.accent: root.stateIcons[furniture["type"]][furniture["state"]]
+                    highlighted: furniture["state"] !== undefined && furniture["state"] > 0
+                    Material.accent: furniture["state"] !== undefined ? root.stateIcons[furniture["type"]][furniture["state"]] : root.stateIcons[furniture["type"]][0]
+                    enabled: furniture["state"] !== undefined
 
                     onClicked: {
                         var onPostJsonComplete = function(rsp) {
-                            var obj = furnitures[Common.find(furnitures, "address", furniture["address"])]
+                            var obj = root.furnitures[J.find(root.furnitures, "address", furniture["address"])]
                             obj["state"] = rsp["state"]
                             var tmp = {}
                             tmp["furniture"] = obj
-                            listModel.set(Common.findModelData(listModel, "furniture", "address", furniture["address"]), tmp)
+                            listModel.set(J.findModelData(listModel, "furniture", "address", furniture["address"]), tmp)
                         }
                         var content = {}
                         content["state"] = furniture["state"] > 0 ? 0 : 1
                         content["address"] = furniture["address"]
-                        Common.postJSON(settings.host + "/state", content, true, onPostJsonComplete, root.xhrErrorHandle)
+                        J.postJSON(settings.host + "/state", onPostJsonComplete, root.xhrErrorHandle, content)
                     }
                 }
-                Label {
+                C.VFit {
                     id: displayLabel
                     height: 15
-                    width: contentWidth
                     anchors.top: iconLabel.verticalCenter
-                    fontSizeMode: Text.VerticalFit
-                    minimumPixelSize: 10
-                    font.pixelSize: 72
                     anchors.left: iconLabel.right
                     anchors.leftMargin: 10
                     text: {
@@ -146,16 +72,12 @@ C.List {
                         return ret
                     }
                 }
-                Label {
+                C.VFit {
                     height: 12
                     anchors.left: displayLabel.left
                     anchors.bottom: displayLabel.top
-                    width: contentWidth
-                    fontSizeMode: Text.VerticalFit
-                    minimumPixelSize: 10
-                    font.pixelSize: 72
                     text: qsTr("No Associated Autos")
-                    color: "#aaaaaa"
+                    enabled: false
                 }
 
                 RowLayout {
@@ -214,13 +136,64 @@ C.List {
                         rsp["state"] = furniture["state"]
                         var tmp = {}
                         tmp["furniture"] = rsp
-                        listModel.set(Common.findModelData(listModel, "furniture", "address", furniture["address"]), tmp)
+                        listModel.set(J.findModelData(listModel, "furniture", "address", furniture["address"]), tmp)
                     }
                     var content = {}
                     content["address"] = furniture["address"]
                     content["alias"] = aliasTextField.text
                     content["loc"] = locTextField.text
-                    Common.postJSON(settings.host + "/config", content, true, onPostJsonComplete, root.xhrErrorHandle)
+                    J.postJSON(settings.host + "/config", onPostJsonComplete, root.xhrErrorHandle, content)
+                }
+            }
+        }
+    }
+    header: Component {
+        C.Touch {
+            height: 56
+            width: furnituresList.width
+            onClicked: {
+                filterDialog.open()
+            }
+            enabled: furnituresList.count > 0
+
+            contentItem: Item {
+                C.VFit {
+                    id: filterLabel
+                    height: parent.parent.height / 3
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.left: parent.left
+                    font.italic: true
+                    text: {
+                        if (furnituresList.count <= 0) {
+                            return qsTr("Nothing here, and Pull to Refresh.")
+                        }
+
+                        var ret = ""
+                        var entries = Object.entries(filters)
+                        for (var i = 0; i < entries.length; ++i) {
+                            if (i > 0) {
+                                ret += qsTr(", ")
+                            }
+                            if (entries[i][0] === "type") {
+                                ret += window.typeTexts[entries[i][1]]
+                            } else {
+                                ret += entries[i][1]
+                            }
+                        }
+                        if (ret === "") {
+                            ret = qsTr("No filter")
+                        }
+                        return ret
+                    }
+                }
+                IconLabel {
+                    height: filterLabel.height
+                    width: height
+                    anchors.top: filterLabel.top
+                    anchors.right: parent.right
+                    icon.source: "/icons/tap.svg"
+                    icon.color: filterLabel.color
+                    visible: furnituresList.count > 0
                 }
             }
         }
@@ -267,24 +240,44 @@ C.List {
 
     C.Popup {
         id: refreshPopup
-        title: qsTr("刷新")
+        title: qsTr("Refresh")
+        property var xhrs
+
+        function onDownloadConfigsComplete(list) {
+            root.furnitures = list
+            close()
+            J.updateModelData(listModel, root.furnitures, "furniture", "address")
+        }
+        function downloadConfigs(list) {
+            for (var i = 0; i < list.length; ++i) {
+                var current = list[i]
+                if (!current["connected"]) {
+                    continue
+                }
+                var onInnerPostJsonComplete = function(rsp) {
+                    list[J.find(list, "address", current["address"])]["state"] = rsp["state"]
+                }
+                J.postJSON(settings.host + "/state", onInnerPostJsonComplete, root.xhrErrorHandle, { address: current["address"] }, false, xhrs)
+            }
+            onDownloadConfigsComplete(list)
+        }
+        onOpened: {
+            xhrs = []
+            J.downloadModelData(settings.host, "config", "address", downloadConfigs, root.xhrErrorHandle, xhrs)
+        }
+        onClosed: {
+            for (var i = 0; i < xhrs.length; ++i) {
+                xhrs[i].abort()
+            }
+        }
 
         ColumnLayout {
             id: refreshColumnLayout
             anchors.fill: parent
             spacing: 10
-            property int count
 
             Label {
-                text: {
-                    if (discoverColumnLayout.count < 0) {
-                        return qsTr("Sending discover request...")
-                    }
-                    if (discoverColumnLayout.count < 10) {
-                        return qsTr("Checking the result and ") + discoverColumnLayout.count + qsTr(" times checked.")
-                    }
-                    return qsTr("We have checked the result too many times.")
-                }
+                text: qsTr("We are refreshing the furnitures list.")
             }
             ProgressBar {
                 indeterminate: true

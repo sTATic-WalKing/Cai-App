@@ -1,5 +1,6 @@
 ﻿import QtQuick
 import QtQuick.Controls
+import "." as C
 
 ListView {
     id: listView
@@ -39,6 +40,7 @@ ListView {
         anchors.bottom: contentItem.top
         anchors.left: contentItem.left
         anchors.right: contentItem.right
+        anchors.bottomMargin: listView.count > 0 || !headerItem ? 0 : headerItem.height
         clip: true
         height: {
             var offset = 0
@@ -53,6 +55,25 @@ ListView {
             anchors.bottomMargin: 10
             height: 36
             icon.source: listView.bOver ? "/icons/refresh.svg" : "/icons/down.svg"
+            icon.color: "#E91E63"
+        }
+    }
+
+    header: Component {
+        Item {
+            height: listView.count > 0 ? 0 : 56
+            width: listView.width
+            clip: true
+
+            C.VFit {
+                height: parent.height / 3
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.left: parent.left
+                anchors.leftMargin: 10
+                font.italic: true
+                text: qsTr("Nothing here, and Pull to Refresh.")
+                enabled: false
+            }
         }
     }
 }

@@ -4,7 +4,7 @@ import QtQuick.Layouts
 import QtQuick.Controls
 import QtQuick.Controls.Material
 import "." as App
-import "qrc:/common.js" as Common
+import "qrc:/common.js" as J
 import "components" as C
 
 ApplicationWindow {
@@ -26,19 +26,24 @@ ApplicationWindow {
         [ Material.accent, "orange" ]
     ]
 
+    property var furnitures: [{ "address": "A4:C1:38:CC:74:ED", "type": 0, "alias": "台灯", "state": 0, "connected": true }, { "address": "B4:C1:38:CC:74:ED", "type": 0, "alias": "新买的台灯", "state": 1, "connected": true }, { "address": "C4:C1:38:CC:74:ED", "type": 0, "alias": "究极无敌大壁灯", "state": 1, "connected": true }]
+    property var views: [{"states": [{ "address": "A4:C1:38:CC:74:ED", "state": 1 }, { "address": "B4:C1:38:CC:74:ED", "state": 1 }, { "address": "C4:C1:38:CC:74:ED", "state": 1 }], "alias": "夜晚", "uid": 1}]
+    property var autos: [{"view": 1, "start": 1712917132, "every": 90061}]
+
     readonly property bool portraitMode: !landscapeCheckBox.checked || root.width < root.height
 
     header: ToolBar {
         id: toolBar
-        height: 104
+        height: 100
 
         function showToolTip(text) {
             ToolTip.show(text)
         }
         ToolButton {
+            id: drawerToolButton
             anchors.left: parent.left
             anchors.top: parent.top
-            anchors.bottom: parent.verticalCenter
+            height: 55
             visible: root.portraitMode
             icon.source: "/icons/overview.svg"
             Material.foreground: "white"
@@ -51,7 +56,7 @@ ApplicationWindow {
         RowLayout {
             anchors.right: parent.right
             anchors.top: parent.top
-            anchors.bottom: parent.verticalCenter
+            height: drawerToolButton.height
 
             ToolButton {
                 id: discoverToolButton
@@ -59,14 +64,6 @@ ApplicationWindow {
                 icon.source: "/icons/bluetooth.svg"
                 action: Action {
                     onTriggered: {
-                        discoverColumnLayout.count = -1
-                        var onPostJSONComplete = function(rsp) {
-                            ++discoverColumnLayout.count
-                            discoverTimer.before = rsp["count"]
-                            discoverTimer.current = discoverTimer.before
-                            discoverTimer.start()
-                        }
-                        Common.postJSON(settings.host + "/discover", {}, true, onPostJSONComplete, root.xhrErrorHandle)
                         discoverDialog.open()
                     }
                 }
@@ -78,7 +75,6 @@ ApplicationWindow {
                     onTriggered: {
                         console.log("before", before, "current", current)
                         if (before !== current) {
-                            stop()
                             discoverDialog.close()
                             furnitures.refresh()
                             return
@@ -87,7 +83,11 @@ ApplicationWindow {
                             ++discoverColumnLayout.count
                             current = rsp["count"]
                         }
-                        Common.postJSON(settings.host + "/peek", {}, false, onPostJSONComplete, root.xhrErrorHandle)
+                        var onPostJSONError = function(xhr) {
+                            discoverDialog.close()
+                            root.xhrErrorHandle(xhr)
+                        }
+                        J.postJSON(settings.host + "/peek", onPostJSONComplete, onPostJSONError, {}, false)
                     }
                 }
             }
@@ -109,30 +109,34 @@ ApplicationWindow {
         TabBar {
             id: bar
             width: toolBar.width - (root.portraitMode ? 0 : drawer.width)
+            height: toolBar.height - drawerToolButton.height
             anchors.right: parent.right
-            anchors.top: parent.verticalCenter
             anchors.bottom: parent.bottom
             contentHeight: height
             currentIndex: swipeView.currentIndex
             spacing: 0
             Material.accent: "white"
+            Material.background: Material.primary
 
             Repeater {
                 id: barRepeater
                 model: [
-                    { "text": qsTr("FURNITURES") },
-                    { "text": qsTr("VIEWS") },
-                    { "text": qsTr("AUTOS") }
+                    { "text": qsTr("FURNITURES"), "iconSource": "/icons/furnitures.svg" },
+                    { "text": qsTr("AUTOS"), "iconSource": "/icons/autos.svg" },
                 ]
 
                 TabButton {
                     text: modelData["text"]
-                    width: bar.width / barRepeater.count
+                    width: 110
                     Material.accent: bar.Material.accent
                     Material.foreground: Qt.tint(Material.primary, "#aaffffff")
-                    background: Rectangle {
-                        color: Material.primary
+                    icon.source: {
+                        if (Qt.locale().name.indexOf("zh") !== -1) {
+                            return modelData["iconSource"]
+                        }
+                        return undefined
                     }
+
                     onClicked: {
                         swipeView.currentIndex = TabBar.index
                     }
@@ -162,11 +166,6 @@ ApplicationWindow {
 
         App.Furnitures {
             id: furnitures
-            furnitures: []
-            autos: []
-        }
-        App.Views {
-            id: views
         }
         App.Autos {
             id: autos
@@ -201,6 +200,20 @@ ApplicationWindow {
     C.Popup {
         id: discoverDialog
         title: qsTr("Discover")
+        onOpened: {
+            discoverColumnLayout.count = -1
+            var onPostJSONComplete = function(rsp) {
+                ++discoverColumnLayout.count
+                discoverTimer.before = rsp["count"]
+                discoverTimer.current = discoverTimer.before
+                discoverTimer.start()
+            }
+            J.postJSON(settings.host + "/discover", onPostJSONComplete, root.xhrErrorHandle)
+        }
+
+        onClosed: {
+            discoverTimer.stop()
+        }
 
         ColumnLayout {
             id: discoverColumnLayout
