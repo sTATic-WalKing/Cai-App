@@ -44,13 +44,32 @@ C.List {
                             property int furnitureIndex: J.find(root.furnitures, "address", furniture["address"])
                             height: iconsListView.height
                             width: height
-                            icon.source: furnitureIndex === -1 ?
-                                             "/icons/disconnected.svg" :
-                                             root.typeIcons[root.furnitures[furnitureIndex]["type"]]
-                            highlighted: furniture["state"] > 0
-                            Material.accent: furnitureIndex === -1 ?
-                                                 iconsListView.Material.accent :
+                            icon.source: {
+                                if (furnitureIndex === -1) {
+                                    return "/icons/delete.svg"
+                                }
+                                if (!root.furnitures[furnitureIndex]["connected"]) {
+                                    return "/icons/disconnected.svg"
+                                }
+                                return root.typeIcons[root.furnitures[furnitureIndex]["type"]]
+                            }
+
+                            highlighted: furniture["state"] > 0 || furnitureIndex === -1 || !root.furnitures[furnitureIndex]["connected"]
+                            Material.accent: furnitureIndex === -1 || !root.furnitures[furnitureIndex]["connected"] ?
+                                                 "#E91E63" :
                                                  root.stateIcons[root.furnitures[furnitureIndex]["type"]][furniture["state"]]
+                            ToolTip.visible: down
+                            ToolTip.text: {
+                                if (furnitureIndex === -1) {
+                                    return qsTr("Deleted")
+                                }
+                                var rootFurniture = root.furnitures[furnitureIndex]
+                                var furnitureAlias = rootFurniture["alias"]
+                                if (furnitureAlias !== undefined) {
+                                    return furnitureAlias
+                                }
+                                return rootFurniture["address"]
+                            }
                         }
                     }
                 }
@@ -71,18 +90,24 @@ C.List {
                         return ""
                     }
                 }
-                property int autoIndex: J.find(root.autos, "view", view["uid"])
+                property var autoIndexes: {
+                    var ret = J.findAll(root.autos, "view", view["uid"])
+                    ret.sort(function(a, b) { return root.autos[a]["start"] - root.autos[b]["start"] })
+                    return ret
+                }
+
                 C.VFit {
                     id: autoVFit
                     anchors.right: parent.right
                     anchors.bottom: viewVFit.bottom
                     height: viewVFit.height
                     font.underline: true
+                    enabled: parent.autoIndexes.length !== 0
                     text: {
-                        if (parent.autoIndex === -1) {
-                            return ""
+                        if (parent.autoIndexes.length === 0) {
+                            return qsTr("Failed to get the next start time.")
                         }
-                        var auto = root.autos[parent.autoIndex]
+                        var auto = root.autos[parent.autoIndexes[0]]
                         var autoStart = auto["start"] * 1000
                         var ret = ""
                         if (autoStart !== undefined) {
@@ -107,7 +132,7 @@ C.List {
                         Layout.fillHeight: true
                         Layout.preferredWidth: height
                         highlighted: true
-                        icon.source: parent.parent.autoIndex === -1 ? "/icons/timeout.svg" : "/icons/play.svg"
+                        icon.source: parent.parent.autoIndexes.length === 0 ? "/icons/timeout.svg" : "/icons/play.svg"
                     }
                 }
             }

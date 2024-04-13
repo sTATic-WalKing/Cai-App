@@ -100,8 +100,9 @@ C.List {
                     C.Rounded {
                         Layout.fillHeight: true
                         Layout.preferredWidth: height
-                        highlighted: furniture["connected"]
+                        highlighted: true
                         icon.source: furniture["connected"] ? "/icons/connected.svg" : "/icons/disconnected.svg"
+                        Material.accent: furniture["connected"] ? parent.Material.accent : "#E91E63"
                     }
                 }
             }

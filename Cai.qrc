@@ -20,5 +20,6 @@
         <file>icons/views.svg</file>
         <file>icons/play.svg</file>
         <file>icons/timeout.svg</file>
+        <file>icons/delete.svg</file>
     </qresource>
 </RCC>

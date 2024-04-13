@@ -26,9 +26,19 @@ ApplicationWindow {
         [ Material.accent, "orange" ]
     ]
 
-    property var furnitures: [{ "address": "A4:C1:38:CC:74:ED", "type": 0, "alias": "台灯", "state": 0, "connected": true }, { "address": "B4:C1:38:CC:74:ED", "type": 0, "alias": "新买的台灯", "state": 1, "connected": true }, { "address": "C4:C1:38:CC:74:ED", "type": 0, "alias": "究极无敌大壁灯", "state": 1, "connected": true }]
-    property var views: [{"states": [{ "address": "A4:C1:38:CC:74:ED", "state": 1 }, { "address": "B4:C1:38:CC:74:ED", "state": 1 }, { "address": "C4:C1:38:CC:74:ED", "state": 1 }], "alias": "夜晚", "uid": 1}]
-    property var autos: [{"view": 1, "start": 1712917132, "every": 90061}]
+    property var furnitures: [
+        { "address": "A4:C1:38:CC:74:ED", "type": 0, "state": 0, "connected": true },
+        { "address": "B4:C1:38:CC:74:ED", "type": 0, "alias": "新买的台灯", "state": 1, "connected": false },
+        { "address": "C4:C1:38:CC:74:ED", "type": 0, "alias": "究极无敌大壁灯", "state": 1, "connected": true }
+    ]
+    property var views: [
+        {"states": [{ "address": "A4:C1:38:CC:74:ED", "state": 1 }, { "address": "B4:C1:38:CC:74:ED", "state": 1 }, { "address": "C4:C1:38:CC:74:ED", "state": 1 }], "alias": "夜晚", "uid": 1},
+        {"states": [{ "address": "A4:C1:38:CC:74:ED", "state": 0 }, { "address": "B4:C1:38:CC:74:ED", "state": 0 }, { "address": "D4:C1:38:CC:74:ED", "state": 0 }], "alias": "夜晚", "uid": 2}
+    ]
+    property var autos: [
+        {"view": 1, "start": 1712917132, "every": 90061},
+        {"view": 1, "start": 1712937132, "every": 90060}
+    ]
 
     readonly property bool portraitMode: !landscapeCheckBox.checked || root.width < root.height
 

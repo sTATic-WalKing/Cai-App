@@ -46,6 +46,16 @@ function find(objs, key, value) {
     return -1
 }
 
+function findAll(objs, key, value) {
+    var ret = []
+    for (var i = 0; i < objs.length; ++i) {
+        if (value === objs[i][key]) {
+            ret.push(i)
+        }
+    }
+    return ret
+}
+
 function findModelData(listModel, mod, key, value) {
     for (var i = 0; i < listModel.count; ++i) {
         if (value === listModel.get(i)[mod][key]) {
