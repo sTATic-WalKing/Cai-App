@@ -8,9 +8,15 @@ C.List {
     id: viewsList
     delegate: Component {
         C.Touch {
+            id: viewsListTouch
             width: viewsList.width
             height: 87
-
+            property var autoIndexes: {
+                console.log("autoIndexes")
+                var ret = J.findAll(root.autos, "view", view["uid"])
+                ret.sort(function(a, b) { return root.autos[a]["start"] - root.autos[b]["start"] })
+                return ret
+            }
             contentItem: Item {
                 ListView {
                     id: iconsListView
@@ -31,36 +37,9 @@ C.List {
                         }
                     }
                     delegate: Component {
-                        C.Rounded {
-                            property int furnitureIndex: J.find(root.furnitures, "address", furniture["address"])
+                        C.RoundedFurniture {
                             height: iconsListView.height
                             width: height
-                            icon.source: {
-                                if (furnitureIndex === -1) {
-                                    return "/icons/delete.svg"
-                                }
-                                if (!root.furnitures[furnitureIndex]["connected"]) {
-                                    return "/icons/disconnected.svg"
-                                }
-                                return root.typeIcons[root.furnitures[furnitureIndex]["type"]]
-                            }
-
-                            highlighted: furniture["state"] > 0 || furnitureIndex === -1 || !root.furnitures[furnitureIndex]["connected"]
-                            Material.accent: furnitureIndex === -1 || !root.furnitures[furnitureIndex]["connected"] ?
-                                                 "#E91E63" :
-                                                 root.stateIcons[root.furnitures[furnitureIndex]["type"]][furniture["state"]]
-                            ToolTip.visible: down
-                            ToolTip.text: {
-                                if (furnitureIndex === -1) {
-                                    return qsTr("Deleted")
-                                }
-                                var rootFurniture = root.furnitures[furnitureIndex]
-                                var furnitureAlias = rootFurniture["alias"]
-                                if (furnitureAlias !== undefined) {
-                                    return furnitureAlias
-                                }
-                                return rootFurniture["address"]
-                            }
                         }
                     }
                 }
@@ -78,13 +57,8 @@ C.List {
                         if (viewAlias !== undefined) {
                             return viewAlias
                         }
-                        return ""
+                        return view["uid"]
                     }
-                }
-                property var autoIndexes: {
-                    var ret = J.findAll(root.autos, "view", view["uid"])
-                    ret.sort(function(a, b) { return root.autos[a]["start"] - root.autos[b]["start"] })
-                    return ret
                 }
 
                 C.VFit {
@@ -93,12 +67,12 @@ C.List {
                     anchors.bottom: viewVFit.bottom
                     height: viewVFit.height
                     font.underline: true
-                    enabled: parent.autoIndexes.length !== 0
+                    enabled: viewsListTouch.autoIndexes.length !== 0
                     text: {
-                        if (parent.autoIndexes.length === 0) {
+                        if (viewsListTouch.autoIndexes.length === 0) {
                             return qsTr("Failed to get the next start time.")
                         }
-                        var auto = root.autos[parent.autoIndexes[0]]
+                        var auto = root.autos[viewsListTouch.autoIndexes[0]]
                         var autoStart = auto["start"] * 1000
                         var ret = ""
                         if (autoStart !== undefined) {
@@ -126,14 +100,25 @@ C.List {
                         Layout.fillHeight: true
                         Layout.preferredWidth: height
                         highlighted: true
-                        icon.source: parent.parent.autoIndexes.length === 0 ? "/icons/timeout.svg" : "/icons/play.svg"
+                        icon.source: viewsListTouch.autoIndexes.length === 0 ? "/icons/timeout.svg" : "/icons/play.svg"
                         onClicked: {
-                            autoDialog.open()
+                            if (viewsListTouch.autoIndexes.length === 0) {
+                                autoDialog.open()
+                            } else {
+                                autoAbortDialog.open()
+                            }
+
                         }
                     }
                 }
             }
-
+            Rectangle {
+                anchors.left: parent.left
+                anchors.right: parent.right
+                anchors.top: parent.top
+                height: 1
+                color: "#eeeeee"
+            }
             C.Popup {
                 id: configDialog
                 title: qsTr("Config")
@@ -164,23 +149,49 @@ C.List {
                 id: autoDialog
                 title: qsTr("Auto")
                 standardButtons: Dialog.Ok | Dialog.Cancel
-                readonly property int start: datePicker.selectedDate + timePicker.selectedTime + new Date().getTimezoneOffset() * 60
+                readonly property int start: datePicker.selectedDate + timePicker.selectedTime + root.currentDate.getTimezoneOffset() * 60
                 readonly property int every: everyPicker.selectedTime
-                Component.onCompleted: {
+                onOpened: {
                     datePicker.reset()
+                    timePicker.reset()
+                }
+                onAccepted: {
+                    var onPostJsonComplete = function(rsp) {
+                        var autos_copy = root.autos.concat()
+                        autos_copy.push(rsp)
+                        root.autos = autos_copy
+                    }
+                    var content = {}
+                    content["view"] = view["uid"]
+                    if (autoDialog.start * 1000 > root.currentDate.getTime()) {
+                        content["start"] = autoDialog.start
+                    }
+                    if (autoDialog.every > 0) {
+                        content["every"] = autoDialog.every
+                    }
+
+                    J.postJSON(settings.host + "/auto", onPostJsonComplete, root.xhrErrorHandle, content)
                 }
 
                 ColumnLayout {
                     anchors.fill: parent
+                    spacing: 10
                     Label {
-                        text: qsTr("Start At ")
+                        text: qsTr("Start At")
                     }
                     Label {
-                        text: new Date(autoDialog.start * 1000).toLocaleString()
+                        text: {
+                            var start = autoDialog.start * 1000
+                            if (start <= root.currentDate.getTime()) {
+                                return qsTr("Now")
+                            }
+                            return new Date(start).toLocaleString()
+                        }
+
                         font.underline: true
                     }
                     Label {
-                        text: qsTr("Repeat Every ")
+                        text: qsTr("Repeat Every")
                     }
                     Label {
                         text: {
@@ -192,16 +203,16 @@ C.List {
                             second -= minute * 60
                             var ret = ""
                             if (day > 0) {
-                                ret += day + qsTr(" Day ")
+                                ret += day + " " + qsTr("Day") + " "
                             }
                             if (hour > 0) {
-                                ret += hour + qsTr(" Hour ")
+                                ret += hour + " " + qsTr("Hour") + " "
                             }
                             if (minute > 0) {
-                                ret += minute + qsTr(" Minute ")
+                                ret += minute + " " + qsTr("Minute") + " "
                             }
                             if (second > 0) {
-                                ret += second + qsTr(" Second ")
+                                ret += second + " " + qsTr("Second") + " "
                             }
                             if (ret === "") {
                                 ret = qsTr("Not Repeated")
@@ -271,23 +282,192 @@ C.List {
                     daySpinBoxVisible: true
                 }
             }
+            C.Popup {
+                id: autoAbortDialog
+                title: qsTr("Abort Autos")
+                standardButtons: Dialog.Ok | Dialog.Cancel
+                onAccepted: {
+                    var uids = []
+                    for (var i = 0; i < viewsListTouch.autoIndexes.length; ++i) {
+                        uids.push(root.autos[viewsListTouch.autoIndexes[i]]["uid"])
+                    }
+                    console.log(uids)
+
+                    for (i = 0; i < uids.length; ++i) {
+                        var local_i = i
+                        var onPostJsonComplete = function(rsp) {
+                            if (rsp["affected"] > 0) {
+                                var autos_copy = root.autos.concat()
+                                var toDel = J.find(autos_copy, "uid", uids[local_i])
+                                if (toDel !== -1) {
+                                    autos_copy.splice(toDel, 1)
+                                }
+                                root.autos = autos_copy
+                            }
+                        }
+                        var content = {}
+                        content["uid"] = uids[i]
+                        J.postJSON(settings.host + "/abort", onPostJsonComplete, root.xhrErrorHandle, content)
+                    }
+                }
+                Label {
+                    text: qsTr("Abort all associated autos, are you sure?")
+                }
+            }
+        }
+    }
+    header: Component {
+        C.Touch {
+            height: 56
+            width: viewsList.width
+
+            onClicked: {
+                addDialog.open()
+            }
+
+            contentItem: Item {
+                C.VFit {
+                    id: filterLabel
+                    height: parent.parent.height / 3
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.left: parent.left
+                    font.italic: true
+                    text: qsTr("Click to add a new View, or Pull to Refresh.")
+                }
+                IconLabel {
+                    height: filterLabel.height
+                    width: height
+                    anchors.top: filterLabel.top
+                    anchors.right: parent.right
+                    icon.source: "/icons/addto.svg"
+                    icon.color: filterLabel.color
+                }
+            }
+
+            C.Popup {
+                id: addDialog
+                title: qsTr("Add a View")
+                standardButtons: Dialog.Ok | Dialog.Cancel
+                clip: true
+                contentHeight: addFlickable.contentHeight
+                onAccepted: {
+                    if (addListModel.count <= 0) {
+                        return
+                    }
+
+                    var onPostJsonComplete = function(rsp) {
+                        var tmp = {}
+                        tmp["view"] = rsp
+                        viewsList.model.append(tmp)
+                    }
+                    var content = {}
+                    content["alias"] = aliasTextField.text
+                    var states = []
+                    for (var i = 0; i < addListModel.count; ++i) {
+                        states.push(addListModel.get(i)["furniture"])
+                    }
+                    content["states"] = states
+                    J.postJSON(settings.host + "/view", onPostJsonComplete, root.xhrErrorHandle, content)
+                }
+                onOpened: {
+                    addListModel.clear()
+                }
+
+                Flickable {
+                    id: addFlickable
+                    anchors.fill: parent
+                    contentHeight: addColumnLayout.height
+                    ColumnLayout {
+                        id: addColumnLayout
+                        spacing: 10
+                        anchors.left: parent.left
+                        anchors.right: parent.right
+
+                        TextField {
+                            id: aliasTextField
+                            placeholderText: qsTr("Alias")
+                            Layout.fillWidth: true
+                        }
+                        Button {
+                            icon.source: "/icons/addto.svg"
+                            text: qsTr("Associate")
+
+                            onClicked: {
+                                associatePopup.open()
+                            }
+                        }
+                        GridView {
+                            Layout.fillWidth: true
+                            Layout.preferredHeight: contentHeight
+                            interactive: false
+                            cellHeight: 42
+                            cellWidth: cellHeight
+
+                            model: ListModel {
+                                id: addListModel
+                            }
+                            delegate: Component {
+                                C.RoundedFurniture {
+                                    height: 32
+                                    width: height
+                                }
+                            }
+                        }
+                    }
+                }
+
+                C.Popup {
+                    id: associatePopup
+                    title: qsTr("Associate")
+                    standardButtons: Dialog.Ok | Dialog.Cancel
+                    onOpened: {
+                        var added = []
+                        for (var i = 0; i < addListModel.count; ++i) {
+                            added.push(addListModel.get(i)["furniture"]["address"])
+                        }
+                        var all = []
+                        for (i = 0; i < root.furnitures.length; ++i) {
+                            all.push(root.furnitures[i]["address"])
+                        }
+                        var toAdd = J.difference(all, added)
+                        var res = []
+                        for (i = 0; i < toAdd.length; ++i) {
+                            var furniture = root.furnitures[J.find(root.furnitures, "address", toAdd[i])]
+                            var tmp = {}
+                            tmp["address"] = furniture["address"]
+                            var furnitureAlias = furniture["alias"]
+                            if (furnitureAlias === undefined) {
+                                tmp["alias"] = furniture["address"]
+                            } else {
+                                tmp["alias"] = furniture["alias"]
+                            }
+                            res.push(tmp)
+                        }
+                        associateFurnitureComboBox.model = res
+                    }
+                    onAccepted: {
+                        addListModel.append({"furniture": { "address": associateFurnitureComboBox.currentValue, "state": associateStateComboBox.currentIndex }})
+                    }
+
+                    ColumnLayout {
+                        anchors.fill: parent
+                        spacing: 10
+                        ComboBox {
+                            id: associateFurnitureComboBox
+                            Layout.fillWidth: true
+                            textRole: "alias"
+                            valueRole: "address"
+                        }
+
+                        ComboBox {
+                            id: associateStateComboBox
+                            model: root.stateTexts
+                            Layout.fillWidth: true
+                        }
+                    }
+
+                }
+            }
         }
     }
 }
-// onAccepted: {
-//     var onPostJsonComplete = function(rsp) {
-//         var tmp = {}
-//         tmp["view"] = rsp
-//         viewsList.model.set(J.findModelData(viewsList.model, "view", "uid", view["uid"]), tmp)
-//     }
-//     var content = {}
-//     content["view"] = view["uid"]
-//     if (startTextField.text !== "") {
-//         content["start"] = Number(startTextField.text)
-//     }
-//     if (everyTextField.text !== "") {
-//         content["every"] = Number(everyTextField.text)
-//     }
-
-//     J.postJSON(settings.host + "/view", onPostJsonComplete, root.xhrErrorHandle, content)
-// }

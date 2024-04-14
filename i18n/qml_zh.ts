@@ -8,108 +8,146 @@
         <translation type="obsolete">，</translation>
     </message>
     <message>
-        <location filename="../Autos.qml" line="55"/>
-        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Autos.qml" line="55"/>
-        <source>Deleted</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../Autos.qml" line="99"/>
-        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Autos.qml" line="99"/>
+        <location filename="../Autos.qml" line="73"/>
+        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Autos.qml" line="73"/>
         <source>Failed to get the next start time.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Autos.qml" line="139"/>
-        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Autos.qml" line="139"/>
+        <location filename="../Autos.qml" line="124"/>
+        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Autos.qml" line="124"/>
         <source>Config</source>
         <translation type="unfinished">配置</translation>
     </message>
     <message>
-        <location filename="../Autos.qml" line="147"/>
-        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Autos.qml" line="147"/>
+        <location filename="../Autos.qml" line="132"/>
+        <location filename="../Autos.qml" line="388"/>
+        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Autos.qml" line="132"/>
+        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Autos.qml" line="388"/>
         <source>Alias</source>
         <translation type="unfinished">别名</translation>
     </message>
     <message>
-        <location filename="../Autos.qml" line="165"/>
-        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Autos.qml" line="165"/>
+        <location filename="../Autos.qml" line="150"/>
+        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Autos.qml" line="150"/>
         <source>Auto</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Autos.qml" line="176"/>
-        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Autos.qml" line="176"/>
-        <source>Start At </source>
+        <location filename="../Autos.qml" line="180"/>
+        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Autos.qml" line="180"/>
+        <source>Start At</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Autos.qml" line="183"/>
-        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Autos.qml" line="183"/>
-        <source>Repeat Every </source>
+        <location filename="../Autos.qml" line="186"/>
+        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Autos.qml" line="186"/>
+        <source>Now</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Autos.qml" line="195"/>
-        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Autos.qml" line="195"/>
-        <source> Day </source>
+        <location filename="../Autos.qml" line="194"/>
+        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Autos.qml" line="194"/>
+        <source>Repeat Every</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Autos.qml" line="198"/>
-        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Autos.qml" line="198"/>
-        <source> Hour </source>
+        <location filename="../Autos.qml" line="206"/>
+        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Autos.qml" line="206"/>
+        <source>Day</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Autos.qml" line="201"/>
-        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Autos.qml" line="201"/>
-        <source> Minute </source>
+        <location filename="../Autos.qml" line="209"/>
+        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Autos.qml" line="209"/>
+        <source>Hour</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Autos.qml" line="204"/>
-        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Autos.qml" line="204"/>
-        <source> Second </source>
+        <location filename="../Autos.qml" line="212"/>
+        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Autos.qml" line="212"/>
+        <source>Minute</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Autos.qml" line="207"/>
-        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Autos.qml" line="207"/>
+        <location filename="../Autos.qml" line="215"/>
+        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Autos.qml" line="215"/>
+        <source>Second</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Autos.qml" line="218"/>
+        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Autos.qml" line="218"/>
         <source>Not Repeated</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Autos.qml" line="217"/>
-        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Autos.qml" line="217"/>
+        <location filename="../Autos.qml" line="228"/>
+        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Autos.qml" line="228"/>
         <source>Set Start Date</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Autos.qml" line="223"/>
-        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Autos.qml" line="223"/>
+        <location filename="../Autos.qml" line="234"/>
+        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Autos.qml" line="234"/>
         <source>Set Start Time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Autos.qml" line="231"/>
-        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Autos.qml" line="231"/>
+        <location filename="../Autos.qml" line="242"/>
+        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Autos.qml" line="242"/>
         <source>Set Interval</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Autos.qml" line="240"/>
-        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Autos.qml" line="240"/>
+        <location filename="../Autos.qml" line="251"/>
+        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Autos.qml" line="251"/>
         <source>Date Picker</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Autos.qml" line="257"/>
-        <location filename="../Autos.qml" line="266"/>
-        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Autos.qml" line="257"/>
-        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Autos.qml" line="266"/>
+        <location filename="../Autos.qml" line="268"/>
+        <location filename="../Autos.qml" line="277"/>
+        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Autos.qml" line="268"/>
+        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Autos.qml" line="277"/>
         <source>Time Picker</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Autos.qml" line="287"/>
+        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Autos.qml" line="287"/>
+        <source>Abort Autos</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Autos.qml" line="314"/>
+        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Autos.qml" line="314"/>
+        <source>Abort all associated autos, are you sure?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Autos.qml" line="335"/>
+        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Autos.qml" line="335"/>
+        <source>Click to add a new View, or Pull to Refresh.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Autos.qml" line="349"/>
+        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Autos.qml" line="349"/>
+        <source>Add a View</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Autos.qml" line="393"/>
+        <location filename="../Autos.qml" line="421"/>
+        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Autos.qml" line="393"/>
+        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Autos.qml" line="421"/>
+        <source>Associate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Void</source>
+        <translation type="obsolete">略</translation>
     </message>
 </context>
 <context>
@@ -190,64 +228,64 @@
 <context>
     <name>Furnitures</name>
     <message>
-        <location filename="../Furnitures.qml" line="160"/>
-        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Furnitures.qml" line="160"/>
+        <location filename="../Furnitures.qml" line="166"/>
+        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Furnitures.qml" line="166"/>
         <source>Nothing here, and Pull to Refresh.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Furnitures.qml" line="56"/>
-        <location filename="../Furnitures.qml" line="167"/>
-        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Furnitures.qml" line="56"/>
-        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Furnitures.qml" line="167"/>
+        <location filename="../Furnitures.qml" line="58"/>
+        <location filename="../Furnitures.qml" line="173"/>
+        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Furnitures.qml" line="58"/>
+        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Furnitures.qml" line="173"/>
         <source>, </source>
         <translation>，</translation>
     </message>
     <message>
-        <location filename="../Furnitures.qml" line="176"/>
-        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Furnitures.qml" line="176"/>
+        <location filename="../Furnitures.qml" line="182"/>
+        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Furnitures.qml" line="182"/>
         <source>No filter</source>
         <translation>没有设置过滤</translation>
     </message>
     <message>
-        <location filename="../Furnitures.qml" line="70"/>
-        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Furnitures.qml" line="70"/>
+        <location filename="../Furnitures.qml" line="72"/>
+        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Furnitures.qml" line="72"/>
         <source>No Associated Autos</source>
         <translation>没有任务关联</translation>
     </message>
     <message>
-        <location filename="../Furnitures.qml" line="109"/>
-        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Furnitures.qml" line="109"/>
+        <location filename="../Furnitures.qml" line="111"/>
+        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Furnitures.qml" line="111"/>
         <source>Config</source>
         <translation>配置</translation>
     </message>
     <message>
-        <location filename="../Furnitures.qml" line="117"/>
-        <location filename="../Furnitures.qml" line="223"/>
-        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Furnitures.qml" line="117"/>
-        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Furnitures.qml" line="223"/>
+        <location filename="../Furnitures.qml" line="119"/>
+        <location filename="../Furnitures.qml" line="229"/>
+        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Furnitures.qml" line="119"/>
+        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Furnitures.qml" line="229"/>
         <source>Alias</source>
         <translation>别名</translation>
     </message>
     <message>
-        <location filename="../Furnitures.qml" line="122"/>
-        <location filename="../Furnitures.qml" line="227"/>
-        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Furnitures.qml" line="122"/>
-        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Furnitures.qml" line="227"/>
+        <location filename="../Furnitures.qml" line="124"/>
+        <location filename="../Furnitures.qml" line="233"/>
+        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Furnitures.qml" line="124"/>
+        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Furnitures.qml" line="233"/>
         <source>Location</source>
         <translation>位置</translation>
     </message>
     <message>
-        <location filename="../Furnitures.qml" line="196"/>
-        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Furnitures.qml" line="196"/>
+        <location filename="../Furnitures.qml" line="202"/>
+        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Furnitures.qml" line="202"/>
         <source>Filter</source>
         <translation>过滤</translation>
     </message>
     <message>
-        <location filename="../Furnitures.qml" line="206"/>
-        <location filename="../Furnitures.qml" line="216"/>
-        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Furnitures.qml" line="206"/>
-        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Furnitures.qml" line="216"/>
+        <location filename="../Furnitures.qml" line="212"/>
+        <location filename="../Furnitures.qml" line="222"/>
+        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Furnitures.qml" line="212"/>
+        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Furnitures.qml" line="222"/>
         <source>Void</source>
         <translation>略</translation>
     </message>
@@ -298,8 +336,8 @@
         <translation>开</translation>
     </message>
     <message>
-        <location filename="../Main.qml" line="134"/>
-        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Main.qml" line="134"/>
+        <location filename="../Main.qml" line="141"/>
+        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Main.qml" line="141"/>
         <source>FURNITURES</source>
         <translation>家具</translation>
     </message>
@@ -308,108 +346,117 @@
         <translation type="vanished">场景</translation>
     </message>
     <message>
-        <location filename="../Main.qml" line="135"/>
-        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Main.qml" line="135"/>
+        <location filename="../Main.qml" line="142"/>
+        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Main.qml" line="142"/>
         <source>AUTOS</source>
         <translation>任务</translation>
     </message>
     <message>
-        <location filename="../Main.qml" line="205"/>
-        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Main.qml" line="205"/>
+        <location filename="../Main.qml" line="212"/>
+        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Main.qml" line="212"/>
         <source>Settings</source>
         <translation>设置</translation>
     </message>
     <message>
-        <location filename="../Main.qml" line="213"/>
-        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Main.qml" line="213"/>
+        <location filename="../Main.qml" line="220"/>
+        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Main.qml" line="220"/>
         <source>Landscape</source>
         <translation>宽屏</translation>
     </message>
     <message>
-        <location filename="../Main.qml" line="219"/>
-        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Main.qml" line="219"/>
+        <location filename="../Main.qml" line="226"/>
+        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Main.qml" line="226"/>
         <source>Host</source>
         <translation>主机</translation>
     </message>
     <message>
-        <location filename="../Main.qml" line="230"/>
-        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Main.qml" line="230"/>
+        <location filename="../Main.qml" line="237"/>
+        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Main.qml" line="237"/>
         <source>Discover</source>
         <translation>发现</translation>
     </message>
     <message>
-        <location filename="../Main.qml" line="255"/>
-        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Main.qml" line="255"/>
+        <location filename="../Main.qml" line="262"/>
+        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Main.qml" line="262"/>
         <source>Sending discover request...</source>
         <translation>正在发送发现请求……</translation>
     </message>
     <message>
-        <location filename="../Main.qml" line="258"/>
-        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Main.qml" line="258"/>
+        <location filename="../Main.qml" line="265"/>
+        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Main.qml" line="265"/>
         <source>Checking the result and </source>
         <translation>正在检查结果，</translation>
     </message>
     <message>
-        <location filename="../Main.qml" line="258"/>
-        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Main.qml" line="258"/>
+        <location filename="../Main.qml" line="265"/>
+        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Main.qml" line="265"/>
         <source> times checked.</source>
         <translation>次已经被重试。</translation>
     </message>
     <message>
-        <location filename="../Main.qml" line="260"/>
-        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Main.qml" line="260"/>
+        <location filename="../Main.qml" line="267"/>
+        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Main.qml" line="267"/>
         <source>We have checked the result too many times.</source>
         <translation>我们重试太多次惹。</translation>
     </message>
     <message>
-        <location filename="../Main.qml" line="273"/>
-        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Main.qml" line="273"/>
+        <location filename="../Main.qml" line="280"/>
+        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Main.qml" line="280"/>
         <source>来到了没有网络的荒原~</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../Main.qml" line="275"/>
-        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Main.qml" line="275"/>
-        <source>不知道服务器说了个啥</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../Main.qml" line="282"/>
         <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Main.qml" line="282"/>
+        <source>不知道服务器说了个啥</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Main.qml" line="289"/>
+        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Main.qml" line="289"/>
         <source>Refresh</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Main.qml" line="331"/>
-        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Main.qml" line="331"/>
+        <location filename="../Main.qml" line="338"/>
+        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Main.qml" line="338"/>
         <source>We are refreshing the furnitures list.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>RoundedFurniture</name>
+    <message>
+        <location filename="../components/RoundedFurniture.qml" line="27"/>
+        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/components/RoundedFurniture.qml" line="27"/>
+        <source>Deleted</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>TimePicker</name>
     <message>
-        <location filename="../components/TimePicker.qml" line="19"/>
-        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/components/TimePicker.qml" line="19"/>
-        <source>Days</source>
+        <location filename="../components/TimePicker.qml" line="26"/>
+        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/components/TimePicker.qml" line="26"/>
+        <source>Day</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../components/TimePicker.qml" line="32"/>
-        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/components/TimePicker.qml" line="32"/>
-        <source>Hours</source>
+        <location filename="../components/TimePicker.qml" line="39"/>
+        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/components/TimePicker.qml" line="39"/>
+        <source>Hour</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../components/TimePicker.qml" line="44"/>
-        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/components/TimePicker.qml" line="44"/>
-        <source>Minutes</source>
+        <location filename="../components/TimePicker.qml" line="51"/>
+        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/components/TimePicker.qml" line="51"/>
+        <source>Minute</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../components/TimePicker.qml" line="56"/>
-        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/components/TimePicker.qml" line="56"/>
-        <source>Seconds</source>
+        <location filename="../components/TimePicker.qml" line="63"/>
+        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/components/TimePicker.qml" line="63"/>
+        <source>Second</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

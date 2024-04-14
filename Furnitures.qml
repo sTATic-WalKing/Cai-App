@@ -27,8 +27,10 @@ C.List {
 
                     onClicked: {
                         var onPostJsonComplete = function(rsp) {
-                            var obj = root.furnitures[J.find(root.furnitures, "address", furniture["address"])]
+                            var furnitures_copy = root.furnitures.concat()
+                            var obj = furnitures_copy[J.find(furnitures_copy, "address", furniture["address"])]
                             obj["state"] = rsp["state"]
+                            root.furnitures = furnitures_copy
                             var tmp = {}
                             tmp["furniture"] = obj
                             furnituresList.model.set(J.findModelData(furnituresList.model, "furniture", "address", furniture["address"]), tmp)
@@ -125,7 +127,11 @@ C.List {
                 }
                 onAccepted: {
                     var onPostJsonComplete = function(rsp) {
-                        rsp["state"] = furniture["state"]
+                        var furnitures_copy = root.furnitures.concat()
+                        var index = J.find(furnitures_copy, "address", furniture["address"])
+                        rsp["state"] = furnitures_copy[index]["state"]
+                        furnitures_copy[index] = rsp
+                        root.furnitures = furnitures_copy
                         var tmp = {}
                         tmp["furniture"] = rsp
                         furnituresList.model.set(J.findModelData(furnituresList.model, "furniture", "address", furniture["address"]), tmp)

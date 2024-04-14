@@ -8,10 +8,13 @@ C.Touch {
     display: AbstractButton.TextOnly
 
     IconLabel {
-        anchors.centerIn: parent
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.left: parent.left
+        anchors.leftMargin: (parent.height - height) / 2
         icon.width: parent.width / 5 * 4
         icon.height: parent.width / 5 * 4
         icon.source: parent.icon.source
         icon.color: parent.icon.color
     }
+
 }

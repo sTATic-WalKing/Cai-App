@@ -23,5 +23,6 @@
         <file>icons/delete.svg</file>
         <file>icons/colon.svg</file>
         <file>icons/left.svg</file>
+        <file>icons/addto.svg</file>
     </qresource>
 </RCC>

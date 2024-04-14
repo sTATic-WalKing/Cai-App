@@ -41,6 +41,13 @@ ApplicationWindow {
     ]
 
     readonly property bool portraitMode: !landscapeCheckBox.checked || root.width < root.height
+    property var currentDate: new Date()
+    Timer {
+        repeat: true
+        onTriggered: {
+            currentDate = new Date()
+        }
+    }
 
     header: ToolBar {
         id: toolBar
