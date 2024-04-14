@@ -32,8 +32,8 @@ ApplicationWindow {
         { "address": "C4:C1:38:CC:74:ED", "type": 0, "alias": "究极无敌大壁灯", "state": 1, "connected": true }
     ]
     property var views: [
-        {"states": [{ "address": "A4:C1:38:CC:74:ED", "state": 1 }, { "address": "B4:C1:38:CC:74:ED", "state": 1 }, { "address": "C4:C1:38:CC:74:ED", "state": 1 }], "alias": "夜晚", "uid": 1},
-        {"states": [{ "address": "A4:C1:38:CC:74:ED", "state": 0 }, { "address": "B4:C1:38:CC:74:ED", "state": 0 }, { "address": "D4:C1:38:CC:74:ED", "state": 0 }], "alias": "夜晚", "uid": 2}
+        {"states": [{ "address": "A4:C1:38:CC:74:ED", "state": 1 }, { "address": "B4:C1:38:CC:74:ED", "state": 1 }, { "address": "C4:C1:38:CC:74:ED", "state": 1 }], "alias": "夜晚", "uid": 101},
+        {"states": [{ "address": "A4:C1:38:CC:74:ED", "state": 0 }, { "address": "B4:C1:38:CC:74:ED", "state": 0 }, { "address": "D4:C1:38:CC:74:ED", "state": 0 }], "alias": "夜晚", "uid": 102}
     ]
     property var autos: [
         {"view": 1, "start": 1712917132, "every": 90061},
@@ -176,9 +176,27 @@ ApplicationWindow {
 
         App.Furnitures {
             id: furnitures
+            onRefresh: {
+                refreshPopup.open()
+            }
+            model: ListModel {
+                id: furnituresListModel
+            }
+            Component.onCompleted: {
+                J.updateModelData(furnituresListModel, root.furnitures, "furniture", "address")
+            }
         }
         App.Autos {
             id: autos
+            onRefresh: {
+                refreshPopup.open()
+            }
+            model: ListModel {
+                id: autosListModel
+            }
+            Component.onCompleted: {
+                J.updateModelData(autosListModel, root.views, "view", "uid")
+            }
         }
     }
 
@@ -257,5 +275,65 @@ ApplicationWindow {
             toolTipText = qsTr("不知道服务器说了个啥")
         }
         toolBar.showToolTip(toolTipText)
+    }
+
+    C.Popup {
+        id: refreshPopup
+        title: qsTr("Refresh")
+        property var xhrs
+
+        function onDownloadConfigsComplete(list) {
+            root.furnitures = list
+            close()
+            J.updateModelData(furnituresListModel, root.furnitures, "furniture", "address")
+        }
+        function downloadConfigs(list) {
+            for (var i = 0; i < list.length; ++i) {
+                var current = list[i]
+                if (!current["connected"]) {
+                    continue
+                }
+                var onInnerPostJsonComplete = function(rsp) {
+                    list[J.find(list, "address", current["address"])]["state"] = rsp["state"]
+                }
+                J.postJSON(settings.host + "/state", onInnerPostJsonComplete, root.xhrErrorHandle, { address: current["address"] }, false, xhrs)
+            }
+            onDownloadConfigsComplete(list)
+        }
+        function onDownloadViewsComplete(list) {
+            root.views = list
+            close()
+            J.updateModelData(autosListModel, root.views, "view", "uid")
+        }
+        function onDownloadAutosComplete(list) {
+            root.autos = list
+            close()
+        }
+
+        onOpened: {
+            xhrs = []
+            J.downloadModelData(settings.host, "config", "address", downloadConfigs, root.xhrErrorHandle, xhrs)
+            J.downloadModelData(settings.host, "view", "uid", onDownloadViewsComplete, root.xhrErrorHandle, xhrs)
+            J.downloadModelData(settings.host, "auto", "uid", onDownloadAutosComplete, root.xhrErrorHandle, xhrs)
+        }
+        onClosed: {
+            for (var i = 0; i < xhrs.length; ++i) {
+                xhrs[i].abort()
+            }
+        }
+
+        ColumnLayout {
+            id: refreshColumnLayout
+            anchors.fill: parent
+            spacing: 10
+
+            Label {
+                text: qsTr("We are refreshing the furnitures list.")
+            }
+            ProgressBar {
+                indeterminate: true
+                Layout.fillWidth: true
+            }
+        }
     }
 }

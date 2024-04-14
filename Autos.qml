@@ -6,15 +6,6 @@ import "qrc:/common.js" as J
 
 C.List {
     id: viewsList
-
-    model: ListModel {
-        id: listModel
-    }
-    Component.onCompleted: {
-        for (var i = 0; i < root.views.length; ++i) {
-            listModel.append({view: root.views[i]})
-        }
-    }
     delegate: Component {
         C.Touch {
             width: viewsList.width
@@ -127,15 +118,176 @@ C.List {
                         Layout.preferredWidth: height
                         highlighted: true
                         icon.source: "/icons/config.svg"
+                        onClicked: {
+                            configDialog.open()
+                        }
                     }
                     C.Rounded {
                         Layout.fillHeight: true
                         Layout.preferredWidth: height
                         highlighted: true
                         icon.source: parent.parent.autoIndexes.length === 0 ? "/icons/timeout.svg" : "/icons/play.svg"
+                        onClicked: {
+                            autoDialog.open()
+                        }
                     }
+                }
+            }
+
+            C.Popup {
+                id: configDialog
+                title: qsTr("Config")
+                standardButtons: Dialog.Ok | Dialog.Cancel
+                ColumnLayout {
+                    anchors.fill: parent
+                    spacing: 10
+
+                    TextField {
+                        id: aliasTextField
+                        placeholderText: qsTr("Alias")
+                        Layout.fillWidth: true
+                    }
+                }
+                onAccepted: {
+                    var onPostJsonComplete = function(rsp) {
+                        var tmp = {}
+                        tmp["view"] = rsp
+                        viewsList.model.set(J.findModelData(viewsList.model, "view", "uid", view["uid"]), tmp)
+                    }
+                    var content = {}
+                    content["uid"] = view["uid"]
+                    content["alias"] = aliasTextField.text
+                    J.postJSON(settings.host + "/view", onPostJsonComplete, root.xhrErrorHandle, content)
+                }
+            }
+            C.Popup {
+                id: autoDialog
+                title: qsTr("Auto")
+                standardButtons: Dialog.Ok | Dialog.Cancel
+                readonly property int start: datePicker.selectedDate + timePicker.selectedTime + new Date().getTimezoneOffset() * 60
+                readonly property int every: everyPicker.selectedTime
+                Component.onCompleted: {
+                    datePicker.reset()
+                }
+
+                ColumnLayout {
+                    anchors.fill: parent
+                    Label {
+                        text: qsTr("Start At ")
+                    }
+                    Label {
+                        text: new Date(autoDialog.start * 1000).toLocaleString()
+                        font.underline: true
+                    }
+                    Label {
+                        text: qsTr("Repeat Every ")
+                    }
+                    Label {
+                        text: {
+                            var day = parseInt(autoDialog.every / (24 * 60 * 60))
+                            var second = autoDialog.every - day * (24 * 60 * 60)
+                            var hour = parseInt(second / (60 * 60))
+                            second -= hour * (60 * 60)
+                            var minute = parseInt(second / 60)
+                            second -= minute * 60
+                            var ret = ""
+                            if (day > 0) {
+                                ret += day + qsTr(" Day ")
+                            }
+                            if (hour > 0) {
+                                ret += hour + qsTr(" Hour ")
+                            }
+                            if (minute > 0) {
+                                ret += minute + qsTr(" Minute ")
+                            }
+                            if (second > 0) {
+                                ret += second + qsTr(" Second ")
+                            }
+                            if (ret === "") {
+                                ret = qsTr("Not Repeated")
+                            }
+
+                            return  ret
+                        }
+
+                        font.underline: true
+                    }
+                    RowLayout {
+                        Button {
+                            text: qsTr("Set Start Date")
+                            onClicked: {
+                                datePickerPopup.open()
+                            }
+                        }
+                        Button {
+                            text: qsTr("Set Start Time")
+                            onClicked: {
+                                timePickerPopup.open()
+                            }
+                        }
+
+                    }
+                    Button {
+                        text: qsTr("Set Interval")
+                        onClicked: {
+                            everyPickerPopup.open()
+                        }
+                    }
+                }
+            }
+            C.Popup {
+                id: datePickerPopup
+                title: qsTr("Date Picker")
+                standardButtons: Dialog.Ok | Dialog.Cancel
+                clip: true
+                contentHeight: datePickerFlickable.contentHeight
+                Flickable {
+                    id: datePickerFlickable
+                    anchors.fill: parent
+                    contentHeight: datePicker.height
+
+                    C.DatePicker {
+                        id: datePicker
+                        x: (parent.width - datePicker.width) / 2
+                    }
+                }
+            }
+            C.Popup {
+                id: timePickerPopup
+                title: qsTr("Time Picker")
+                standardButtons: Dialog.Ok | Dialog.Cancel
+                C.TimePicker {
+                    id: timePicker
+                    x: (parent.width - width) / 2
+                }
+            }
+            C.Popup {
+                id: everyPickerPopup
+                title: qsTr("Time Picker")
+                standardButtons: Dialog.Ok | Dialog.Cancel
+                C.TimePicker {
+                    id: everyPicker
+                    x: (parent.width - width) / 2
+                    daySpinBoxVisible: true
                 }
             }
         }
     }
 }
+// onAccepted: {
+//     var onPostJsonComplete = function(rsp) {
+//         var tmp = {}
+//         tmp["view"] = rsp
+//         viewsList.model.set(J.findModelData(viewsList.model, "view", "uid", view["uid"]), tmp)
+//     }
+//     var content = {}
+//     content["view"] = view["uid"]
+//     if (startTextField.text !== "") {
+//         content["start"] = Number(startTextField.text)
+//     }
+//     if (everyTextField.text !== "") {
+//         content["every"] = Number(everyTextField.text)
+//     }
+
+//     J.postJSON(settings.host + "/view", onPostJsonComplete, root.xhrErrorHandle, content)
+// }

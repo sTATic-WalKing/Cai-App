@@ -7,15 +7,6 @@ import "qrc:/common.js" as J
 C.List {
     id: furnituresList
     property var filters: ({})
-    model: ListModel {
-        id: listModel
-    }
-    onRefresh: {
-        refreshPopup.open()
-    }
-    Component.onCompleted: {
-        J.updateModelData(listModel, root.furnitures, "furniture", "address")
-    }
 
     delegate: Component {
         C.Touch {
@@ -40,7 +31,7 @@ C.List {
                             obj["state"] = rsp["state"]
                             var tmp = {}
                             tmp["furniture"] = obj
-                            listModel.set(J.findModelData(listModel, "furniture", "address", furniture["address"]), tmp)
+                            furnituresList.model.set(J.findModelData(furnituresList.model, "furniture", "address", furniture["address"]), tmp)
                         }
                         var content = {}
                         content["state"] = furniture["state"] > 0 ? 0 : 1
@@ -137,7 +128,7 @@ C.List {
                         rsp["state"] = furniture["state"]
                         var tmp = {}
                         tmp["furniture"] = rsp
-                        listModel.set(J.findModelData(listModel, "furniture", "address", furniture["address"]), tmp)
+                        furnituresList.model.set(J.findModelData(furnituresList.model, "furniture", "address", furniture["address"]), tmp)
                     }
                     var content = {}
                     content["address"] = furniture["address"]
@@ -234,54 +225,6 @@ C.List {
             }
             TextField {
                 placeholderText: qsTr("Location")
-                Layout.fillWidth: true
-            }
-        }
-    }
-
-    C.Popup {
-        id: refreshPopup
-        title: qsTr("Refresh")
-        property var xhrs
-
-        function onDownloadConfigsComplete(list) {
-            root.furnitures = list
-            close()
-            J.updateModelData(listModel, root.furnitures, "furniture", "address")
-        }
-        function downloadConfigs(list) {
-            for (var i = 0; i < list.length; ++i) {
-                var current = list[i]
-                if (!current["connected"]) {
-                    continue
-                }
-                var onInnerPostJsonComplete = function(rsp) {
-                    list[J.find(list, "address", current["address"])]["state"] = rsp["state"]
-                }
-                J.postJSON(settings.host + "/state", onInnerPostJsonComplete, root.xhrErrorHandle, { address: current["address"] }, false, xhrs)
-            }
-            onDownloadConfigsComplete(list)
-        }
-        onOpened: {
-            xhrs = []
-            J.downloadModelData(settings.host, "config", "address", downloadConfigs, root.xhrErrorHandle, xhrs)
-        }
-        onClosed: {
-            for (var i = 0; i < xhrs.length; ++i) {
-                xhrs[i].abort()
-            }
-        }
-
-        ColumnLayout {
-            id: refreshColumnLayout
-            anchors.fill: parent
-            spacing: 10
-
-            Label {
-                text: qsTr("We are refreshing the furnitures list.")
-            }
-            ProgressBar {
-                indeterminate: true
                 Layout.fillWidth: true
             }
         }
