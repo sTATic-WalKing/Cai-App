@@ -11,13 +11,13 @@
         <location filename="../Autos.qml" line="72"/>
         <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Autos.qml" line="72"/>
         <source>Failed to get the next start time.</source>
-        <translation type="unfinished"></translation>
+        <translation>未获取到最近的开始时间</translation>
     </message>
     <message>
         <location filename="../Autos.qml" line="174"/>
         <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Autos.qml" line="174"/>
         <source>Config</source>
-        <translation type="unfinished">配置</translation>
+        <translation>配置</translation>
     </message>
     <message>
         <location filename="../Autos.qml" line="182"/>
@@ -25,85 +25,85 @@
         <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Autos.qml" line="182"/>
         <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Autos.qml" line="430"/>
         <source>Alias</source>
-        <translation type="unfinished">别名</translation>
+        <translation>别名</translation>
     </message>
     <message>
         <location filename="../Autos.qml" line="200"/>
         <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Autos.qml" line="200"/>
         <source>Auto</source>
-        <translation type="unfinished"></translation>
+        <translation>任务</translation>
     </message>
     <message>
         <location filename="../Autos.qml" line="228"/>
         <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Autos.qml" line="228"/>
         <source>Start At</source>
-        <translation type="unfinished"></translation>
+        <translation>开始于</translation>
     </message>
     <message>
         <location filename="../Autos.qml" line="234"/>
         <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Autos.qml" line="234"/>
         <source>Now</source>
-        <translation type="unfinished"></translation>
+        <translation>现在</translation>
     </message>
     <message>
         <location filename="../Autos.qml" line="242"/>
         <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Autos.qml" line="242"/>
         <source>Repeat Every</source>
-        <translation type="unfinished"></translation>
+        <translation>重复每</translation>
     </message>
     <message>
         <location filename="../Autos.qml" line="254"/>
         <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Autos.qml" line="254"/>
         <source>Day</source>
-        <translation type="unfinished"></translation>
+        <translation>天</translation>
     </message>
     <message>
         <location filename="../Autos.qml" line="257"/>
         <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Autos.qml" line="257"/>
         <source>Hour</source>
-        <translation type="unfinished"></translation>
+        <translation>时</translation>
     </message>
     <message>
         <location filename="../Autos.qml" line="260"/>
         <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Autos.qml" line="260"/>
         <source>Minute</source>
-        <translation type="unfinished"></translation>
+        <translation>分</translation>
     </message>
     <message>
         <location filename="../Autos.qml" line="263"/>
         <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Autos.qml" line="263"/>
         <source>Second</source>
-        <translation type="unfinished"></translation>
+        <translation>秒</translation>
     </message>
     <message>
         <location filename="../Autos.qml" line="266"/>
         <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Autos.qml" line="266"/>
         <source>Not Repeated</source>
-        <translation type="unfinished"></translation>
+        <translation>没有重复</translation>
     </message>
     <message>
         <location filename="../Autos.qml" line="276"/>
         <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Autos.qml" line="276"/>
         <source>Set Start Date</source>
-        <translation type="unfinished"></translation>
+        <translation>设置开始日期</translation>
     </message>
     <message>
         <location filename="../Autos.qml" line="282"/>
         <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Autos.qml" line="282"/>
         <source>Set Start Time</source>
-        <translation type="unfinished"></translation>
+        <translation>设置开始时间</translation>
     </message>
     <message>
         <location filename="../Autos.qml" line="290"/>
         <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Autos.qml" line="290"/>
         <source>Set Interval</source>
-        <translation type="unfinished"></translation>
+        <translation>设置重复间隔</translation>
     </message>
     <message>
         <location filename="../Autos.qml" line="299"/>
         <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Autos.qml" line="299"/>
         <source>Date Picker</source>
-        <translation type="unfinished"></translation>
+        <translation>选择日期</translation>
     </message>
     <message>
         <location filename="../Autos.qml" line="316"/>
@@ -111,31 +111,31 @@
         <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Autos.qml" line="316"/>
         <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Autos.qml" line="325"/>
         <source>Time Picker</source>
-        <translation type="unfinished"></translation>
+        <translation>选择时间</translation>
     </message>
     <message>
         <location filename="../Autos.qml" line="335"/>
         <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Autos.qml" line="335"/>
         <source>Abort Autos</source>
-        <translation type="unfinished"></translation>
+        <translation>停止任务</translation>
     </message>
     <message>
         <location filename="../Autos.qml" line="356"/>
         <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Autos.qml" line="356"/>
         <source>Abort all associated autos, are you sure?</source>
-        <translation type="unfinished"></translation>
+        <translation>将会停止该场景关联的所有任务，确定？</translation>
     </message>
     <message>
         <location filename="../Autos.qml" line="377"/>
         <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Autos.qml" line="377"/>
         <source>Add a new View</source>
-        <translation type="unfinished"></translation>
+        <translation>添加新的场景</translation>
     </message>
     <message>
         <location filename="../Autos.qml" line="391"/>
         <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Autos.qml" line="391"/>
         <source>Add a View</source>
-        <translation type="unfinished"></translation>
+        <translation>添加场景</translation>
     </message>
     <message>
         <location filename="../Autos.qml" line="435"/>
@@ -143,7 +143,7 @@
         <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Autos.qml" line="435"/>
         <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Autos.qml" line="463"/>
         <source>Associate</source>
-        <translation type="unfinished"></translation>
+        <translation>关联</translation>
     </message>
     <message>
         <source>Void</source>
@@ -156,148 +156,148 @@
         <location filename="../components/DatePicker.qml" line="119"/>
         <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/components/DatePicker.qml" line="119"/>
         <source>January</source>
-        <translation type="unfinished"></translation>
+        <translation>一月</translation>
     </message>
     <message>
         <location filename="../components/DatePicker.qml" line="119"/>
         <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/components/DatePicker.qml" line="119"/>
         <source>February</source>
-        <translation type="unfinished"></translation>
+        <translation>二月</translation>
     </message>
     <message>
         <location filename="../components/DatePicker.qml" line="119"/>
         <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/components/DatePicker.qml" line="119"/>
         <source>March</source>
-        <translation type="unfinished"></translation>
+        <translation>三月</translation>
     </message>
     <message>
         <location filename="../components/DatePicker.qml" line="119"/>
         <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/components/DatePicker.qml" line="119"/>
         <source>April</source>
-        <translation type="unfinished"></translation>
+        <translation>四月</translation>
     </message>
     <message>
         <location filename="../components/DatePicker.qml" line="119"/>
         <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/components/DatePicker.qml" line="119"/>
         <source>May</source>
-        <translation type="unfinished"></translation>
+        <translation>五月</translation>
     </message>
     <message>
         <location filename="../components/DatePicker.qml" line="119"/>
         <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/components/DatePicker.qml" line="119"/>
         <source>June</source>
-        <translation type="unfinished"></translation>
+        <translation>六月</translation>
     </message>
     <message>
         <location filename="../components/DatePicker.qml" line="119"/>
         <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/components/DatePicker.qml" line="119"/>
         <source>July</source>
-        <translation type="unfinished"></translation>
+        <translation>七月</translation>
     </message>
     <message>
         <location filename="../components/DatePicker.qml" line="119"/>
         <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/components/DatePicker.qml" line="119"/>
         <source>August</source>
-        <translation type="unfinished"></translation>
+        <translation>八月</translation>
     </message>
     <message>
         <location filename="../components/DatePicker.qml" line="119"/>
         <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/components/DatePicker.qml" line="119"/>
         <source>September</source>
-        <translation type="unfinished"></translation>
+        <translation>九月</translation>
     </message>
     <message>
         <location filename="../components/DatePicker.qml" line="119"/>
         <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/components/DatePicker.qml" line="119"/>
         <source>October</source>
-        <translation type="unfinished"></translation>
+        <translation>十月</translation>
     </message>
     <message>
         <location filename="../components/DatePicker.qml" line="119"/>
         <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/components/DatePicker.qml" line="119"/>
         <source>November</source>
-        <translation type="unfinished"></translation>
+        <translation>十一月</translation>
     </message>
     <message>
         <location filename="../components/DatePicker.qml" line="119"/>
         <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/components/DatePicker.qml" line="119"/>
         <source>December</source>
-        <translation type="unfinished"></translation>
+        <translation>十二月</translation>
     </message>
 </context>
 <context>
     <name>Furnitures</name>
     <message>
-        <location filename="../Furnitures.qml" line="185"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Furnitures.qml" line="185"/>
+        <location filename="../Furnitures.qml" line="187"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Furnitures.qml" line="187"/>
         <source>Nothing here, and Pull to Refresh.</source>
-        <translation type="unfinished"></translation>
+        <translation>这里什么都没有，尝试下拉刷新。</translation>
     </message>
     <message>
         <location filename="../Furnitures.qml" line="58"/>
-        <location filename="../Furnitures.qml" line="192"/>
+        <location filename="../Furnitures.qml" line="194"/>
         <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Furnitures.qml" line="58"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Furnitures.qml" line="192"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Furnitures.qml" line="194"/>
         <source>, </source>
         <translation>，</translation>
     </message>
     <message>
-        <location filename="../Furnitures.qml" line="201"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Furnitures.qml" line="201"/>
+        <location filename="../Furnitures.qml" line="203"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Furnitures.qml" line="203"/>
         <source>No filter</source>
         <translation>没有设置过滤</translation>
     </message>
     <message>
-        <location filename="../Furnitures.qml" line="91"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Furnitures.qml" line="91"/>
+        <location filename="../Furnitures.qml" line="93"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Furnitures.qml" line="93"/>
         <source>No Associated Autos</source>
         <translation>没有任务关联</translation>
     </message>
     <message>
-        <location filename="../Furnitures.qml" line="88"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Furnitures.qml" line="88"/>
+        <location filename="../Furnitures.qml" line="90"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Furnitures.qml" line="90"/>
         <source>Will be</source>
-        <translation type="unfinished"></translation>
+        <translation>将会</translation>
     </message>
     <message>
-        <location filename="../Furnitures.qml" line="88"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Furnitures.qml" line="88"/>
+        <location filename="../Furnitures.qml" line="90"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Furnitures.qml" line="90"/>
         <source>at</source>
-        <translation type="unfinished"></translation>
+        <translation>于</translation>
     </message>
     <message>
-        <location filename="../Furnitures.qml" line="132"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Furnitures.qml" line="132"/>
+        <location filename="../Furnitures.qml" line="134"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Furnitures.qml" line="134"/>
         <source>Config</source>
         <translation>配置</translation>
     </message>
     <message>
-        <location filename="../Furnitures.qml" line="140"/>
-        <location filename="../Furnitures.qml" line="248"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Furnitures.qml" line="140"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Furnitures.qml" line="248"/>
+        <location filename="../Furnitures.qml" line="142"/>
+        <location filename="../Furnitures.qml" line="250"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Furnitures.qml" line="142"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Furnitures.qml" line="250"/>
         <source>Alias</source>
         <translation>别名</translation>
     </message>
     <message>
-        <location filename="../Furnitures.qml" line="145"/>
-        <location filename="../Furnitures.qml" line="252"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Furnitures.qml" line="145"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Furnitures.qml" line="252"/>
+        <location filename="../Furnitures.qml" line="147"/>
+        <location filename="../Furnitures.qml" line="254"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Furnitures.qml" line="147"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Furnitures.qml" line="254"/>
         <source>Location</source>
         <translation>位置</translation>
     </message>
     <message>
-        <location filename="../Furnitures.qml" line="221"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Furnitures.qml" line="221"/>
+        <location filename="../Furnitures.qml" line="223"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Furnitures.qml" line="223"/>
         <source>Filter</source>
         <translation>过滤</translation>
     </message>
     <message>
-        <location filename="../Furnitures.qml" line="231"/>
-        <location filename="../Furnitures.qml" line="241"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Furnitures.qml" line="231"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Furnitures.qml" line="241"/>
+        <location filename="../Furnitures.qml" line="233"/>
+        <location filename="../Furnitures.qml" line="243"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Furnitures.qml" line="233"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Furnitures.qml" line="243"/>
         <source>Void</source>
         <translation>略</translation>
     </message>
@@ -324,7 +324,7 @@
         <location filename="../components/List.qml" line="74"/>
         <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/components/List.qml" line="74"/>
         <source>Nothing here, and Pull to Refresh.</source>
-        <translation type="unfinished"></translation>
+        <translation>这里什么都没有，尝试下拉刷新。</translation>
     </message>
 </context>
 <context>
@@ -414,26 +414,26 @@
     <message>
         <location filename="../Main.qml" line="275"/>
         <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Main.qml" line="275"/>
-        <source>来到了没有网络的荒原~</source>
-        <translation type="unfinished"></translation>
+        <source>Network Error</source>
+        <translation>来到了没有网络的荒原</translation>
     </message>
     <message>
         <location filename="../Main.qml" line="277"/>
         <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Main.qml" line="277"/>
-        <source>不知道服务器说了个啥</source>
-        <translation type="unfinished"></translation>
+        <source>Server Error</source>
+        <translation>不知道服务器说了个啥</translation>
     </message>
     <message>
         <location filename="../Main.qml" line="284"/>
         <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Main.qml" line="284"/>
         <source>Refresh</source>
-        <translation type="unfinished"></translation>
+        <translation>刷新</translation>
     </message>
     <message>
         <location filename="../Main.qml" line="331"/>
         <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Main.qml" line="331"/>
-        <source>We are refreshing the furnitures list.</source>
-        <translation type="unfinished"></translation>
+        <source>We are refreshing all the data.</source>
+        <translation>我们正在重新获取所有数据。</translation>
     </message>
 </context>
 <context>
@@ -442,7 +442,7 @@
         <location filename="../components/RoundedFurniture.qml" line="27"/>
         <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/components/RoundedFurniture.qml" line="27"/>
         <source>Deleted</source>
-        <translation type="unfinished"></translation>
+        <translation>已删除</translation>
     </message>
 </context>
 <context>
@@ -451,25 +451,25 @@
         <location filename="../components/TimePicker.qml" line="26"/>
         <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/components/TimePicker.qml" line="26"/>
         <source>Day</source>
-        <translation type="unfinished"></translation>
+        <translation>天</translation>
     </message>
     <message>
         <location filename="../components/TimePicker.qml" line="39"/>
         <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/components/TimePicker.qml" line="39"/>
         <source>Hour</source>
-        <translation type="unfinished"></translation>
+        <translation>时</translation>
     </message>
     <message>
         <location filename="../components/TimePicker.qml" line="51"/>
         <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/components/TimePicker.qml" line="51"/>
         <source>Minute</source>
-        <translation type="unfinished"></translation>
+        <translation>分</translation>
     </message>
     <message>
         <location filename="../components/TimePicker.qml" line="63"/>
         <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/components/TimePicker.qml" line="63"/>
         <source>Second</source>
-        <translation type="unfinished"></translation>
+        <translation>秒</translation>
     </message>
 </context>
 <context>

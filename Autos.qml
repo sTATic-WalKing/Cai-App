@@ -65,7 +65,7 @@ C.List {
                     anchors.right: parent.right
                     anchors.bottom: viewVFit.bottom
                     height: viewVFit.height
-                    font.underline: true
+                    font.underline: viewsListTouch.autoIndexes.length !== 0
                     enabled: viewsListTouch.autoIndexes.length !== 0
                     text: {
                         if (viewsListTouch.autoIndexes.length === 0) {

@@ -69,6 +69,7 @@ C.List {
                     height: 12
                     anchors.left: displayLabel.left
                     anchors.bottom: displayLabel.top
+                    property bool associated
                     text: {
                         var associatedViews = []
                         for (var i = 0; i < root.views.length; ++i) {
@@ -85,13 +86,14 @@ C.List {
                         if (associatedAutoIndexes.length > 0) {
                             var auto = root.autos[associatedAutoIndexes[0]]
                             var states = root.views[J.find(root.views, "uid", auto["view"])]["states"]
-                            return qsTr("Will be") + " " + root.stateTexts[states[J.find(states, "address", furniture["address"])]["state"]] + " " + qsTr("at") + new Date(auto["start"] * 1000).toLocaleString()
+                            associated = true
+                            return qsTr("Will be") + " <u>" + root.stateTexts[states[J.find(states, "address", furniture["address"])]["state"]] + "</u> " + qsTr("at") + " <u>" + new Date(auto["start"] * 1000).toLocaleString() + "</u>"
                         }
 
                         return qsTr("No Associated Autos")
                     }
 
-                    enabled: false
+                    enabled: associated
                 }
 
                 RowLayout {

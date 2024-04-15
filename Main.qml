@@ -272,9 +272,9 @@ ApplicationWindow {
     function xhrErrorHandle(xhr) {
         var toolTipText
         if (xhr.status === 0) {
-            toolTipText = qsTr("来到了没有网络的荒原~")
+            toolTipText = qsTr("Network Error")
         } else {
-            toolTipText = qsTr("不知道服务器说了个啥")
+            toolTipText = qsTr("Server Error")
         }
         toolBar.showToolTip(toolTipText)
     }
@@ -328,7 +328,7 @@ ApplicationWindow {
             spacing: 10
 
             Label {
-                text: qsTr("We are refreshing the furnitures list.")
+                text: qsTr("We are refreshing all the data.")
             }
             ProgressBar {
                 indeterminate: true
