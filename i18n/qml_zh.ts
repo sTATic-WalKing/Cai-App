@@ -339,13 +339,13 @@
         <location filename="../Main.qml" line="24"/>
         <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Main.qml" line="24"/>
         <source>Off</source>
-        <translation>关</translation>
+        <translation>关闭</translation>
     </message>
     <message>
         <location filename="../Main.qml" line="24"/>
         <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Main.qml" line="24"/>
         <source>On</source>
-        <translation>开</translation>
+        <translation>开启</translation>
     </message>
     <message>
         <location filename="../Main.qml" line="142"/>
