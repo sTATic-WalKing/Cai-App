@@ -509,7 +509,7 @@ C.List {
                     }
                     onAccepted: {
                         if (associateFurnitureComboBox.currentValue === undefined) {
-                            root.toolBarShowToolTip(qsTr("No selected Furniture!s"))
+                            root.toolBarShowToolTip(qsTr("No selected Furnitures! "))
                             return
                         }
 
