@@ -44,9 +44,9 @@ C.List {
                 C.VFit {
                     id: displayLabel
                     height: 15
-                    anchors.top: iconLabel.verticalCenter
                     anchors.left: iconLabel.right
                     anchors.leftMargin: 10
+                    anchors.bottom: iconLabel.bottom
                     text: {
                         var ret = ""
                         var entries = Object.entries(furniture)
@@ -66,9 +66,11 @@ C.List {
                     }
                 }
                 C.VFit {
+                    id: associatedVFit
                     height: 12
                     anchors.left: displayLabel.left
-                    anchors.bottom: displayLabel.top
+                    anchors.top: iconLabel.top
+                    enabled: associated
                     property bool associated
                     text: {
                         var associatedViews = []
@@ -83,20 +85,35 @@ C.List {
                             associatedAutoIndexes = associatedAutoIndexes.concat(J.findAll(root.autos, "view", associatedViews[i]["uid"]))
                         }
                         associatedAutoIndexes.sort(function(a, b) { return root.autos[a]["start"] - root.autos[b]["start"] })
+                        console.log("updateAssociated", root.views, root.autos, JSON.stringify(associatedViews), JSON.stringify(associatedAutoIndexes))
                         if (associatedAutoIndexes.length > 0) {
                             var auto = root.autos[associatedAutoIndexes[0]]
                             var states = root.views[J.find(root.views, "uid", auto["view"])]["states"]
                             associated = true
-                            return qsTr("Will be") + " <u>" + root.stateTexts[states[J.find(states, "address", furniture["address"])]["state"]] + "</u> " + qsTr("at") + " <u>" + new Date(auto["start"] * 1000).toLocaleString() + "</u>"
+                            return qsTr("Will be") + " " + root.stateTexts[states[J.find(states, "address", furniture["address"])]["state"]] + " " + qsTr("at") + " " + J.date2ShortText(new Date(auto["start"] * 1000), root.currentDate)
+                        } else {
+                            associated = false
+                            return qsTr("No Associated Autos")
                         }
-                        associated = false
-                        return qsTr("No Associated Autos")
-                    }
 
-                    enabled: associated
+                    }
+                    // Component.onCompleted: {
+                    //     updateAssociated()
+                    // }
+                    // Connections {
+                    //     target: root
+                    //     function onViewsChanged() {
+                    //         associatedVFit.updateAssociated()
+                    //     }
+                    //     function onAutosChanged() {
+                    //         associatedVFit.updateAssociated()
+                    //     }
+                    // }
+
                 }
 
                 RowLayout {
+                    id: roundedRowLayout
                     height: iconLabel.height
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.right: parent.right

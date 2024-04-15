@@ -415,9 +415,7 @@ C.List {
                     }
 
                     var onPostJsonComplete = function(rsp) {
-                        var tmp = {}
-                        tmp["view"] = rsp
-                        viewsList.model.append(tmp)
+                        J.updateAndNotify(root, "views", "uid", rsp)
                     }
                     var content = {}
                     if (aliasTextField.text !== "") {

@@ -21,9 +21,9 @@
     </message>
     <message>
         <location filename="../Autos.qml" line="182"/>
-        <location filename="../Autos.qml" line="449"/>
+        <location filename="../Autos.qml" line="447"/>
         <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Autos.qml" line="182"/>
-        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Autos.qml" line="449"/>
+        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Autos.qml" line="447"/>
         <source>Alias</source>
         <translation>别名</translation>
     </message>
@@ -150,16 +150,16 @@
         <translation>没有关联家具！</translation>
     </message>
     <message>
-        <location filename="../Autos.qml" line="455"/>
-        <location filename="../Autos.qml" line="483"/>
-        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Autos.qml" line="455"/>
-        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Autos.qml" line="483"/>
+        <location filename="../Autos.qml" line="453"/>
+        <location filename="../Autos.qml" line="481"/>
+        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Autos.qml" line="453"/>
+        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Autos.qml" line="481"/>
         <source>Associate</source>
         <translation>关联</translation>
     </message>
     <message>
-        <location filename="../Autos.qml" line="512"/>
-        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Autos.qml" line="512"/>
+        <location filename="../Autos.qml" line="510"/>
+        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Autos.qml" line="510"/>
         <source>No selected Furnitures! </source>
         <translation>未选择家具！</translation>
     </message>
@@ -246,100 +246,100 @@
 <context>
     <name>Furnitures</name>
     <message>
-        <location filename="../Furnitures.qml" line="254"/>
-        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Furnitures.qml" line="254"/>
+        <location filename="../Furnitures.qml" line="271"/>
+        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Furnitures.qml" line="271"/>
         <source>Nothing here, and Pull to Refresh.</source>
         <translation>这里什么都没有，尝试下拉刷新。</translation>
     </message>
     <message>
         <location filename="../Furnitures.qml" line="58"/>
-        <location filename="../Furnitures.qml" line="261"/>
+        <location filename="../Furnitures.qml" line="278"/>
         <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Furnitures.qml" line="58"/>
-        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Furnitures.qml" line="261"/>
+        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Furnitures.qml" line="278"/>
         <source>, </source>
         <translation>，</translation>
     </message>
     <message>
-        <location filename="../Furnitures.qml" line="270"/>
-        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Furnitures.qml" line="270"/>
+        <location filename="../Furnitures.qml" line="287"/>
+        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Furnitures.qml" line="287"/>
         <source>No filter</source>
         <translation>没有设置过滤</translation>
     </message>
     <message>
-        <location filename="../Furnitures.qml" line="93"/>
-        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Furnitures.qml" line="93"/>
+        <location filename="../Furnitures.qml" line="96"/>
+        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Furnitures.qml" line="96"/>
         <source>No Associated Autos</source>
         <translation>没有任务关联</translation>
     </message>
     <message>
-        <location filename="../Furnitures.qml" line="90"/>
-        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Furnitures.qml" line="90"/>
+        <location filename="../Furnitures.qml" line="93"/>
+        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Furnitures.qml" line="93"/>
         <source>Will be</source>
         <translation>将会</translation>
     </message>
     <message>
-        <location filename="../Furnitures.qml" line="90"/>
-        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Furnitures.qml" line="90"/>
+        <location filename="../Furnitures.qml" line="93"/>
+        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Furnitures.qml" line="93"/>
         <source>at</source>
         <translation>于</translation>
     </message>
     <message>
-        <location filename="../Furnitures.qml" line="141"/>
-        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Furnitures.qml" line="141"/>
+        <location filename="../Furnitures.qml" line="158"/>
+        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Furnitures.qml" line="158"/>
         <source>Config</source>
         <translation>配置</translation>
     </message>
     <message>
-        <location filename="../Furnitures.qml" line="149"/>
-        <location filename="../Furnitures.qml" line="317"/>
-        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Furnitures.qml" line="149"/>
-        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Furnitures.qml" line="317"/>
+        <location filename="../Furnitures.qml" line="166"/>
+        <location filename="../Furnitures.qml" line="334"/>
+        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Furnitures.qml" line="166"/>
+        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Furnitures.qml" line="334"/>
         <source>Alias</source>
         <translation>别名</translation>
     </message>
     <message>
-        <location filename="../Furnitures.qml" line="154"/>
-        <location filename="../Furnitures.qml" line="321"/>
-        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Furnitures.qml" line="154"/>
-        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Furnitures.qml" line="321"/>
+        <location filename="../Furnitures.qml" line="171"/>
+        <location filename="../Furnitures.qml" line="338"/>
+        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Furnitures.qml" line="171"/>
+        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Furnitures.qml" line="338"/>
         <source>Location</source>
         <translation>位置</translation>
     </message>
     <message>
-        <location filename="../Furnitures.qml" line="160"/>
-        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Furnitures.qml" line="160"/>
+        <location filename="../Furnitures.qml" line="177"/>
+        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Furnitures.qml" line="177"/>
         <source>Inputs cannot all be empty! </source>
         <translation>输入不能全是空白！</translation>
     </message>
     <message>
-        <location filename="../Furnitures.qml" line="186"/>
-        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Furnitures.qml" line="186"/>
+        <location filename="../Furnitures.qml" line="203"/>
+        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Furnitures.qml" line="203"/>
         <source>Disconnecting...</source>
         <translation>断开连接……</translation>
     </message>
     <message>
-        <location filename="../Furnitures.qml" line="222"/>
-        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Furnitures.qml" line="222"/>
+        <location filename="../Furnitures.qml" line="239"/>
+        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Furnitures.qml" line="239"/>
         <source>Connect</source>
         <translation>连接</translation>
     </message>
     <message>
-        <location filename="../Furnitures.qml" line="228"/>
-        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Furnitures.qml" line="228"/>
+        <location filename="../Furnitures.qml" line="245"/>
+        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Furnitures.qml" line="245"/>
         <source>Connecting to a specified furniture is not supported, and try Discover button at the top-right corner.</source>
         <translation>不支持连接到指定的家具，请尝试使用右上角的发现按钮。</translation>
     </message>
     <message>
-        <location filename="../Furnitures.qml" line="290"/>
-        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Furnitures.qml" line="290"/>
+        <location filename="../Furnitures.qml" line="307"/>
+        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Furnitures.qml" line="307"/>
         <source>Filter</source>
         <translation>过滤</translation>
     </message>
     <message>
-        <location filename="../Furnitures.qml" line="300"/>
-        <location filename="../Furnitures.qml" line="310"/>
-        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Furnitures.qml" line="300"/>
-        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Furnitures.qml" line="310"/>
+        <location filename="../Furnitures.qml" line="317"/>
+        <location filename="../Furnitures.qml" line="327"/>
+        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Furnitures.qml" line="317"/>
+        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Debug/Cai/Furnitures.qml" line="327"/>
         <source>Void</source>
         <translation>略</translation>
     </message>

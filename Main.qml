@@ -17,7 +17,7 @@ ApplicationWindow {
 
     Settings {
         id: settings
-        property var host: hostTextField.text
+        property string host: hostTextField.text
     }
     readonly property var typeTexts: [ qsTr("Light") ]
     readonly property var typeIcons: [ "/icons/bulb.svg" ]

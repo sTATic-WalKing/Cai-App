@@ -170,3 +170,15 @@ function updateAndNotify(root, mod, key, data) {
     }
     root[mod] = copy
 }
+
+function sameDate(a, b) {
+    return a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate()
+}
+
+function date2ShortText(date, now) {
+    if (sameDate(date, now)) {
+        return date.toLocaleTimeString()
+    } else {
+        return date.toLocaleDateString()
+    }
+}
