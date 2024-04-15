@@ -69,7 +69,28 @@ C.List {
                     height: 12
                     anchors.left: displayLabel.left
                     anchors.bottom: displayLabel.top
-                    text: qsTr("No Associated Autos")
+                    text: {
+                        var associatedViews = []
+                        for (var i = 0; i < root.views.length; ++i) {
+                            var view = root.views[i]
+                            if (J.find(view["states"], "address", furniture["address"]) !== -1) {
+                                associatedViews.push(view)
+                            }
+                        }
+                        var associatedAutoIndexes = []
+                        for (i = 0; i < associatedViews.length; ++i) {
+                            associatedAutoIndexes = associatedAutoIndexes.concat(J.findAll(root.autos, "view", associatedViews[i]["uid"]))
+                        }
+                        associatedAutoIndexes.sort(function(a, b) { return root.autos[a]["start"] - root.autos[b]["start"] })
+                        if (associatedAutoIndexes.length > 0) {
+                            var auto = root.autos[associatedAutoIndexes[0]]
+                            var states = root.views[J.find(root.views, "uid", auto["view"])]["states"]
+                            return qsTr("Will be") + " " + root.stateTexts[states[J.find(states, "address", furniture["address"])]["state"]] + " " + qsTr("at") + new Date(auto["start"] * 1000).toLocaleString()
+                        }
+
+                        return qsTr("No Associated Autos")
+                    }
+
                     enabled: false
                 }
 

@@ -228,64 +228,76 @@
 <context>
     <name>Furnitures</name>
     <message>
-        <location filename="../Furnitures.qml" line="164"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Furnitures.qml" line="164"/>
+        <location filename="../Furnitures.qml" line="185"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Furnitures.qml" line="185"/>
         <source>Nothing here, and Pull to Refresh.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../Furnitures.qml" line="58"/>
-        <location filename="../Furnitures.qml" line="171"/>
+        <location filename="../Furnitures.qml" line="192"/>
         <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Furnitures.qml" line="58"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Furnitures.qml" line="171"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Furnitures.qml" line="192"/>
         <source>, </source>
         <translation>，</translation>
     </message>
     <message>
-        <location filename="../Furnitures.qml" line="180"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Furnitures.qml" line="180"/>
+        <location filename="../Furnitures.qml" line="201"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Furnitures.qml" line="201"/>
         <source>No filter</source>
         <translation>没有设置过滤</translation>
     </message>
     <message>
-        <location filename="../Furnitures.qml" line="72"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Furnitures.qml" line="72"/>
+        <location filename="../Furnitures.qml" line="91"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Furnitures.qml" line="91"/>
         <source>No Associated Autos</source>
         <translation>没有任务关联</translation>
     </message>
     <message>
-        <location filename="../Furnitures.qml" line="111"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Furnitures.qml" line="111"/>
+        <location filename="../Furnitures.qml" line="88"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Furnitures.qml" line="88"/>
+        <source>Will be</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Furnitures.qml" line="88"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Furnitures.qml" line="88"/>
+        <source>at</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Furnitures.qml" line="132"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Furnitures.qml" line="132"/>
         <source>Config</source>
         <translation>配置</translation>
     </message>
     <message>
-        <location filename="../Furnitures.qml" line="119"/>
-        <location filename="../Furnitures.qml" line="227"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Furnitures.qml" line="119"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Furnitures.qml" line="227"/>
+        <location filename="../Furnitures.qml" line="140"/>
+        <location filename="../Furnitures.qml" line="248"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Furnitures.qml" line="140"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Furnitures.qml" line="248"/>
         <source>Alias</source>
         <translation>别名</translation>
     </message>
     <message>
-        <location filename="../Furnitures.qml" line="124"/>
-        <location filename="../Furnitures.qml" line="231"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Furnitures.qml" line="124"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Furnitures.qml" line="231"/>
+        <location filename="../Furnitures.qml" line="145"/>
+        <location filename="../Furnitures.qml" line="252"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Furnitures.qml" line="145"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Furnitures.qml" line="252"/>
         <source>Location</source>
         <translation>位置</translation>
     </message>
     <message>
-        <location filename="../Furnitures.qml" line="200"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Furnitures.qml" line="200"/>
+        <location filename="../Furnitures.qml" line="221"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Furnitures.qml" line="221"/>
         <source>Filter</source>
         <translation>过滤</translation>
     </message>
     <message>
-        <location filename="../Furnitures.qml" line="210"/>
-        <location filename="../Furnitures.qml" line="220"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Furnitures.qml" line="210"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Furnitures.qml" line="220"/>
+        <location filename="../Furnitures.qml" line="231"/>
+        <location filename="../Furnitures.qml" line="241"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Furnitures.qml" line="231"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Furnitures.qml" line="241"/>
         <source>Void</source>
         <translation>略</translation>
     </message>
