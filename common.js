@@ -100,7 +100,7 @@ function updateModelData(listModel, objs, mod, key) {
         listModel.append(tmp)
     }
 
-    console.log("before", before, "current", current, "toRemove", toRemove, "toAppend", toAppend, "inter", inter, "toUpdate", toUpdate)
+    // console.log("before", before, "current", current, "toRemove", toRemove, "toAppend", toAppend, "inter", inter, "toUpdate", toUpdate)
 }
 
 function postJSON(url, onComplete, onError, body={}, async=true, xhrs=[]) {

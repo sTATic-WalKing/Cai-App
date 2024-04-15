@@ -23,7 +23,7 @@ C.List {
                     icon.source: root.typeIcons[furniture["type"]]
                     highlighted: furniture["state"] !== undefined && furniture["state"] > 0
                     Material.accent: furniture["state"] !== undefined ? root.stateIcons[furniture["type"]][furniture["state"]] : root.stateIcons[furniture["type"]][0]
-                    enabled: furniture["state"] !== undefined
+                    enabled: furniture["state"] !== undefined && furniture["connected"]
 
                     onClicked: {
                         var onPostJsonComplete = function(rsp) {
@@ -89,7 +89,7 @@ C.List {
                             associated = true
                             return qsTr("Will be") + " <u>" + root.stateTexts[states[J.find(states, "address", furniture["address"])]["state"]] + "</u> " + qsTr("at") + " <u>" + new Date(auto["start"] * 1000).toLocaleString() + "</u>"
                         }
-
+                        associated = false
                         return qsTr("No Associated Autos")
                     }
 
@@ -110,7 +110,7 @@ C.List {
                         icon.source: "/icons/config.svg"
 
                         onClicked: {
-                            configDialog.open()
+                            configPopup.open()
                         }
                     }
                     C.Rounded {
@@ -119,6 +119,13 @@ C.List {
                         highlighted: true
                         icon.source: furniture["connected"] ? "/icons/connected.svg" : "/icons/disconnected.svg"
                         Material.accent: furniture["connected"] ? parent.Material.accent : "#E91E63"
+                        onClicked: {
+                            if (furniture["connected"]) {
+                                disconnectPopup.open()
+                            } else {
+                                connectPopup.open()
+                            }
+                        }
                     }
                 }
             }
@@ -130,9 +137,9 @@ C.List {
                 color: "#eeeeee"
             }
             C.Popup {
-                id: configDialog
+                id: configPopup
                 title: qsTr("Config")
-                standardButtons: Dialog.Ok | Dialog.Cancel
+                standardButtons: Dialog.Ok
                 ColumnLayout {
                     anchors.fill: parent
                     spacing: 10
@@ -149,6 +156,11 @@ C.List {
                     }
                 }
                 onAccepted: {
+                    if (aliasTextField.text === "" && locTextField.text === "") {
+                        root.toolBarShowToolTip(qsTr("Inputs cannot all be empty! "))
+                        return
+                    }
+
                     var onPostJsonComplete = function(rsp) {
                         var index = J.find(root.furnitures, "address", furniture["address"])
                         if (index === -1) {
@@ -159,9 +171,64 @@ C.List {
                     }
                     var content = {}
                     content["address"] = furniture["address"]
-                    content["alias"] = aliasTextField.text
-                    content["loc"] = locTextField.text
+                    if (aliasTextField.text !== "") {
+                        content["alias"] = aliasTextField.text
+                    }
+                    if (locTextField.text !== "") {
+                        content["loc"] = locTextField.text
+                    }
+
                     J.postJSON(settings.host + "/config", onPostJsonComplete, root.xhrErrorHandle, content)
+                }
+            }
+            C.Popup {
+                id: disconnectPopup
+                title: qsTr("Disconnecting...")
+                property var xhrs: []
+                onOpened: {
+                    var onPostJsonComplete = function(rsp) {
+                        close()
+                        if (rsp["affected"] > 0) {
+                            var index = J.find(root.furnitures, "address", furniture["address"])
+                            if (index === -1) {
+                                return
+                            }
+                            var data = root.furnitures[index]
+                            data["connected"] = false
+                            J.updateAndNotify(root, "furnitures", "address", data)
+                        }
+                    }
+                    var content = {}
+                    content["address"] = furniture["address"]
+                    J.postJSON(settings.host + "/disconnect", onPostJsonComplete, root.xhrErrorHandle, content, true, xhrs)
+                }
+                onClosed: {
+                    for (var i = 0; i < xhrs.length; ++i) {
+                        xhrs[i].abort()
+                    }
+                }
+
+                ColumnLayout {
+                    anchors.fill: parent
+                    spacing: 10
+                    ProgressBar {
+                        indeterminate: true
+                        Layout.fillWidth: true
+                    }
+                }
+            }
+            C.Popup {
+                id: connectPopup
+                title: qsTr("Connect")
+
+                ColumnLayout {
+                    anchors.fill: parent
+                    spacing: 10
+                    Label {
+                        text: qsTr("Connecting to a specified furniture is not supported, and try Discover button at the top-right corner.")
+                        wrapMode: Text.Wrap
+                        Layout.fillWidth: true
+                    }
                 }
             }
         }
@@ -171,7 +238,7 @@ C.List {
             height: 56
             width: furnituresList.width
             onClicked: {
-                filterDialog.open()
+                filterPopup.open()
             }
             enabled: furnituresList.count > 0
 
@@ -219,7 +286,7 @@ C.List {
     }
 
     C.Popup {
-        id: filterDialog
+        id: filterPopup
         title: qsTr("Filter")
         standardButtons: Dialog.Ok | Dialog.Reset
 

@@ -10,4 +10,5 @@ Button {
     Material.roundedScale: Material.NotRounded
     padding: 10
 
+
 }

@@ -82,30 +82,7 @@ ApplicationWindow {
                 icon.source: "/icons/bluetooth.svg"
                 action: Action {
                     onTriggered: {
-                        discoverDialog.open()
-                    }
-                }
-                Timer {
-                    id: discoverTimer
-                    repeat: true
-                    property int before
-                    property int current
-                    onTriggered: {
-                        console.log("before", before, "current", current)
-                        if (before !== current) {
-                            discoverDialog.close()
-                            furnitures.refresh()
-                            return
-                        }
-                        var onPostJSONComplete = function(rsp) {
-                            ++discoverColumnLayout.count
-                            current = rsp["count"]
-                        }
-                        var onPostJSONError = function(xhr) {
-                            discoverDialog.close()
-                            root.xhrErrorHandle(xhr)
-                        }
-                        J.postJSON(settings.host + "/peek", onPostJSONComplete, onPostJSONError, {}, false)
+                        discoverPopup.open()
                     }
                 }
             }
@@ -118,7 +95,7 @@ ApplicationWindow {
                 icon.source: "/icons/settings.svg"
                 action: Action {
                     onTriggered: {
-                        settingsDialog.open()
+                        settingsPopup.open()
                     }
                 }
             }
@@ -203,7 +180,7 @@ ApplicationWindow {
     }
 
     C.Popup {
-        id: settingsDialog
+        id: settingsPopup
         title: qsTr("Settings")
 
         ColumnLayout {
@@ -228,23 +205,61 @@ ApplicationWindow {
     }
 
     C.Popup {
-        id: discoverDialog
+        id: discoverPopup
         title: qsTr("Discover")
+        property var xhrs: []
+        function onXHRError(xhr) {
+            close()
+            root.xhrErrorHandle(xhr)
+        }
+
         onOpened: {
             discoverColumnLayout.count = -1
             var onPostJSONComplete = function(rsp) {
                 ++discoverColumnLayout.count
                 discoverTimer.before = rsp["count"]
-                discoverTimer.current = discoverTimer.before
                 discoverTimer.start()
             }
-            J.postJSON(settings.host + "/discover", onPostJSONComplete, root.xhrErrorHandle)
+            J.postJSON(settings.host + "/discover", onPostJSONComplete, onXHRError, {}, true, xhrs)
         }
-
         onClosed: {
             discoverTimer.stop()
+            for (var i = 0; i < xhrs.length; ++i) {
+                xhrs[i].abort()
+            }
         }
 
+        Timer {
+            id: discoverTimer
+            interval: 2000
+            property int before
+            onTriggered: {
+                var onPostJSONComplete = function(rsp) {
+                    ++discoverColumnLayout.count
+                    if (before !== rsp["count"]) {
+                        var latest = rsp["latest"]
+                        if (latest === "") {
+                            discoverPopup.close()
+                            toolBarShowToolTip(qsTr("No new furnitures found."))
+                        } else {
+                            discoverColumnLayout.count = -11
+                            var onInnerPostJSONComplete = function(rsp) {
+                                var onStatePostJSONComplete  = function(innerRsp) {
+                                    rsp["state"] = innerRsp["state"]
+                                }
+                                J.postJSON(settings.host + "/state", onStatePostJSONComplete, discoverPopup.onXHRError, { address: rsp["address"] }, false, discoverPopup.xhrs)
+                                J.updateAndNotify(root, "furnitures", "address", rsp)
+                                discoverPopup.close()
+                            }
+                            J.postJSON(settings.host + "/config", onInnerPostJSONComplete, discoverPopup.onXHRError, { address: latest }, false, discoverPopup.xhrs)
+                        }
+                    } else {
+                        start()
+                    }
+                }
+                J.postJSON(settings.host + "/peek", onPostJSONComplete, discoverPopup.onXHRError, {}, false, discoverPopup.xhrs)
+            }
+        }
         ColumnLayout {
             id: discoverColumnLayout
             anchors.fill: parent
@@ -253,6 +268,9 @@ ApplicationWindow {
 
             Label {
                 text: {
+                    if (discoverColumnLayout.count < -10) {
+                        return qsTr("Downloading the config...")
+                    }
                     if (discoverColumnLayout.count < 0) {
                         return qsTr("Sending discover request...")
                     }
@@ -278,15 +296,22 @@ ApplicationWindow {
         }
         toolBar.showToolTip(toolTipText)
     }
+    function toolBarShowToolTip(text) {
+        toolBar.showToolTip(text)
+    }
 
     C.Popup {
         id: refreshPopup
         title: qsTr("Refresh")
         property var xhrs
+        property int count
 
         function onDownloadConfigsComplete(list) {
             root.furnitures = list
-            close()
+            ++count
+            if (count === 3) {
+                close()
+            }
         }
         function downloadConfigs(list) {
             for (var i = 0; i < list.length; ++i) {
@@ -303,15 +328,22 @@ ApplicationWindow {
         }
         function onDownloadViewsComplete(list) {
             root.views = list
-            close()
+            ++count
+            if (count === 3) {
+                close()
+            }
         }
         function onDownloadAutosComplete(list) {
             root.autos = list
-            close()
+            ++count
+            if (count === 3) {
+                close()
+            }
         }
 
         onOpened: {
             xhrs = []
+            count = 0
             J.downloadModelData(settings.host, "config", "address", downloadConfigs, root.xhrErrorHandle, xhrs)
             J.downloadModelData(settings.host, "view", "uid", onDownloadViewsComplete, root.xhrErrorHandle, xhrs)
             J.downloadModelData(settings.host, "auto", "uid", onDownloadAutosComplete, root.xhrErrorHandle, xhrs)

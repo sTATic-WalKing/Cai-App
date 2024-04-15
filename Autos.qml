@@ -92,7 +92,7 @@ C.List {
                         highlighted: true
                         icon.source: "/icons/config.svg"
                         onClicked: {
-                            configDialog.open()
+                            configPopup.open()
                         }
                     }
                     C.Rounded {
@@ -102,9 +102,9 @@ C.List {
                         icon.source: viewsListTouch.autoIndexes.length === 0 ? "/icons/timeout.svg" : "/icons/play.svg"
                         onClicked: {
                             if (viewsListTouch.autoIndexes.length === 0) {
-                                autoDialog.open()
+                                autoPopup.open()
                             } else {
-                                autoAbortDialog.open()
+                                autoAbortPopup.open()
                             }
 
                         }
@@ -170,9 +170,9 @@ C.List {
                 color: "#eeeeee"
             }
             C.Popup {
-                id: configDialog
+                id: configPopup
                 title: qsTr("Config")
-                standardButtons: Dialog.Ok | Dialog.Cancel
+                standardButtons: Dialog.Ok
                 ColumnLayout {
                     anchors.fill: parent
                     spacing: 10
@@ -184,6 +184,11 @@ C.List {
                     }
                 }
                 onAccepted: {
+                    if (aliasTextField.text === "") {
+                        root.toolBarShowToolTip(qsTr("Inputs cannot all be empty! "))
+                        return
+                    }
+
                     var onPostJsonComplete = function(rsp) {
                         var tmp = {}
                         tmp["view"] = rsp
@@ -196,9 +201,9 @@ C.List {
                 }
             }
             C.Popup {
-                id: autoDialog
+                id: autoPopup
                 title: qsTr("Auto")
-                standardButtons: Dialog.Ok | Dialog.Cancel
+                standardButtons: Dialog.Ok
                 readonly property int start: datePicker.selectedDate + timePicker.selectedTime + root.currentDate.getTimezoneOffset() * 60
                 readonly property int every: everyPicker.selectedTime
                 onAboutToShow: {
@@ -211,11 +216,11 @@ C.List {
                     }
                     var content = {}
                     content["view"] = view["uid"]
-                    if (autoDialog.start * 1000 > root.currentDate.getTime()) {
-                        content["start"] = autoDialog.start
+                    if (autoPopup.start * 1000 > root.currentDate.getTime()) {
+                        content["start"] = autoPopup.start
                     }
-                    if (autoDialog.every > 0) {
-                        content["every"] = autoDialog.every
+                    if (autoPopup.every > 0) {
+                        content["every"] = autoPopup.every
                     }
 
                     J.postJSON(settings.host + "/auto", onPostJsonComplete, root.xhrErrorHandle, content)
@@ -229,7 +234,7 @@ C.List {
                     }
                     Label {
                         text: {
-                            var start = autoDialog.start * 1000
+                            var start = autoPopup.start * 1000
                             if (start <= root.currentDate.getTime()) {
                                 return qsTr("Now")
                             }
@@ -243,8 +248,8 @@ C.List {
                     }
                     Label {
                         text: {
-                            var day = parseInt(autoDialog.every / (24 * 60 * 60))
-                            var second = autoDialog.every - day * (24 * 60 * 60)
+                            var day = parseInt(autoPopup.every / (24 * 60 * 60))
+                            var second = autoPopup.every - day * (24 * 60 * 60)
                             var hour = parseInt(second / (60 * 60))
                             second -= hour * (60 * 60)
                             var minute = parseInt(second / 60)
@@ -271,25 +276,30 @@ C.List {
 
                         font.underline: true
                     }
-                    RowLayout {
+                    Flow {
+                        Layout.fillWidth: true
+                        spacing: 10
+
                         Button {
+                            highlighted: true
                             text: qsTr("Set Start Date")
                             onClicked: {
                                 datePickerPopup.open()
                             }
                         }
                         Button {
+                            highlighted: true
                             text: qsTr("Set Start Time")
                             onClicked: {
                                 timePickerPopup.open()
                             }
                         }
-
-                    }
-                    Button {
-                        text: qsTr("Set Interval")
-                        onClicked: {
-                            everyPickerPopup.open()
+                        Button {
+                            highlighted: true
+                            text: qsTr("Set Interval")
+                            onClicked: {
+                                everyPickerPopup.open()
+                            }
                         }
                     }
                 }
@@ -297,7 +307,7 @@ C.List {
             C.Popup {
                 id: datePickerPopup
                 title: qsTr("Date Picker")
-                standardButtons: Dialog.Ok | Dialog.Cancel
+                standardButtons: Dialog.Ok
                 clip: true
                 contentHeight: datePickerFlickable.contentHeight
                 Flickable {
@@ -314,7 +324,7 @@ C.List {
             C.Popup {
                 id: timePickerPopup
                 title: qsTr("Time Picker")
-                standardButtons: Dialog.Ok | Dialog.Cancel
+                standardButtons: Dialog.Ok
                 C.TimePicker {
                     id: timePicker
                     x: (parent.width - width) / 2
@@ -323,7 +333,7 @@ C.List {
             C.Popup {
                 id: everyPickerPopup
                 title: qsTr("Time Picker")
-                standardButtons: Dialog.Ok | Dialog.Cancel
+                standardButtons: Dialog.Ok
                 C.TimePicker {
                     id: everyPicker
                     x: (parent.width - width) / 2
@@ -331,9 +341,9 @@ C.List {
                 }
             }
             C.Popup {
-                id: autoAbortDialog
+                id: autoAbortPopup
                 title: qsTr("Abort Autos")
-                standardButtons: Dialog.Ok | Dialog.Cancel
+                standardButtons: Dialog.Ok
                 onAccepted: {
                     var uids = []
                     for (var i = 0; i < viewsListTouch.autoIndexes.length; ++i) {
@@ -352,8 +362,14 @@ C.List {
                         J.postJSON(settings.host + "/abort", onPostJsonComplete, root.xhrErrorHandle, content)
                     }
                 }
-                Label {
-                    text: qsTr("Abort all associated autos, are you sure?")
+                ColumnLayout {
+                    anchors.fill: parent
+                    spacing: 10
+                    Label {
+                        text: qsTr("Abort all associated autos, are you sure?")
+                        wrapMode: Text.Wrap
+                        Layout.fillWidth: true
+                    }
                 }
             }
         }
@@ -364,7 +380,7 @@ C.List {
             width: viewsList.width
 
             onClicked: {
-                addDialog.open()
+                addPopup.open()
             }
 
             contentItem: Item {
@@ -387,13 +403,14 @@ C.List {
             }
 
             C.Popup {
-                id: addDialog
+                id: addPopup
                 title: qsTr("Add a View")
-                standardButtons: Dialog.Ok | Dialog.Cancel
+                standardButtons: Dialog.Ok
                 clip: true
                 contentHeight: addFlickable.contentHeight
                 onAccepted: {
                     if (addListModel.count <= 0) {
+                        root.toolBarShowToolTip(qsTr("No associated Furnitures! "))
                         return
                     }
 
@@ -403,7 +420,9 @@ C.List {
                         viewsList.model.append(tmp)
                     }
                     var content = {}
-                    content["alias"] = aliasTextField.text
+                    if (aliasTextField.text !== "") {
+                        content["alias"] = aliasTextField.text
+                    }
                     var states = []
                     for (var i = 0; i < addListModel.count; ++i) {
                         states.push(addListModel.get(i)["furniture"])
@@ -431,6 +450,7 @@ C.List {
                             Layout.fillWidth: true
                         }
                         Button {
+                            highlighted: true
                             icon.source: "/icons/addto.svg"
                             text: qsTr("Associate")
 
@@ -461,7 +481,7 @@ C.List {
                 C.Popup {
                     id: associatePopup
                     title: qsTr("Associate")
-                    standardButtons: Dialog.Ok | Dialog.Cancel
+                    standardButtons: Dialog.Ok
                     onAboutToShow: {
                         var added = []
                         for (var i = 0; i < addListModel.count; ++i) {
@@ -488,6 +508,11 @@ C.List {
                         associateFurnitureComboBox.model = res
                     }
                     onAccepted: {
+                        if (associateFurnitureComboBox.currentValue === undefined) {
+                            root.toolBarShowToolTip(qsTr("No selected Furniture!s"))
+                            return
+                        }
+
                         addListModel.append({"furniture": { "address": associateFurnitureComboBox.currentValue, "state": associateStateComboBox.currentIndex }})
                     }
 
