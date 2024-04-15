@@ -26,26 +26,27 @@ ApplicationWindow {
         [ Material.accent, "orange" ]
     ]
 
-    property var furnitures: [
-        { "address": "A4:C1:38:CC:74:ED", "type": 0, "state": 0, "connected": true },
-        { "address": "B4:C1:38:CC:74:ED", "type": 0, "alias": "新买的台灯", "state": 1, "connected": false },
-        { "address": "C4:C1:38:CC:74:ED", "type": 0, "alias": "究极无敌大壁灯", "state": 1, "connected": true }
-    ]
-    property var views: [
-        {"states": [{ "address": "A4:C1:38:CC:74:ED", "state": 1 }, { "address": "B4:C1:38:CC:74:ED", "state": 1 }, { "address": "C4:C1:38:CC:74:ED", "state": 1 }], "alias": "夜晚", "uid": 101},
-        {"states": [{ "address": "A4:C1:38:CC:74:ED", "state": 0 }, { "address": "B4:C1:38:CC:74:ED", "state": 0 }, { "address": "D4:C1:38:CC:74:ED", "state": 0 }], "alias": "夜晚", "uid": 102}
-    ]
-    property var autos: [
-        {"view": 1, "start": 1712917132, "every": 90061},
-        {"view": 1, "start": 1712937132, "every": 90060}
-    ]
+    property var furnitures: []
+    property var views: []
+    property var autos: []
+
+    onFurnituresChanged: {
+        J.updateModelData(furnituresListModel, root.furnitures, "furniture", "address")
+    }
+    onViewsChanged: {
+        J.updateModelData(autosListModel, root.views, "view", "uid")
+    }
 
     readonly property bool portraitMode: !landscapeCheckBox.checked || root.width < root.height
-    property var currentDate: new Date()
+    property var currentDate
     Timer {
         repeat: true
+        triggeredOnStart: true
         onTriggered: {
             currentDate = new Date()
+        }
+        Component.onCompleted: {
+            start()
         }
     }
 
@@ -189,9 +190,6 @@ ApplicationWindow {
             model: ListModel {
                 id: furnituresListModel
             }
-            Component.onCompleted: {
-                J.updateModelData(furnituresListModel, root.furnitures, "furniture", "address")
-            }
         }
         App.Autos {
             id: autos
@@ -200,9 +198,6 @@ ApplicationWindow {
             }
             model: ListModel {
                 id: autosListModel
-            }
-            Component.onCompleted: {
-                J.updateModelData(autosListModel, root.views, "view", "uid")
             }
         }
     }
@@ -292,7 +287,6 @@ ApplicationWindow {
         function onDownloadConfigsComplete(list) {
             root.furnitures = list
             close()
-            J.updateModelData(furnituresListModel, root.furnitures, "furniture", "address")
         }
         function downloadConfigs(list) {
             for (var i = 0; i < list.length; ++i) {
@@ -310,7 +304,6 @@ ApplicationWindow {
         function onDownloadViewsComplete(list) {
             root.views = list
             close()
-            J.updateModelData(autosListModel, root.views, "view", "uid")
         }
         function onDownloadAutosComplete(list) {
             root.autos = list

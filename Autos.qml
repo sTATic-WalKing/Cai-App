@@ -12,7 +12,6 @@ C.List {
             width: viewsList.width
             height: 87
             property var autoIndexes: {
-                console.log("autoIndexes")
                 var ret = J.findAll(root.autos, "view", view["uid"])
                 ret.sort(function(a, b) { return root.autos[a]["start"] - root.autos[b]["start"] })
                 return ret
@@ -112,6 +111,57 @@ C.List {
                     }
                 }
             }
+            function updateTimer() {
+                viewsListTimer.stop()
+                if (viewsListTouch.autoIndexes.length === 0) {
+                    return
+                }
+                viewsListTimer.auto = root.autos[viewsListTouch.autoIndexes[0]]
+                viewsListTimer.interval = Math.max((viewsListTimer.auto["start"] + 1) * 1000 - root.currentDate.getTime(), 0)
+                viewsListTimer.start()
+            }
+
+            onAutoIndexesChanged: {
+                updateTimer()
+            }
+            Timer {
+                id: viewsListTimer
+                property var auto
+                onTriggered: {
+                    if (auto["every"] !== undefined) {
+                        var onPostJsonComplete = function(rsp) {
+                            J.updateAndNotify(root, "autos", "uid", rsp)
+                        }
+                        var onError = function(xhr) {
+                            if (xhr.status === 404) {
+                                J.removeAndNotify(root, "autos", "uid", auto["uid"])
+                            } else {
+                                root.xhrErrorHandle(xhr)
+                            }
+                        }
+                        J.postJSON(settings.host + "/auto", onPostJsonComplete, onError, { "uid": auto["uid"] })
+                    } else {
+                        J.removeAndNotify(root, "autos", "uid", auto["uid"])
+                    }
+                    var states = view["states"]
+                    for (var i = 0; i < states.length; ++i) {
+                        var local_i = i
+                        var onInnerPostJsonComplete = function(rsp) {
+                            var index = J.find(root.furnitures, "address", states[local_i]["address"])
+                            if (index === -1) {
+                                return
+                            }
+                            var data = root.furnitures[index]
+                            data["state"] = rsp["state"]
+                            J.updateAndNotify(root, "furnitures", "address", data)
+                        }
+                        var content = {}
+                        content["address"] = states[i]["address"]
+                        J.postJSON(settings.host + "/state", onInnerPostJsonComplete, root.xhrErrorHandle, content)
+                    }
+                }
+            }
+
             Rectangle {
                 anchors.left: parent.left
                 anchors.right: parent.right
@@ -151,15 +201,13 @@ C.List {
                 standardButtons: Dialog.Ok | Dialog.Cancel
                 readonly property int start: datePicker.selectedDate + timePicker.selectedTime + root.currentDate.getTimezoneOffset() * 60
                 readonly property int every: everyPicker.selectedTime
-                onOpened: {
+                onAboutToShow: {
                     datePicker.reset()
                     timePicker.reset()
                 }
                 onAccepted: {
                     var onPostJsonComplete = function(rsp) {
-                        var autos_copy = root.autos.concat()
-                        autos_copy.push(rsp)
-                        root.autos = autos_copy
+                        J.updateAndNotify(root, "autos", "uid", rsp)
                     }
                     var content = {}
                     content["view"] = view["uid"]
@@ -291,18 +339,12 @@ C.List {
                     for (var i = 0; i < viewsListTouch.autoIndexes.length; ++i) {
                         uids.push(root.autos[viewsListTouch.autoIndexes[i]]["uid"])
                     }
-                    console.log(uids)
 
                     for (i = 0; i < uids.length; ++i) {
                         var local_i = i
                         var onPostJsonComplete = function(rsp) {
                             if (rsp["affected"] > 0) {
-                                var autos_copy = root.autos.concat()
-                                var toDel = J.find(autos_copy, "uid", uids[local_i])
-                                if (toDel !== -1) {
-                                    autos_copy.splice(toDel, 1)
-                                }
-                                root.autos = autos_copy
+                                J.removeAndNotify(root, "autos", "uid", uids[local_i])
                             }
                         }
                         var content = {}
@@ -332,7 +374,7 @@ C.List {
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.left: parent.left
                     font.italic: true
-                    text: qsTr("Click to add a new View, or Pull to Refresh.")
+                    text: qsTr("Add a new View")
                 }
                 IconLabel {
                     height: filterLabel.height
@@ -369,7 +411,7 @@ C.List {
                     content["states"] = states
                     J.postJSON(settings.host + "/view", onPostJsonComplete, root.xhrErrorHandle, content)
                 }
-                onOpened: {
+                onAboutToShow: {
                     addListModel.clear()
                 }
 
@@ -420,7 +462,7 @@ C.List {
                     id: associatePopup
                     title: qsTr("Associate")
                     standardButtons: Dialog.Ok | Dialog.Cancel
-                    onOpened: {
+                    onAboutToShow: {
                         var added = []
                         for (var i = 0; i < addListModel.count; ++i) {
                             added.push(addListModel.get(i)["furniture"]["address"])

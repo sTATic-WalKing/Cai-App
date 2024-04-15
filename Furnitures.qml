@@ -27,13 +27,13 @@ C.List {
 
                     onClicked: {
                         var onPostJsonComplete = function(rsp) {
-                            var furnitures_copy = root.furnitures.concat()
-                            var obj = furnitures_copy[J.find(furnitures_copy, "address", furniture["address"])]
-                            obj["state"] = rsp["state"]
-                            root.furnitures = furnitures_copy
-                            var tmp = {}
-                            tmp["furniture"] = obj
-                            furnituresList.model.set(J.findModelData(furnituresList.model, "furniture", "address", furniture["address"]), tmp)
+                            var index = J.find(root.furnitures, "address", furniture["address"])
+                            if (index === -1) {
+                                return
+                            }
+                            var data = root.furnitures[index]
+                            data["state"] = rsp["state"]
+                            J.updateAndNotify(root, "furnitures", "address", data)
                         }
                         var content = {}
                         content["state"] = furniture["state"] > 0 ? 0 : 1
@@ -127,14 +127,12 @@ C.List {
                 }
                 onAccepted: {
                     var onPostJsonComplete = function(rsp) {
-                        var furnitures_copy = root.furnitures.concat()
-                        var index = J.find(furnitures_copy, "address", furniture["address"])
-                        rsp["state"] = furnitures_copy[index]["state"]
-                        furnitures_copy[index] = rsp
-                        root.furnitures = furnitures_copy
-                        var tmp = {}
-                        tmp["furniture"] = rsp
-                        furnituresList.model.set(J.findModelData(furnituresList.model, "furniture", "address", furniture["address"]), tmp)
+                        var index = J.find(root.furnitures, "address", furniture["address"])
+                        if (index === -1) {
+                            return
+                        }
+                        rsp["state"] = root.furnitures[index]["state"]
+                        J.updateAndNotify(root, "furnitures", "address", rsp)
                     }
                     var content = {}
                     content["address"] = furniture["address"]

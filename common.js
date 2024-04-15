@@ -137,11 +137,36 @@ function downloadModelData(host, mod, key, onComplete, onError, xhrs) {
             var onInnerPostJSONComplete = function(rsp) {
                 list.push(rsp)
             }
+            var onInnerError = function(xhr) {
+                if (xhr.status !== 404) {
+                    onError(xhr)
+                }
+            }
             var content = {}
             content[key] = keys[i]
-            postJSON(host + "/" + mod, onInnerPostJSONComplete, onError, content, false, xhrs)
+            postJSON(host + "/" + mod, onInnerPostJSONComplete, onInnerError, content, false, xhrs)
         }
         onComplete(list)
     }
     postJSON(host + "/" + mod +"s", onPostJSONComplete, onError, {}, true, xhrs)
+}
+
+function removeAndNotify(root, mod, key, value) {
+    var copy = root[mod].concat()
+    var index = find(copy, key, value)
+    if (index !== -1) {
+        copy.splice(index, 1)
+        root[mod] = copy
+    }
+}
+
+function updateAndNotify(root, mod, key, data) {
+    var copy = root[mod].concat()
+    var index = find(copy, key, data[key])
+    if (index === -1) {
+        copy.push(data)
+    } else {
+        copy[index] = data
+    }
+    root[mod] = copy
 }
