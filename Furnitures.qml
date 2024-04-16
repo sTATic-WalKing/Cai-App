@@ -10,10 +10,10 @@ C.List {
 
     delegate: Component {
         C.Touch {
-            width: furnituresList.width
-            height: 60
+            buttonWidth: furnituresList.width
+            buttonHeight: 60
 
-            contentItem: Item {
+            buttonContentItem: Item {
                 C.Rounded {
                     id: iconLabel
                     height: 32
@@ -67,7 +67,7 @@ C.List {
                 }
                 C.VFit {
                     id: associatedVFit
-                    height: 12
+                    height: 14
                     anchors.left: displayLabel.left
                     anchors.top: iconLabel.top
                     enabled: associated
@@ -85,30 +85,17 @@ C.List {
                             associatedAutoIndexes = associatedAutoIndexes.concat(J.findAll(root.autos, "view", associatedViews[i]["uid"]))
                         }
                         associatedAutoIndexes.sort(function(a, b) { return root.autos[a]["start"] - root.autos[b]["start"] })
-                        console.log("updateAssociated", root.views, root.autos, JSON.stringify(associatedViews), JSON.stringify(associatedAutoIndexes))
                         if (associatedAutoIndexes.length > 0) {
                             var auto = root.autos[associatedAutoIndexes[0]]
                             var states = root.views[J.find(root.views, "uid", auto["view"])]["states"]
                             associated = true
-                            return qsTr("Will be") + " " + root.stateTexts[states[J.find(states, "address", furniture["address"])]["state"]] + " " + qsTr("at") + " " + J.date2ShortText(new Date(auto["start"] * 1000), root.currentDate)
+                            return qsTr("Will be") + " <u>" + root.stateTexts[states[J.find(states, "address", furniture["address"])]["state"]] + "</u> " + qsTr("at") + " <u>" + J.date2ShortText(new Date(auto["start"] * 1000) , root.currentDate) + "</u>"
                         } else {
                             associated = false
                             return qsTr("No Associated Autos")
                         }
 
                     }
-                    // Component.onCompleted: {
-                    //     updateAssociated()
-                    // }
-                    // Connections {
-                    //     target: root
-                    //     function onViewsChanged() {
-                    //         associatedVFit.updateAssociated()
-                    //     }
-                    //     function onAutosChanged() {
-                    //         associatedVFit.updateAssociated()
-                    //     }
-                    // }
 
                 }
 
@@ -135,7 +122,7 @@ C.List {
                         Layout.preferredWidth: height
                         highlighted: true
                         icon.source: furniture["connected"] ? "/icons/connected.svg" : "/icons/disconnected.svg"
-                        Material.accent: furniture["connected"] ? parent.Material.accent : "#E91E63"
+                        Material.accent: furniture["connected"] ? parent.Material.accent : root.warnColor
                         onClicked: {
                             if (furniture["connected"]) {
                                 disconnectPopup.open()
@@ -146,6 +133,7 @@ C.List {
                     }
                 }
             }
+
             Rectangle {
                 anchors.left: parent.left
                 anchors.right: parent.right
@@ -205,15 +193,13 @@ C.List {
                 onOpened: {
                     var onPostJsonComplete = function(rsp) {
                         close()
-                        if (rsp["affected"] > 0) {
-                            var index = J.find(root.furnitures, "address", furniture["address"])
-                            if (index === -1) {
-                                return
-                            }
-                            var data = root.furnitures[index]
-                            data["connected"] = false
-                            J.updateAndNotify(root, "furnitures", "address", data)
+                        var index = J.find(root.furnitures, "address", furniture["address"])
+                        if (index === -1) {
+                            return
                         }
+                        var data = root.furnitures[index]
+                        data["connected"] = false
+                        J.updateAndNotify(root, "furnitures", "address", data)
                     }
                     var content = {}
                     content["address"] = furniture["address"]
@@ -248,18 +234,107 @@ C.List {
                     }
                 }
             }
+
+            extraHeight: extraColumnLayout.height + extraColumnLayout.spacing
+            extraWidth: extraColumnLayout.width
+            ColumnLayout {
+                id: extraColumnLayout
+                anchors.top: button.bottom
+                x: displayLabel.x + buttonContentItem.x
+                width: buttonContentItem.width - displayLabel.x
+                clip: true
+
+                readonly property real rowHeight: 15
+                C.VFit {
+                    Layout.preferredHeight: extraColumnLayout.rowHeight
+                    text: "<font color=\"grey\">" + qsTr("Address") + qsTr(": ") + "</font>" + furniture["address"]
+                }
+                C.VFit {
+                    Layout.preferredHeight: extraColumnLayout.rowHeight
+                    text: {
+                        var furnitureAlias = furniture["alias"]
+                        if (furnitureAlias === undefined) {
+                            furnitureAlias = "<i>" + qsTr("Not configured") + "</i>"
+                        }
+                        return "<font color=\"grey\">" + qsTr("Alias") + qsTr(": ") + "</font>" + furnitureAlias
+                    }
+                }
+                C.VFit {
+                    Layout.preferredHeight: extraColumnLayout.rowHeight
+                    text: {
+                        var furnitureLoc = furniture["loc"]
+                        if (furnitureLoc === undefined) {
+                            furnitureLoc = "<i>" + qsTr("Not configured") + "</i>"
+                        }
+                        return "<font color=\"grey\">" + qsTr("Location") + qsTr(": ") + "</font>" + furnitureLoc
+                    }
+                }
+
+                RowLayout {
+                    Layout.preferredWidth: extraColumnLayout.width
+                    Button {
+                        Layout.alignment: Qt.AlignRight
+                        Layout.preferredHeight: 26
+                        Layout.preferredWidth: 48
+                        flat: true
+                        Material.roundedScale: Material.NotRounded
+                        topInset: 0
+                        bottomInset: 0
+                        leftInset: 0
+                        rightInset: 0
+                        onClicked: {
+                            abortPopup.open()
+                        }
+
+                        C.VFit {
+                            anchors.centerIn: parent
+                            height: extraColumnLayout.rowHeight
+                            text: qsTr("ABORT")
+                            color: root.warnColor
+                        }
+                    }
+                }
+            }
+            C.Popup {
+                id: abortPopup
+                title: qsTr("Aborting...")
+                property var xhrs: []
+                onOpened: {
+                    var onPostJsonComplete = function(rsp) {
+                        close()
+                        J.removeAndNotify(root, "furnitures", "address", furniture["address"])
+                    }
+                    var content = {}
+                    content["address"] = furniture["address"]
+                    J.postJSON(settings.host + "/abort", onPostJsonComplete, root.xhrErrorHandle, content, true, xhrs)
+                }
+                onClosed: {
+                    for (var i = 0; i < xhrs.length; ++i) {
+                        xhrs[i].abort()
+                    }
+                }
+
+                ColumnLayout {
+                    anchors.fill: parent
+                    spacing: 10
+                    ProgressBar {
+                        indeterminate: true
+                        Layout.fillWidth: true
+                    }
+                }
+            }
         }
     }
     header: Component {
         C.Touch {
-            height: 56
-            width: furnituresList.width
-            onClicked: {
+            buttonHeight: 56
+            buttonWidth: furnituresList.width
+            onButtonClicked: {
                 filterPopup.open()
             }
             enabled: furnituresList.count > 0
 
-            contentItem: Item {
+            buttonContentItem: Item {
                 C.VFit {
                     id: filterLabel
                     height: parent.parent.height / 3

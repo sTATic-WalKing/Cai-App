@@ -11,8 +11,6 @@ ApplicationWindow {
     id: root
     width: 360
     height: 600
-    // width: 768
-    // height: 480
     visible: true
 
     Settings {
@@ -25,6 +23,8 @@ ApplicationWindow {
     readonly property var stateIcons: [
         [ Material.accent, "orange" ]
     ]
+    readonly property var unitOfTime: [ qsTr("millisecond"), qsTr("Second"), qsTr("Minute"), qsTr("Hour"), qsTr("Day"), qsTr("Week"), qsTr("Month"), qsTr("Year") ]
+    readonly property color warnColor: "#E91E63"
 
     property var furnitures: []
     property var views: []

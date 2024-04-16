@@ -3,7 +3,13 @@ import "." as C
 import QtQuick.Controls
 import QtQuick.Layouts
 
-C.Touch {
+Button {
+    flat: true
+    topInset: 0
+    bottomInset: 0
+    leftInset: 0
+    rightInset: 0
+    padding: 10
     Material.roundedScale: Material.FullScale
     display: AbstractButton.TextOnly
 
@@ -16,5 +22,4 @@ C.Touch {
         icon.source: parent.icon.source
         icon.color: parent.icon.color
     }
-
 }

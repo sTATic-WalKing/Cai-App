@@ -116,7 +116,7 @@ function postJSON(url, onComplete, onError, body={}, async=true, xhrs=[]) {
             onError(xhr)
             return
         }
-        console.log(xhr.responseURL, xhr.responseText.toString())
+        // console.log(xhr.responseURL, xhr.responseText.toString())
         onComplete(JSON.parse(xhr.responseText.toString()))
     }
     xhr.open("POST", url, async)
@@ -181,4 +181,28 @@ function date2ShortText(date, now) {
     } else {
         return date.toLocaleDateString()
     }
+}
+
+function stamp2SpanText(stamp, unitOfTime) {
+    var day = parseInt(stamp / (24 * 60 * 60))
+    var second = stamp - day * (24 * 60 * 60)
+    var hour = parseInt(second / (60 * 60))
+    second -= hour * (60 * 60)
+    var minute = parseInt(second / 60)
+    second -= minute * 60
+    var ret = ""
+    if (day > 0) {
+        ret += day + " " + unitOfTime[4] + " "
+    }
+    if (hour > 0) {
+        ret += hour + " " + unitOfTime[3] + " "
+    }
+    if (minute > 0) {
+        ret += minute + " " + unitOfTime[2] + " "
+    }
+    if (second > 0) {
+        ret += second + " " + unitOfTime[1] + " "
+    }
+
+    return  ret
 }

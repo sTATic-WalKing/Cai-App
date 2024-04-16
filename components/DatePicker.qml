@@ -77,7 +77,7 @@ ColumnLayout {
             color: "transparent"
             border.width: 1
             border.color: Material.accent
-            readonly property real duration: 50
+            readonly property int duration: 50
 
             NumberAnimation on x {
                 id: xNumberAnimation

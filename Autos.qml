@@ -9,14 +9,14 @@ C.List {
     delegate: Component {
         C.Touch {
             id: viewsListTouch
-            width: viewsList.width
-            height: 87
+            buttonWidth: viewsList.width
+            buttonHeight: 87
             property var autoIndexes: {
                 var ret = J.findAll(root.autos, "view", view["uid"])
                 ret.sort(function(a, b) { return root.autos[a]["start"] - root.autos[b]["start"] })
                 return ret
             }
-            contentItem: Item {
+            buttonContentItem: Item {
                 ListView {
                     id: iconsListView
                     anchors.left: parent.left
@@ -68,16 +68,12 @@ C.List {
                     font.underline: viewsListTouch.autoIndexes.length !== 0
                     enabled: viewsListTouch.autoIndexes.length !== 0
                     text: {
-                        if (viewsListTouch.autoIndexes.length === 0) {
-                            return qsTr("Failed to get the next start time.")
+                        if (viewsListTouch.autoIndexes.length > 0) {
+                            var autoStart = root.autos[viewsListTouch.autoIndexes[0]]["start"] * 1000
+                            return J.date2ShortText(new Date(autoStart), root.currentDate)
                         }
-                        var auto = root.autos[viewsListTouch.autoIndexes[0]]
-                        var autoStart = auto["start"] * 1000
-                        var ret = ""
-                        if (autoStart !== undefined) {
-                            ret += new Date(autoStart).toLocaleString()
-                        }
-                        return ret
+
+                        return qsTr("Failed to get the next start time.")
                     }
                 }
                 RowLayout {
@@ -117,10 +113,31 @@ C.List {
                     return
                 }
                 viewsListTimer.auto = root.autos[viewsListTouch.autoIndexes[0]]
-                viewsListTimer.interval = Math.max((viewsListTimer.auto["start"] + 1) * 1000 - root.currentDate.getTime(), 0)
+                viewsListTimer.interval = Math.max((viewsListTimer.auto["start"] + 1) * 1000 - root.currentDate.getTime(), 1000)
                 viewsListTimer.start()
             }
+            function abortAutos(onComplete=undefined, xhrs=[]) {
+                var uids = []
+                for (var i = 0; i < viewsListTouch.autoIndexes.length; ++i) {
+                    uids.push(root.autos[viewsListTouch.autoIndexes[i]]["uid"])
+                }
+                if (uids.length === 0 && onComplete !== undefined) {
+                    onComplete()
+                }
 
+                for (i = 0; i < uids.length; ++i) {
+                    var local_i = i
+                    var onPostJsonComplete = function(rsp) {
+                        J.removeAndNotify(root, "autos", "uid", uids[local_i])
+                        if (onComplete !== undefined && local_i === uids.length - 1) {
+                            onComplete()
+                        }
+                    }
+                    var content = {}
+                    content["uid"] = uids[i]
+                    J.postJSON(settings.host + "/abort", onPostJsonComplete, root.xhrErrorHandle, content, true, xhrs)
+                }
+            }
             onAutoIndexesChanged: {
                 updateTimer()
             }
@@ -248,29 +265,10 @@ C.List {
                     }
                     Label {
                         text: {
-                            var day = parseInt(autoPopup.every / (24 * 60 * 60))
-                            var second = autoPopup.every - day * (24 * 60 * 60)
-                            var hour = parseInt(second / (60 * 60))
-                            second -= hour * (60 * 60)
-                            var minute = parseInt(second / 60)
-                            second -= minute * 60
-                            var ret = ""
-                            if (day > 0) {
-                                ret += day + " " + qsTr("Day") + " "
-                            }
-                            if (hour > 0) {
-                                ret += hour + " " + qsTr("Hour") + " "
-                            }
-                            if (minute > 0) {
-                                ret += minute + " " + qsTr("Minute") + " "
-                            }
-                            if (second > 0) {
-                                ret += second + " " + qsTr("Second") + " "
-                            }
+                            var ret = J.stamp2SpanText(autoPopup.every, root.unitOfTime)
                             if (ret === "") {
                                 ret = qsTr("Not Repeated")
                             }
-
                             return  ret
                         }
 
@@ -332,7 +330,7 @@ C.List {
             }
             C.Popup {
                 id: everyPickerPopup
-                title: qsTr("Time Picker")
+                title: qsTr("Interval Picker")
                 standardButtons: Dialog.Ok
                 C.TimePicker {
                     id: everyPicker
@@ -345,22 +343,7 @@ C.List {
                 title: qsTr("Abort Autos")
                 standardButtons: Dialog.Ok
                 onAccepted: {
-                    var uids = []
-                    for (var i = 0; i < viewsListTouch.autoIndexes.length; ++i) {
-                        uids.push(root.autos[viewsListTouch.autoIndexes[i]]["uid"])
-                    }
-
-                    for (i = 0; i < uids.length; ++i) {
-                        var local_i = i
-                        var onPostJsonComplete = function(rsp) {
-                            if (rsp["affected"] > 0) {
-                                J.removeAndNotify(root, "autos", "uid", uids[local_i])
-                            }
-                        }
-                        var content = {}
-                        content["uid"] = uids[i]
-                        J.postJSON(settings.host + "/abort", onPostJsonComplete, root.xhrErrorHandle, content)
-                    }
+                    viewsListTouch.abortAutos()
                 }
                 ColumnLayout {
                     anchors.fill: parent
@@ -372,18 +355,147 @@ C.List {
                     }
                 }
             }
+
+            extraHeight: extraColumnLayout.height + extraColumnLayout.spacing
+            extraWidth: extraColumnLayout.width
+            ColumnLayout {
+                id: extraColumnLayout
+                anchors.top: button.bottom
+                x: buttonContentItem.x
+                width: buttonContentItem.width
+                clip: true
+
+                readonly property real rowHeight: 15
+                C.VFit {
+                    Layout.preferredHeight: extraColumnLayout.rowHeight
+                    text: "<font color=\"grey\">" + qsTr("UID") + qsTr(": ") + "</font>" + view["uid"]
+                }
+                C.VFit {
+                    Layout.preferredHeight: extraColumnLayout.rowHeight
+                    text: {
+                        var viewAlias = view["alias"]
+                        if (viewAlias === undefined) {
+                            viewAlias = "<i>" + qsTr("Not configured") + "</i>"
+                        }
+                        return "<font color=\"grey\">" + qsTr("Alias") + qsTr(": ") + "</font>" + viewAlias
+                    }
+                }
+                ListView {
+                    id: autosListView
+                    Layout.preferredWidth: extraColumnLayout.width
+                    interactive: false
+                    spacing: extraColumnLayout.spacing
+                    model: ListModel {
+                        id: autosListModel
+                    }
+                    Layout.preferredHeight: contentHeight
+                    function updateAutos() {
+                        autosListModel.clear()
+                        for (var i = 0; i < viewsListTouch.autoIndexes.length; ++i) {
+                            autosListModel.append({ "auto": root.autos[viewsListTouch.autoIndexes[i]] })
+                        }
+                    }
+                    Component.onCompleted: {
+                        updateAutos()
+                    }
+                    Connections {
+                        target: viewsListTouch
+                        function onAutoIndexesChanged() {
+                            autosListView.updateAutos()
+                        }
+                    }
+
+                    header: Component {
+                        C.VFit {
+                            height: extraColumnLayout.rowHeight
+                            text: "<font color=\"grey\">" + qsTr("Autos") + qsTr(": ") + "</font>" + (autosListView.count > 0 ? "" : qsTr("No associated Autos"))
+                        }
+                    }
+                    delegate: Component {
+                        C.VFit {
+                            height: extraColumnLayout.rowHeight
+                            text: {
+                                var ret = qsTr("UID") + qsTr(": ") + auto["uid"] + qsTr(", ") +
+                                          qsTr("Start") + qsTr(": ") + new Date(auto["start"] * 1000).toLocaleString()
+                                var every = auto["every"]
+                                if (every !== undefined) {
+                                    ret += qsTr(", ") + qsTr("Interval") + qsTr(": ") + J.stamp2SpanText(every, root.unitOfTime)
+                                }
+                                return ret
+
+                            }
+                        }
+                    }
+                }
+
+                RowLayout {
+                    Layout.preferredWidth: extraColumnLayout.width
+                    Button {
+                        Layout.alignment: Qt.AlignRight
+                        Layout.preferredHeight: 26
+                        Layout.preferredWidth: 48
+                        flat: true
+                        Material.roundedScale: Material.NotRounded
+                        topInset: 0
+                        bottomInset: 0
+                        leftInset: 0
+                        rightInset: 0
+                        onClicked: {
+                            abortViewPopup.open()
+                        }
+
+                        C.VFit {
+                            anchors.centerIn: parent
+                            height: extraColumnLayout.rowHeight
+                            text: qsTr("ABORT")
+                            color: root.warnColor
+                        }
+                    }
+                }
+            }
+            C.Popup {
+                id: abortViewPopup
+                title: qsTr("Aborting...")
+                property var xhrs: []
+                onOpened: {
+                    var onAbortAutosComplete = function() {
+                        var onPostJsonComplete = function(rsp) {
+                            close()
+                            J.removeAndNotify(root, "views", "uid", view["uid"])
+                        }
+                        var content = {}
+                        content["uid"] = view["uid"]
+                        J.postJSON(settings.host + "/abort", onPostJsonComplete, root.xhrErrorHandle, content, true, xhrs)
+                    }
+                    viewsListTouch.abortAutos(onAbortAutosComplete, xhrs)
+                }
+                onClosed: {
+                    for (var i = 0; i < xhrs.length; ++i) {
+                        xhrs[i].abort()
+                    }
+                }
+
+                ColumnLayout {
+                    anchors.fill: parent
+                    spacing: 10
+                    ProgressBar {
+                        indeterminate: true
+                        Layout.fillWidth: true
+                    }
+                }
+            }
         }
     }
     header: Component {
         C.Touch {
-            height: 56
-            width: viewsList.width
+            buttonHeight: 56
+            buttonWidth: viewsList.width
 
-            onClicked: {
+            onButtonClicked: {
                 addPopup.open()
             }
 
-            contentItem: Item {
+            buttonContentItem: Item {
                 C.VFit {
                     id: filterLabel
                     height: parent.parent.height / 3

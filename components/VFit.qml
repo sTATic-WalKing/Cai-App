@@ -3,7 +3,7 @@ import QtQuick.Controls
 
 Label {
     fontSizeMode: Text.VerticalFit
-    minimumPixelSize: 10
+    minimumPixelSize: 2
     font.pixelSize: 72
     width: contentWidth
     clip: true

@@ -55,7 +55,7 @@ ListView {
             anchors.bottomMargin: 10
             height: 36
             icon.source: listView.bOver ? "/icons/refresh.svg" : "/icons/down.svg"
-            icon.color: "#E91E63"
+            icon.color: root.warnColor
         }
     }
 
