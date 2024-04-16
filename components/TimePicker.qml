@@ -24,7 +24,7 @@ RowLayout {
         visible: daySpinBoxVisible
 
         ToolTip.text: qsTr("Day")
-        ToolTip.visible: hovered
+        ToolTip.visible: moving
     }
     IconLabel {
         icon.source: "/icons/left.svg"
@@ -37,7 +37,7 @@ RowLayout {
         model: 24
 
         ToolTip.text: qsTr("Hour")
-        ToolTip.visible: hovered
+        ToolTip.visible: moving
     }
     IconLabel {
         icon.source: "/icons/colon.svg"
@@ -49,7 +49,7 @@ RowLayout {
         model: 60
 
         ToolTip.text: qsTr("Minute")
-        ToolTip.visible: hovered
+        ToolTip.visible: moving
     }
     IconLabel {
         icon.source: "/icons/colon.svg"
@@ -61,6 +61,6 @@ RowLayout {
         model: 60
 
         ToolTip.text: qsTr("Second")
-        ToolTip.visible: hovered
+        ToolTip.visible: moving
     }
 }

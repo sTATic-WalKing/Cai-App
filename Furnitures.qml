@@ -222,7 +222,7 @@ C.List {
                     anchors.fill: parent
                     spacing: root.commonSpacing
                     Label {
-                        text: qsTr("Connecting to a specified furniture is not supported, and try Discover button at the top-right corner.")
+                        text: qsTr("Connecting to a specified furniture is not supported, and try Discover button at the top bar.")
                         wrapMode: Text.Wrap
                         Layout.fillWidth: true
                     }
