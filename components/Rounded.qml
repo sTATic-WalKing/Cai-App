@@ -12,6 +12,10 @@ Button {
     padding: 10
     Material.roundedScale: Material.FullScale
     display: AbstractButton.TextOnly
+    width: 32
+    height: 32
+    Layout.preferredHeight: 32
+    Layout.preferredWidth: 32
 
     IconLabel {
         anchors.verticalCenter: parent.verticalCenter

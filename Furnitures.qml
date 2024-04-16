@@ -15,9 +15,7 @@ C.List {
 
             buttonContentItem: Item {
                 C.Rounded {
-                    id: iconLabel
-                    height: 32
-                    width: height
+                    id: stateRounded
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.left: parent.left
                     icon.source: root.typeIcons[furniture["type"]]
@@ -42,11 +40,11 @@ C.List {
                     }
                 }
                 C.VFit {
-                    id: displayLabel
+                    id: infoVFit
                     height: 15
-                    anchors.left: iconLabel.right
-                    anchors.leftMargin: 10
-                    anchors.bottom: iconLabel.bottom
+                    anchors.left: stateRounded.right
+                    anchors.leftMargin: root.commonSpacing
+                    anchors.bottom: stateRounded.bottom
                     text: {
                         var ret = ""
                         var entries = Object.entries(furniture)
@@ -68,8 +66,8 @@ C.List {
                 C.VFit {
                     id: associatedVFit
                     height: 14
-                    anchors.left: displayLabel.left
-                    anchors.top: iconLabel.top
+                    anchors.left: infoVFit.left
+                    anchors.top: stateRounded.top
                     enabled: associated
                     property bool associated
                     text: {
@@ -89,10 +87,10 @@ C.List {
                             var auto = root.autos[associatedAutoIndexes[0]]
                             var states = root.views[J.find(root.views, "uid", auto["view"])]["states"]
                             associated = true
-                            return qsTr("Will be") + " <u>" + root.stateTexts[states[J.find(states, "address", furniture["address"])]["state"]] + "</u> " + qsTr("at") + " <u>" + J.date2ShortText(new Date(auto["start"] * 1000) , root.currentDate) + "</u>"
+                            return "<font color=\"grey\">" + qsTr("Will be") + "</font> " + root.stateTexts[states[J.find(states, "address", furniture["address"])]["state"]] + "<font color=\"grey\"> " + qsTr("at") + " </font>" + J.date2ShortText(new Date(auto["start"] * 1000) , root.currentDate)
                         } else {
                             associated = false
-                            return qsTr("No Associated Autos")
+                            return "<font color=\"grey\">" + qsTr("No Associated Autos") + "</font>"
                         }
 
                     }
@@ -100,26 +98,12 @@ C.List {
                 }
 
                 RowLayout {
-                    id: roundedRowLayout
-                    height: iconLabel.height
+                    height: stateRounded.height
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.right: parent.right
-                    spacing: 10
-
+                    spacing: root.commonSpacing
+                    layoutDirection: Qt.RightToLeft
                     C.Rounded {
-                        Layout.fillHeight: true
-                        Layout.preferredWidth: height
-                        highlighted: furniture["connected"]
-                        enabled: furniture["connected"]
-                        icon.source: "/icons/config.svg"
-
-                        onClicked: {
-                            configPopup.open()
-                        }
-                    }
-                    C.Rounded {
-                        Layout.fillHeight: true
-                        Layout.preferredWidth: height
                         highlighted: true
                         icon.source: furniture["connected"] ? "/icons/connected.svg" : "/icons/disconnected.svg"
                         Material.accent: furniture["connected"] ? parent.Material.accent : root.warnColor
@@ -131,6 +115,16 @@ C.List {
                             }
                         }
                     }
+                    C.Rounded {
+                        highlighted: furniture["connected"]
+                        enabled: furniture["connected"]
+                        icon.source: "/icons/config.svg"
+
+                        onClicked: {
+                            configPopup.open()
+                        }
+                    }
+
                 }
             }
 
@@ -147,7 +141,7 @@ C.List {
                 standardButtons: Dialog.Ok
                 ColumnLayout {
                     anchors.fill: parent
-                    spacing: 10
+                    spacing: root.commonSpacing
 
                     TextField {
                         id: aliasTextField
@@ -213,7 +207,7 @@ C.List {
 
                 ColumnLayout {
                     anchors.fill: parent
-                    spacing: 10
+                    spacing: root.commonSpacing
                     ProgressBar {
                         indeterminate: true
                         Layout.fillWidth: true
@@ -226,7 +220,7 @@ C.List {
 
                 ColumnLayout {
                     anchors.fill: parent
-                    spacing: 10
+                    spacing: root.commonSpacing
                     Label {
                         text: qsTr("Connecting to a specified furniture is not supported, and try Discover button at the top-right corner.")
                         wrapMode: Text.Wrap
@@ -240,8 +234,8 @@ C.List {
             ColumnLayout {
                 id: extraColumnLayout
                 anchors.top: button.bottom
-                x: displayLabel.x + buttonContentItem.x
-                width: buttonContentItem.width - displayLabel.x
+                x: infoVFit.x + buttonContentItem.x
+                width: buttonContentItem.width - infoVFit.x
                 clip: true
 
                 readonly property real rowHeight: 15
@@ -254,7 +248,7 @@ C.List {
                     text: {
                         var furnitureAlias = furniture["alias"]
                         if (furnitureAlias === undefined) {
-                            furnitureAlias = "<i>" + qsTr("Not configured") + "</i>"
+                            furnitureAlias = "<font color=\"grey\">" + qsTr("Not configured") + "</font>"
                         }
                         return "<font color=\"grey\">" + qsTr("Alias") + qsTr(": ") + "</font>" + furnitureAlias
                     }
@@ -264,7 +258,7 @@ C.List {
                     text: {
                         var furnitureLoc = furniture["loc"]
                         if (furnitureLoc === undefined) {
-                            furnitureLoc = "<i>" + qsTr("Not configured") + "</i>"
+                            furnitureLoc = "<font color=\"grey\">" + qsTr("Not configured") + "</font>"
                         }
                         return "<font color=\"grey\">" + qsTr("Location") + qsTr(": ") + "</font>" + furnitureLoc
                     }
@@ -272,25 +266,13 @@ C.List {
 
                 RowLayout {
                     Layout.preferredWidth: extraColumnLayout.width
-                    Button {
-                        Layout.alignment: Qt.AlignRight
-                        Layout.preferredHeight: 26
-                        Layout.preferredWidth: 48
-                        flat: true
-                        Material.roundedScale: Material.NotRounded
-                        topInset: 0
-                        bottomInset: 0
-                        leftInset: 0
-                        rightInset: 0
+                    layoutDirection: Qt.RightToLeft
+                    C.Rounded {
+                        icon.source: "/icons/delete.svg"
+                        highlighted: true
+                        Material.accent: root.warnColor
                         onClicked: {
                             abortPopup.open()
-                        }
-
-                        C.VFit {
-                            anchors.centerIn: parent
-                            height: extraColumnLayout.rowHeight
-                            text: qsTr("ABORT")
-                            color: root.warnColor
                         }
                     }
                 }
@@ -316,7 +298,7 @@ C.List {
 
                 ColumnLayout {
                     anchors.fill: parent
-                    spacing: 10
+                    spacing: root.commonSpacing
                     ProgressBar {
                         indeterminate: true
                         Layout.fillWidth: true
@@ -333,10 +315,9 @@ C.List {
                 filterPopup.open()
             }
             enabled: furnituresList.count > 0
-
             buttonContentItem: Item {
                 C.VFit {
-                    id: filterLabel
+                    id: filterVFit
                     height: parent.parent.height / 3
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.left: parent.left
@@ -365,12 +346,12 @@ C.List {
                     }
                 }
                 IconLabel {
-                    height: filterLabel.height
+                    height: filterVFit.height
                     width: height
-                    anchors.top: filterLabel.top
+                    anchors.top: filterVFit.top
                     anchors.right: parent.right
                     icon.source: "/icons/tap.svg"
-                    icon.color: filterLabel.color
+                    icon.color: filterVFit.color
                     visible: furnituresList.count > 0
                 }
             }
@@ -384,7 +365,7 @@ C.List {
 
         ColumnLayout {
             anchors.fill: parent
-            spacing: 10
+            spacing: root.commonSpacing
 
             ComboBox {
                 model: {

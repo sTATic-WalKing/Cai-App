@@ -25,7 +25,7 @@ C.List {
                     width: 200
                     interactive: false
                     orientation: ListView.Horizontal
-                    spacing: 10
+                    spacing: root.commonSpacing
                     model: ListModel {
                         id: iconsListModel
                     }
@@ -36,19 +36,16 @@ C.List {
                         }
                     }
                     delegate: Component {
-                        C.RoundedFurniture {
-                            height: iconsListView.height
-                            width: height
-                        }
+                        C.RoundedFurniture { }
                     }
                 }
                 C.VFit {
                     id: viewVFit
                     anchors.left: iconsListView.left
                     anchors.top: iconsListView.bottom
-                    anchors.topMargin: 10
+                    anchors.topMargin: root.commonSpacing
                     anchors.right: autoVFit.left
-                    anchors.rightMargin: 10
+                    anchors.rightMargin: root.commonSpacing
                     height: 16
                     clip: true
                     text: {
@@ -65,7 +62,6 @@ C.List {
                     anchors.right: parent.right
                     anchors.bottom: viewVFit.bottom
                     height: viewVFit.height
-                    font.underline: viewsListTouch.autoIndexes.length !== 0
                     enabled: viewsListTouch.autoIndexes.length !== 0
                     text: {
                         if (viewsListTouch.autoIndexes.length > 0) {
@@ -73,48 +69,45 @@ C.List {
                             return J.date2ShortText(new Date(autoStart), root.currentDate)
                         }
 
-                        return qsTr("Failed to get the next start time.")
+                        return "<font color=\"grey\">" + qsTr("No Associated Autos") + "</font>"
                     }
                 }
                 RowLayout {
                     height: 32
                     anchors.verticalCenter: iconsListView.verticalCenter
                     anchors.right: parent.right
-                    spacing: 10
-
+                    spacing: root.commonSpacing
+                    layoutDirection: Qt.RightToLeft
                     C.Rounded {
-                        Layout.fillHeight: true
-                        Layout.preferredWidth: height
+                        highlighted: true
+                        icon.source: viewsListTouch.autoIndexes.length === 0 ? "/icons/timeout.svg" : "/icons/play.svg"
+                        onClicked: {
+                            if (viewsListTouch.autoIndexes.length === 0) {
+                                autoCreatePopup.open()
+                            } else {
+                                autosAbortPopup.open()
+                            }
+
+                        }
+                    }
+                    C.Rounded {
                         highlighted: true
                         icon.source: "/icons/config.svg"
                         onClicked: {
                             configPopup.open()
                         }
                     }
-                    C.Rounded {
-                        Layout.fillHeight: true
-                        Layout.preferredWidth: height
-                        highlighted: true
-                        icon.source: viewsListTouch.autoIndexes.length === 0 ? "/icons/timeout.svg" : "/icons/play.svg"
-                        onClicked: {
-                            if (viewsListTouch.autoIndexes.length === 0) {
-                                autoPopup.open()
-                            } else {
-                                autoAbortPopup.open()
-                            }
 
-                        }
-                    }
                 }
             }
             function updateTimer() {
-                viewsListTimer.stop()
+                autosTimer.stop()
                 if (viewsListTouch.autoIndexes.length === 0) {
                     return
                 }
-                viewsListTimer.auto = root.autos[viewsListTouch.autoIndexes[0]]
-                viewsListTimer.interval = Math.max((viewsListTimer.auto["start"] + 1) * 1000 - root.currentDate.getTime(), 1000)
-                viewsListTimer.start()
+                autosTimer.auto = root.autos[viewsListTouch.autoIndexes[0]]
+                autosTimer.interval = Math.max((autosTimer.auto["start"] + 1) * 1000 - root.currentDate.getTime(), 1000)
+                autosTimer.start()
             }
             function abortAutos(onComplete=undefined, xhrs=[]) {
                 var uids = []
@@ -142,7 +135,7 @@ C.List {
                 updateTimer()
             }
             Timer {
-                id: viewsListTimer
+                id: autosTimer
                 property var auto
                 onTriggered: {
                     if (auto["every"] !== undefined) {
@@ -192,7 +185,7 @@ C.List {
                 standardButtons: Dialog.Ok
                 ColumnLayout {
                     anchors.fill: parent
-                    spacing: 10
+                    spacing: root.commonSpacing
 
                     TextField {
                         id: aliasTextField
@@ -218,7 +211,7 @@ C.List {
                 }
             }
             C.Popup {
-                id: autoPopup
+                id: autoCreatePopup
                 title: qsTr("Auto")
                 standardButtons: Dialog.Ok
                 readonly property int start: datePicker.selectedDate + timePicker.selectedTime + root.currentDate.getTimezoneOffset() * 60
@@ -233,11 +226,11 @@ C.List {
                     }
                     var content = {}
                     content["view"] = view["uid"]
-                    if (autoPopup.start * 1000 > root.currentDate.getTime()) {
-                        content["start"] = autoPopup.start
+                    if (autoCreatePopup.start * 1000 > root.currentDate.getTime()) {
+                        content["start"] = autoCreatePopup.start
                     }
-                    if (autoPopup.every > 0) {
-                        content["every"] = autoPopup.every
+                    if (autoCreatePopup.every > 0) {
+                        content["every"] = autoCreatePopup.every
                     }
 
                     J.postJSON(settings.host + "/auto", onPostJsonComplete, root.xhrErrorHandle, content)
@@ -245,56 +238,51 @@ C.List {
 
                 ColumnLayout {
                     anchors.fill: parent
-                    spacing: 10
-                    Label {
-                        text: qsTr("Start At")
-                    }
+                    spacing: root.commonSpacing
                     Label {
                         text: {
-                            var start = autoPopup.start * 1000
+                            var ret = "<font color=\"grey\">" + qsTr("Start At") + qsTr(": ") + "</font>"
+                            var start = autoCreatePopup.start * 1000
                             if (start <= root.currentDate.getTime()) {
-                                return qsTr("Now")
+                                ret += qsTr("Now")
+                            } else {
+                                ret += new Date(start).toLocaleString()
                             }
-                            return new Date(start).toLocaleString()
+                            return ret
                         }
-
-                        font.underline: true
-                    }
-                    Label {
-                        text: qsTr("Repeat Every")
                     }
                     Label {
                         text: {
-                            var ret = J.stamp2SpanText(autoPopup.every, root.unitOfTime)
-                            if (ret === "") {
-                                ret = qsTr("Not Repeated")
+                            var ret = "<font color=\"grey\">" + qsTr("Repeat Every") + qsTr(": ") + "</font>"
+                            if (autoCreatePopup.every === 0) {
+                                ret += qsTr("Not Repeated")
+                            } else {
+                                ret += J.stamp2SpanText(autoCreatePopup.every, root.unitOfTime)
                             }
-                            return  ret
+                            return ret
                         }
-
-                        font.underline: true
                     }
-                    Flow {
+                    RowLayout {
                         Layout.fillWidth: true
-                        spacing: 10
+                        spacing: root.commonSpacing
 
-                        Button {
+                        C.Rounded {
                             highlighted: true
-                            text: qsTr("Set Start Date")
+                            icon.source: "/icons/date.svg"
                             onClicked: {
                                 datePickerPopup.open()
                             }
                         }
-                        Button {
+                        C.Rounded {
                             highlighted: true
-                            text: qsTr("Set Start Time")
+                            icon.source: "/icons/watch.svg"
                             onClicked: {
                                 timePickerPopup.open()
                             }
                         }
-                        Button {
+                        C.Rounded {
                             highlighted: true
-                            text: qsTr("Set Interval")
+                            icon.source: "/icons/interval.svg"
                             onClicked: {
                                 everyPickerPopup.open()
                             }
@@ -339,7 +327,7 @@ C.List {
                 }
             }
             C.Popup {
-                id: autoAbortPopup
+                id: autosAbortPopup
                 title: qsTr("Abort Autos")
                 standardButtons: Dialog.Ok
                 onAccepted: {
@@ -347,7 +335,7 @@ C.List {
                 }
                 ColumnLayout {
                     anchors.fill: parent
-                    spacing: 10
+                    spacing: root.commonSpacing
                     Label {
                         text: qsTr("Abort all associated autos, are you sure?")
                         wrapMode: Text.Wrap
@@ -375,7 +363,7 @@ C.List {
                     text: {
                         var viewAlias = view["alias"]
                         if (viewAlias === undefined) {
-                            viewAlias = "<i>" + qsTr("Not configured") + "</i>"
+                            viewAlias = "<font color=\"grey\">" + qsTr("Not configured") + "</font>"
                         }
                         return "<font color=\"grey\">" + qsTr("Alias") + qsTr(": ") + "</font>" + viewAlias
                     }
@@ -384,7 +372,6 @@ C.List {
                     id: autosListView
                     Layout.preferredWidth: extraColumnLayout.width
                     interactive: false
-                    spacing: extraColumnLayout.spacing
                     model: ListModel {
                         id: autosListModel
                     }
@@ -398,6 +385,7 @@ C.List {
                     Component.onCompleted: {
                         updateAutos()
                     }
+
                     Connections {
                         target: viewsListTouch
                         function onAutoIndexesChanged() {
@@ -408,18 +396,18 @@ C.List {
                     header: Component {
                         C.VFit {
                             height: extraColumnLayout.rowHeight
-                            text: "<font color=\"grey\">" + qsTr("Autos") + qsTr(": ") + "</font>" + (autosListView.count > 0 ? "" : qsTr("No associated Autos"))
+                            text: "<font color=\"grey\">" + (autosListView.count > 0 ? qsTr("Associated Autos") : qsTr("No associated Autos")) + "</font>"
                         }
                     }
                     delegate: Component {
                         C.VFit {
                             height: extraColumnLayout.rowHeight
                             text: {
-                                var ret = qsTr("UID") + qsTr(": ") + auto["uid"] + qsTr(", ") +
-                                          qsTr("Start") + qsTr(": ") + new Date(auto["start"] * 1000).toLocaleString()
+                                var ret = "<font color=\"grey\">" + qsTr("UID") + qsTr(": ") + "</font>" + auto["uid"] + "<font color=\"grey\">" + qsTr(", ") +
+                                          qsTr("Start") + qsTr(": ") + "</font>" + new Date(auto["start"] * 1000).toLocaleString()
                                 var every = auto["every"]
                                 if (every !== undefined) {
-                                    ret += qsTr(", ") + qsTr("Interval") + qsTr(": ") + J.stamp2SpanText(every, root.unitOfTime)
+                                    ret += "<font color=\"grey\">" + qsTr(", ") + qsTr("Interval") + qsTr(": ") +  "</font>" + J.stamp2SpanText(every, root.unitOfTime)
                                 }
                                 return ret
 
@@ -430,31 +418,19 @@ C.List {
 
                 RowLayout {
                     Layout.preferredWidth: extraColumnLayout.width
-                    Button {
-                        Layout.alignment: Qt.AlignRight
-                        Layout.preferredHeight: 26
-                        Layout.preferredWidth: 48
-                        flat: true
-                        Material.roundedScale: Material.NotRounded
-                        topInset: 0
-                        bottomInset: 0
-                        leftInset: 0
-                        rightInset: 0
+                    layoutDirection: Qt.RightToLeft
+                    C.Rounded {
+                        icon.source: "/icons/delete.svg"
+                        highlighted: true
+                        Material.accent: root.warnColor
                         onClicked: {
-                            abortViewPopup.open()
-                        }
-
-                        C.VFit {
-                            anchors.centerIn: parent
-                            height: extraColumnLayout.rowHeight
-                            text: qsTr("ABORT")
-                            color: root.warnColor
+                            viewAbortPopup.open()
                         }
                     }
                 }
             }
             C.Popup {
-                id: abortViewPopup
+                id: viewAbortPopup
                 title: qsTr("Aborting...")
                 property var xhrs: []
                 onOpened: {
@@ -477,7 +453,7 @@ C.List {
 
                 ColumnLayout {
                     anchors.fill: parent
-                    spacing: 10
+                    spacing: root.commonSpacing
                     ProgressBar {
                         indeterminate: true
                         Layout.fillWidth: true
@@ -490,38 +466,36 @@ C.List {
         C.Touch {
             buttonHeight: 56
             buttonWidth: viewsList.width
-
             onButtonClicked: {
-                addPopup.open()
+                viewCreatePopup.open()
             }
-
             buttonContentItem: Item {
                 C.VFit {
-                    id: filterLabel
+                    id: createLabel
                     height: parent.parent.height / 3
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.left: parent.left
                     font.italic: true
-                    text: qsTr("Add a new View")
+                    text: qsTr("Create a View")
                 }
                 IconLabel {
-                    height: filterLabel.height
+                    height: createLabel.height
                     width: height
-                    anchors.top: filterLabel.top
+                    anchors.top: createLabel.top
                     anchors.right: parent.right
                     icon.source: "/icons/addto.svg"
-                    icon.color: filterLabel.color
+                    icon.color: createLabel.color
                 }
             }
 
             C.Popup {
-                id: addPopup
-                title: qsTr("Add a View")
+                id: viewCreatePopup
+                title: qsTr("Create a View")
                 standardButtons: Dialog.Ok
                 clip: true
-                contentHeight: addFlickable.contentHeight
+                contentHeight: createFlickable.contentHeight
                 onAccepted: {
-                    if (addListModel.count <= 0) {
+                    if (createListModel.count <= 0) {
                         root.toolBarShowToolTip(qsTr("No associated Furnitures! "))
                         return
                     }
@@ -534,23 +508,23 @@ C.List {
                         content["alias"] = aliasTextField.text
                     }
                     var states = []
-                    for (var i = 0; i < addListModel.count; ++i) {
-                        states.push(addListModel.get(i)["furniture"])
+                    for (var i = 0; i < createListModel.count; ++i) {
+                        states.push(createListModel.get(i)["furniture"])
                     }
                     content["states"] = states
                     J.postJSON(settings.host + "/view", onPostJsonComplete, root.xhrErrorHandle, content)
                 }
                 onAboutToShow: {
-                    addListModel.clear()
+                    createListModel.clear()
                 }
 
                 Flickable {
-                    id: addFlickable
+                    id: createFlickable
                     anchors.fill: parent
-                    contentHeight: addColumnLayout.height
+                    contentHeight: createColumnLayout.height
                     ColumnLayout {
-                        id: addColumnLayout
-                        spacing: 10
+                        id: createColumnLayout
+                        spacing: root.commonSpacing
                         anchors.left: parent.left
                         anchors.right: parent.right
 
@@ -559,10 +533,9 @@ C.List {
                             placeholderText: qsTr("Alias")
                             Layout.fillWidth: true
                         }
-                        Button {
+                        C.Rounded {
                             highlighted: true
                             icon.source: "/icons/addto.svg"
-                            text: qsTr("Associate")
 
                             onClicked: {
                                 associatePopup.open()
@@ -576,13 +549,10 @@ C.List {
                             cellWidth: cellHeight
 
                             model: ListModel {
-                                id: addListModel
+                                id: createListModel
                             }
                             delegate: Component {
-                                C.RoundedFurniture {
-                                    height: 32
-                                    width: height
-                                }
+                                C.RoundedFurniture { }
                             }
                         }
                     }
@@ -594,8 +564,8 @@ C.List {
                     standardButtons: Dialog.Ok
                     onAboutToShow: {
                         var added = []
-                        for (var i = 0; i < addListModel.count; ++i) {
-                            added.push(addListModel.get(i)["furniture"]["address"])
+                        for (var i = 0; i < createListModel.count; ++i) {
+                            added.push(createListModel.get(i)["furniture"]["address"])
                         }
                         var all = []
                         for (i = 0; i < root.furnitures.length; ++i) {
@@ -623,12 +593,12 @@ C.List {
                             return
                         }
 
-                        addListModel.append({"furniture": { "address": associateFurnitureComboBox.currentValue, "state": associateStateComboBox.currentIndex }})
+                        createListModel.append({"furniture": { "address": associateFurnitureComboBox.currentValue, "state": associateStateComboBox.currentIndex }})
                     }
 
                     ColumnLayout {
                         anchors.fill: parent
-                        spacing: 10
+                        spacing: root.commonSpacing
                         ComboBox {
                             id: associateFurnitureComboBox
                             Layout.fillWidth: true

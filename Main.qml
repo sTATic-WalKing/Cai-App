@@ -13,6 +13,19 @@ ApplicationWindow {
     height: 600
     visible: true
 
+    function xhrErrorHandle(xhr) {
+        var toolTipText
+        if (xhr.status === 0) {
+            toolTipText = qsTr("Network Error")
+        } else {
+            toolTipText = qsTr("Server Error")
+        }
+        toolBar.showToolTip(toolTipText)
+    }
+    function toolBarShowToolTip(text) {
+        toolBar.showToolTip(text)
+    }
+
     Settings {
         id: settings
         property string host: hostTextField.text
@@ -23,13 +36,13 @@ ApplicationWindow {
     readonly property var stateIcons: [
         [ Material.accent, "orange" ]
     ]
-    readonly property var unitOfTime: [ qsTr("millisecond"), qsTr("Second"), qsTr("Minute"), qsTr("Hour"), qsTr("Day"), qsTr("Week"), qsTr("Month"), qsTr("Year") ]
+    readonly property var unitOfTime: [ qsTr("Millisecond"), qsTr("Second"), qsTr("Minute"), qsTr("Hour"), qsTr("Day"), qsTr("Week"), qsTr("Month"), qsTr("Year") ]
     readonly property color warnColor: "#E91E63"
+    readonly property real commonSpacing: 10
 
     property var furnitures: []
     property var views: []
     property var autos: []
-
     onFurnituresChanged: {
         J.updateModelData(furnituresListModel, root.furnitures, "furniture", "address")
     }
@@ -185,7 +198,7 @@ ApplicationWindow {
 
         ColumnLayout {
             anchors.fill: parent
-            spacing: 10
+            spacing: root.commonSpacing
 
             CheckBox {
                 id: landscapeCheckBox
@@ -263,7 +276,7 @@ ApplicationWindow {
         ColumnLayout {
             id: discoverColumnLayout
             anchors.fill: parent
-            spacing: 10
+            spacing: root.commonSpacing
             property int count
 
             Label {
@@ -285,19 +298,6 @@ ApplicationWindow {
                 Layout.fillWidth: true
             }
         }
-    }
-
-    function xhrErrorHandle(xhr) {
-        var toolTipText
-        if (xhr.status === 0) {
-            toolTipText = qsTr("Network Error")
-        } else {
-            toolTipText = qsTr("Server Error")
-        }
-        toolBar.showToolTip(toolTipText)
-    }
-    function toolBarShowToolTip(text) {
-        toolBar.showToolTip(text)
     }
 
     C.Popup {
@@ -357,7 +357,7 @@ ApplicationWindow {
         ColumnLayout {
             id: refreshColumnLayout
             anchors.fill: parent
-            spacing: 10
+            spacing: root.commonSpacing
 
             Label {
                 text: qsTr("We are refreshing all the data.")

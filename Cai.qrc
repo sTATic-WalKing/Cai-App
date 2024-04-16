@@ -24,5 +24,8 @@
         <file>icons/colon.svg</file>
         <file>icons/left.svg</file>
         <file>icons/addto.svg</file>
+        <file>icons/date.svg</file>
+        <file>icons/interval.svg</file>
+        <file>icons/watch.svg</file>
     </qresource>
 </RCC>

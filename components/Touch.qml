@@ -30,6 +30,10 @@ Item {
     onDisplayExtraChanged: {
         updateSize()
     }
+    onExtraHeightChanged: {
+        updateSize()
+    }
+
     onButtonClicked: {
         displayExtra = !displayExtra
     }
