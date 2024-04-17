@@ -12,7 +12,7 @@ C.List {
             buttonWidth: viewsList.width
             buttonHeight: 87
             property var autoIndexes: {
-                var ret = J.findAll(root.autos, "view", view["uid"])
+                var ret = J.viewFindAssociatedAutos(view["uid"], root.autos)
                 ret.sort(function(a, b) { return root.autos[a]["start"] - root.autos[b]["start"] })
                 return ret
             }
@@ -21,7 +21,7 @@ C.List {
                     id: iconsListView
                     anchors.left: parent.left
                     anchors.top: parent.top
-                    height: 32
+                    height: root.roundedSize
                     width: 200
                     interactive: false
                     orientation: ListView.Horizontal
@@ -31,9 +31,7 @@ C.List {
                     }
                     Component.onCompleted: {
                         var viewStates = view["states"]
-                        for (var i = 0; i < viewStates.length; ++i) {
-                            iconsListModel.append({ furniture: viewStates[i] })
-                        }
+                        J.updateModelData(iconsListModel, viewStates, "furniture", "address")
                     }
                     delegate: Component {
                         C.RoundedFurniture { }
@@ -66,7 +64,7 @@ C.List {
                     text: {
                         if (viewsListTouch.autoIndexes.length > 0) {
                             var autoStart = root.autos[viewsListTouch.autoIndexes[0]]["start"] * 1000
-                            return J.date2ShortText(new Date(autoStart), root.currentDate)
+                            return "<font color=\"grey\">" + qsTr("Will be applied at ") + "</font>" + J.date2ShortText(new Date(autoStart), root.currentDate)
                         }
 
                         return "<font color=\"grey\">" + qsTr("No Associated Autos") + "</font>"
@@ -200,9 +198,7 @@ C.List {
                     }
 
                     var onPostJsonComplete = function(rsp) {
-                        var tmp = {}
-                        tmp["view"] = rsp
-                        viewsList.model.set(J.findModelData(viewsList.model, "view", "uid", view["uid"]), tmp)
+                        J.updateAndNotify(root, "views", "uid", rsp)
                     }
                     var content = {}
                     content["uid"] = view["uid"]
@@ -257,7 +253,7 @@ C.List {
                             if (autoCreatePopup.every === 0) {
                                 ret += qsTr("Not Repeated")
                             } else {
-                                ret += J.stamp2SpanText(autoCreatePopup.every, root.unitOfTime)
+                                ret += J.stamp2SpanText(autoCreatePopup.every, root.unitsOfTime)
                             }
                             return ret
                         }
@@ -377,10 +373,11 @@ C.List {
                     }
                     Layout.preferredHeight: contentHeight
                     function updateAutos() {
-                        autosListModel.clear()
+                        var autos = []
                         for (var i = 0; i < viewsListTouch.autoIndexes.length; ++i) {
-                            autosListModel.append({ "auto": root.autos[viewsListTouch.autoIndexes[i]] })
+                            autos.push(root.autos[viewsListTouch.autoIndexes[i]])
                         }
+                        J.updateModelData(autosListModel, autos, "auto", "uid")
                     }
                     Component.onCompleted: {
                         updateAutos()
@@ -395,19 +392,19 @@ C.List {
 
                     header: Component {
                         C.VFit {
-                            height: extraColumnLayout.rowHeight
-                            text: "<font color=\"grey\">" + (autosListView.count > 0 ? qsTr("Associated Autos") : qsTr("No associated Autos")) + "</font>"
+                            height: autosListView.count > 0 ? 0 : extraColumnLayout.rowHeight
+                            text: "<font color=\"grey\">" + qsTr("No associated Autos") + "</font>"
                         }
                     }
                     delegate: Component {
                         C.VFit {
                             height: extraColumnLayout.rowHeight
                             text: {
-                                var ret = "<font color=\"grey\">" + qsTr("UID") + qsTr(": ") + "</font>" + auto["uid"] + "<font color=\"grey\">" + qsTr(", ") +
+                                var ret = "<font color=\"grey\">" + qsTr("Auto") + qsTr(": ") + "</font>" + auto["uid"] + "<font color=\"grey\">" + qsTr(", ") +
                                           qsTr("Start") + qsTr(": ") + "</font>" + new Date(auto["start"] * 1000).toLocaleString()
                                 var every = auto["every"]
                                 if (every !== undefined) {
-                                    ret += "<font color=\"grey\">" + qsTr(", ") + qsTr("Interval") + qsTr(": ") +  "</font>" + J.stamp2SpanText(every, root.unitOfTime)
+                                    ret += "<font color=\"grey\">" + qsTr(", ") + qsTr("Interval") + qsTr(": ") +  "</font>" + J.stamp2SpanText(every, root.unitsOfTime)
                                 }
                                 return ret
 
@@ -422,7 +419,7 @@ C.List {
                     C.Rounded {
                         icon.source: "/icons/delete.svg"
                         highlighted: true
-                        Material.accent: root.warnColor
+                        Material.accent: root.pink
                         onClicked: {
                             viewAbortPopup.open()
                         }

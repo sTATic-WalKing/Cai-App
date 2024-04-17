@@ -30,15 +30,19 @@ ApplicationWindow {
         id: settings
         property string host: hostTextField.text
     }
+
     readonly property var typeTexts: [ qsTr("Light") ]
     readonly property var typeIcons: [ "/icons/bulb.svg" ]
     readonly property var stateTexts: [ qsTr("Off"), qsTr("On") ]
     readonly property var stateIcons: [
         [ Material.accent, "orange" ]
     ]
-    readonly property var unitOfTime: [ qsTr("Millisecond"), qsTr("Second"), qsTr("Minute"), qsTr("Hour"), qsTr("Day"), qsTr("Week"), qsTr("Month"), qsTr("Year") ]
-    readonly property color warnColor: "#E91E63"
+    readonly property var monthsText: [ qsTr("January"), qsTr("February"), qsTr("March"), qsTr("April"), qsTr("May"), qsTr("June"), qsTr("July"), qsTr("August"), qsTr("September"), qsTr("October"), qsTr("November"), qsTr("December") ]
+    readonly property var unitsOfTime: [ qsTr("Millisecond"), qsTr("Second"), qsTr("Minute"), qsTr("Hour"), qsTr("Day"), qsTr("Week"), qsTr("Month"), qsTr("Year") ]
+    readonly property color pink: "#E91E63"
     readonly property real commonSpacing: 10
+    readonly property real headerHeight: 100
+    readonly property real roundedSize: 32
 
     property var furnitures: []
     property var views: []
@@ -65,7 +69,7 @@ ApplicationWindow {
 
     header: ToolBar {
         id: toolBar
-        height: 100
+        height: root.headerHeight
 
         function showToolTip(text) {
             ToolTip.show(text)
@@ -156,13 +160,13 @@ ApplicationWindow {
     Drawer {
         id: drawer
 
-        width: Math.min(root.width, root.height) / 3 * 2
+        width: root.portraitMode ? root.width / 3 * 2 : root.width / 3 * 1
         height: root.height
         modal: root.portraitMode
         interactive: root.portraitMode
         position: root.portraitMode ? 0 : 1
         visible: !root.portraitMode
-        Material.roundedScale: Material.NotRounded
+        // Material.roundedScale: Material.NotRounded
 
         App.Overview {
             anchors.fill: parent
@@ -307,7 +311,7 @@ ApplicationWindow {
     C.Popup {
         id: refreshPopup
         title: qsTr("Refresh")
-        property var xhrs
+        property var xhrs: []
         property int count
 
         function onDownloadConfigsComplete(list) {

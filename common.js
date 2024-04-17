@@ -206,3 +206,27 @@ function stamp2SpanText(stamp, unitOfTime) {
 
     return  ret
 }
+
+function findAssociatedViews(address, views) {
+    var ret = []
+    for (var i = 0; i < views.length; ++i) {
+        var view = views[i]
+        if (find(view["states"], "address", address) !== -1) {
+            ret.push(i)
+        }
+    }
+    return ret
+}
+
+function viewFindAssociatedAutos(uid, autos) {
+    return findAll(autos, "view", uid)
+}
+
+function furnitureFindAssociatedAutos(address, views, autos) {
+    var ret = []
+    var associatedViews = findAssociatedViews(address, views)
+    for (var i = 0; i < associatedViews.length; ++i) {
+        ret = ret.concat(viewFindAssociatedAutos(views[associatedViews[i]]["uid"], autos))
+    }
+    return ret
+}

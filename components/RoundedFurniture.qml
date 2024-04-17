@@ -18,7 +18,7 @@ C.Rounded {
 
     highlighted: furniture["state"] > 0 || furnitureIndex === -1 || !root.furnitures[furnitureIndex]["connected"]
     Material.accent: furnitureIndex === -1 || !root.furnitures[furnitureIndex]["connected"] ?
-                         root.warnColor :
+                         root.pink :
                          root.stateIcons[root.furnitures[furnitureIndex]["type"]][furniture["state"]]
 
     ToolTip.visible: down

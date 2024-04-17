@@ -116,8 +116,8 @@ ColumnLayout {
             value = new Date().getMonth()
         }
         textFromValue: function(value, locale) {
-            var months = [qsTr("January"), qsTr("February"), qsTr("March"), qsTr("April"), qsTr("May"), qsTr("June"), qsTr("July"), qsTr("August"), qsTr("September"), qsTr("October"), qsTr("November"), qsTr("December")]
-            return months[Number(value)]
+
+            return root.monthsText[Number(value)]
         }
     }
     SpinBox {

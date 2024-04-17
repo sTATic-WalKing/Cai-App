@@ -71,20 +71,10 @@ C.List {
                     enabled: associated
                     property bool associated
                     text: {
-                        var associatedViews = []
-                        for (var i = 0; i < root.views.length; ++i) {
-                            var view = root.views[i]
-                            if (J.find(view["states"], "address", furniture["address"]) !== -1) {
-                                associatedViews.push(view)
-                            }
-                        }
-                        var associatedAutoIndexes = []
-                        for (i = 0; i < associatedViews.length; ++i) {
-                            associatedAutoIndexes = associatedAutoIndexes.concat(J.findAll(root.autos, "view", associatedViews[i]["uid"]))
-                        }
-                        associatedAutoIndexes.sort(function(a, b) { return root.autos[a]["start"] - root.autos[b]["start"] })
-                        if (associatedAutoIndexes.length > 0) {
-                            var auto = root.autos[associatedAutoIndexes[0]]
+                        var associatedAutos = J.furnitureFindAssociatedAutos(furniture["address"], root.views, root.autos)
+                        associatedAutos.sort(function(a, b) { return root.autos[a]["start"] - root.autos[b]["start"] })
+                        if (associatedAutos.length > 0) {
+                            var auto = root.autos[associatedAutos[0]]
                             var states = root.views[J.find(root.views, "uid", auto["view"])]["states"]
                             associated = true
                             return "<font color=\"grey\">" + qsTr("Will be") + "</font> " + root.stateTexts[states[J.find(states, "address", furniture["address"])]["state"]] + "<font color=\"grey\"> " + qsTr("at") + " </font>" + J.date2ShortText(new Date(auto["start"] * 1000) , root.currentDate)
@@ -106,7 +96,7 @@ C.List {
                     C.Rounded {
                         highlighted: true
                         icon.source: furniture["connected"] ? "/icons/connected.svg" : "/icons/disconnected.svg"
-                        Material.accent: furniture["connected"] ? parent.Material.accent : root.warnColor
+                        Material.accent: furniture["connected"] ? parent.Material.accent : root.pink
                         onClicked: {
                             if (furniture["connected"]) {
                                 disconnectPopup.open()
@@ -264,13 +254,71 @@ C.List {
                     }
                 }
 
+                ListView {
+                    id: viewsListView
+                    Layout.preferredWidth: extraColumnLayout.width
+                    interactive: false
+                    Layout.preferredHeight: contentHeight
+                    model: ListModel {
+                        id: viewsListModel
+                    }
+                    header: Component {
+                        C.VFit {
+                            height: viewsListView.count > 0 ? 0 : extraColumnLayout.rowHeight
+                            text: "<font color=\"grey\">" + qsTr("No associated Views") + "</font>"
+                        }
+                    }
+                    delegate: Component {
+                        C.VFit {
+                            height: extraColumnLayout.rowHeight
+                            text: {
+                                var ret = "<font color=\"grey\">" + qsTr("View") + "</font>" + qsTr(": ")
+                                var viewAlias = view["alias"]
+                                if (viewAlias === undefined) {
+                                    ret += view["uid"]
+                                } else {
+                                    ret += viewAlias
+                                }
+                                var associatedAutos = J.viewFindAssociatedAutos(view["uid"], root.autos)
+                                if (associatedAutos.length === 0) {
+                                    ret += "<font color=\"grey\">" + qsTr(", ") + qsTr("No associated Autos") + "</font>"
+                                } else {
+                                    associatedAutos.sort(function(a, b) { return root.autos[a]["start"] - root.autos[b]["start"] })
+                                    var autoStart = root.autos[associatedAutos[0]]["start"] * 1000
+                                    ret += "<font color=\"grey\">" + qsTr(", ") + qsTr("Will be applied at ") + "</font>" + J.date2ShortText(new Date(autoStart), root.currentDate)
+                                }
+                                return ret
+                            }
+                        }
+                    }
+                    function updateViews() {
+                        var associatedViews = J.findAssociatedViews(furniture["address"], root.views)
+                        var associatedViewObjs = []
+                        for (var i = 0; i < associatedViews.length; ++i) {
+                            associatedViewObjs.push(root.views[associatedViews[i]])
+                        }
+                        J.updateModelData(viewsListModel, associatedViewObjs, "view", "uid")
+                    }
+
+                    Component.onCompleted: {
+                        updateViews()
+                    }
+
+                    Connections {
+                        target: root
+                        function onViewsChanged() {
+                            viewsListView.updateViews()
+                        }
+                    }
+                }
+
                 RowLayout {
                     Layout.preferredWidth: extraColumnLayout.width
                     layoutDirection: Qt.RightToLeft
                     C.Rounded {
                         icon.source: "/icons/delete.svg"
                         highlighted: true
-                        Material.accent: root.warnColor
+                        Material.accent: root.pink
                         onClicked: {
                             abortPopup.open()
                         }
