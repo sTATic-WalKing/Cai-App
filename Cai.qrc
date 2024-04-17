@@ -27,5 +27,6 @@
         <file>icons/date.svg</file>
         <file>icons/interval.svg</file>
         <file>icons/watch.svg</file>
+        <file>icons/app.svg</file>
     </qresource>
 </RCC>

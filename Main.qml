@@ -163,6 +163,10 @@ ApplicationWindow {
         position: root.portraitMode ? 0 : 1
         visible: !root.portraitMode
         Material.roundedScale: Material.NotRounded
+
+        App.Overview {
+            anchors.fill: parent
+        }
     }
 
     SwipeView {

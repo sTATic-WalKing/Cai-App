@@ -560,62 +560,62 @@
         <translation>任务</translation>
     </message>
     <message>
-        <location filename="../Main.qml" line="197"/>
-        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Release/Cai/Main.qml" line="197"/>
+        <location filename="../Main.qml" line="201"/>
+        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Release/Cai/Main.qml" line="201"/>
         <source>Settings</source>
         <translation>设置</translation>
     </message>
     <message>
-        <location filename="../Main.qml" line="205"/>
-        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Release/Cai/Main.qml" line="205"/>
+        <location filename="../Main.qml" line="209"/>
+        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Release/Cai/Main.qml" line="209"/>
         <source>Landscape</source>
         <translation>宽屏</translation>
     </message>
     <message>
-        <location filename="../Main.qml" line="211"/>
-        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Release/Cai/Main.qml" line="211"/>
+        <location filename="../Main.qml" line="215"/>
+        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Release/Cai/Main.qml" line="215"/>
         <source>Host</source>
         <translation>主机</translation>
     </message>
     <message>
-        <location filename="../Main.qml" line="222"/>
-        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Release/Cai/Main.qml" line="222"/>
+        <location filename="../Main.qml" line="226"/>
+        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Release/Cai/Main.qml" line="226"/>
         <source>Discover</source>
         <translation>发现</translation>
     </message>
     <message>
-        <location filename="../Main.qml" line="256"/>
-        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Release/Cai/Main.qml" line="256"/>
+        <location filename="../Main.qml" line="260"/>
+        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Release/Cai/Main.qml" line="260"/>
         <source>No new furnitures found.</source>
         <translation>未发现新的家具。</translation>
     </message>
     <message>
-        <location filename="../Main.qml" line="285"/>
-        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Release/Cai/Main.qml" line="285"/>
+        <location filename="../Main.qml" line="289"/>
+        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Release/Cai/Main.qml" line="289"/>
         <source>Downloading the config...</source>
         <translation>拉取配置中……</translation>
     </message>
     <message>
-        <location filename="../Main.qml" line="288"/>
-        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Release/Cai/Main.qml" line="288"/>
+        <location filename="../Main.qml" line="292"/>
+        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Release/Cai/Main.qml" line="292"/>
         <source>Sending discover request...</source>
         <translation>正在发送发现请求……</translation>
     </message>
     <message>
-        <location filename="../Main.qml" line="291"/>
-        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Release/Cai/Main.qml" line="291"/>
+        <location filename="../Main.qml" line="295"/>
+        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Release/Cai/Main.qml" line="295"/>
         <source>Checking the result and </source>
         <translation>正在检查结果，</translation>
     </message>
     <message>
-        <location filename="../Main.qml" line="291"/>
-        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Release/Cai/Main.qml" line="291"/>
+        <location filename="../Main.qml" line="295"/>
+        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Release/Cai/Main.qml" line="295"/>
         <source> times checked.</source>
         <translation>次已经被重试。</translation>
     </message>
     <message>
-        <location filename="../Main.qml" line="293"/>
-        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Release/Cai/Main.qml" line="293"/>
+        <location filename="../Main.qml" line="297"/>
+        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Release/Cai/Main.qml" line="297"/>
         <source>We have checked the result too many times.</source>
         <translation>我们重试太多次惹。</translation>
     </message>
@@ -632,14 +632,14 @@
         <translation>不知道服务器说了个啥</translation>
     </message>
     <message>
-        <location filename="../Main.qml" line="305"/>
-        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Release/Cai/Main.qml" line="305"/>
+        <location filename="../Main.qml" line="309"/>
+        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Release/Cai/Main.qml" line="309"/>
         <source>Refresh</source>
         <translation>刷新</translation>
     </message>
     <message>
-        <location filename="../Main.qml" line="363"/>
-        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Release/Cai/Main.qml" line="363"/>
+        <location filename="../Main.qml" line="367"/>
+        <location filename="../../build-Cai-Android_Qt_6_7_0_Clang_arm64_v8a-Release/Cai/Main.qml" line="367"/>
         <source>We are refreshing all the data.</source>
         <translation>我们正在重新获取所有数据。</translation>
     </message>

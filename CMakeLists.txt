@@ -16,7 +16,7 @@ qt_add_executable(appCai
 
 qt_add_qml_module(appCai
     URI Cai
-    QML_FILES Main.qml Furnitures.qml Autos.qml components/List.qml components/Rounded.qml components/Touch.qml components/Popup.qml components/VFit.qml components/DatePicker.qml components/TimePicker.qml components/RoundedFurniture.qml
+    QML_FILES Main.qml Furnitures.qml Autos.qml Overview.qml components/List.qml components/Rounded.qml components/Touch.qml components/Popup.qml components/VFit.qml components/DatePicker.qml components/TimePicker.qml components/RoundedFurniture.qml
 )
 
 qt_add_translations(appCai
@@ -36,6 +36,10 @@ set_target_properties(appCai PROPERTIES
     MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
     MACOSX_BUNDLE TRUE
     WIN32_EXECUTABLE TRUE
+)
+
+set_property(TARGET appCai APPEND PROPERTY
+    QT_ANDROID_PACKAGE_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/android
 )
 
 target_link_libraries(appCai
