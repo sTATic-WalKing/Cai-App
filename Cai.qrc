@@ -28,5 +28,7 @@
         <file>icons/watch.svg</file>
         <file>icons/app.svg</file>
         <file>i18n/qml_zh.ts</file>
+        <file>icons/sync.svg</file>
+        <file>icons/unsync.svg</file>
     </qresource>
 </RCC>

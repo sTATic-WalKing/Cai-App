@@ -6,6 +6,7 @@ import QtQuick.Controls.Material
 import "." as App
 import "qrc:/common.js" as J
 import "components" as C
+import QtQuick.Dialogs
 
 ApplicationWindow {
     id: root
@@ -17,6 +18,8 @@ ApplicationWindow {
         var toolTipText
         if (xhr.status === 0) {
             toolTipText = qsTr("Network Error")
+        } else if (xhr.status === 412) {
+            hashPopup.open()
         } else {
             toolTipText = qsTr("Server Error")
         }
@@ -24,6 +27,31 @@ ApplicationWindow {
     }
     function toolBarShowToolTip(text) {
         toolBar.showToolTip(text)
+    }
+    function get_hash() {
+        var related_configs = []
+        for (var i = 0; i < root.furnitures.length; ++i) {
+            var related_config = {}
+            related_config["address"] = root.furnitures[i]["address"]
+            related_config["connected"] = root.furnitures[i]["connected"]
+            related_config["state"] = root.furnitures[i]["state"]
+            related_config["type"] = root.furnitures[i]["type"]
+            related_configs.push(related_config)
+        }
+        related_configs.sort(function(a, b) { return a["address"] < b["address"] })
+        var view_uids = []
+        for (i = 0; i < root.views.length; ++i) {
+            view_uids.push(root.views[i]["uid"])
+        }
+        view_uids.sort()
+        var auto_uids = []
+        for (i = 0; i < root.autos.length; ++i) {
+            auto_uids.push(root.autos[i]["uid"])
+        }
+        auto_uids.sort()
+        var str = JSON.stringify([ related_configs, view_uids, auto_uids ]).replace(" ", "")
+        var hashed = Qt.md5(str)
+        return hashed
     }
 
     Settings {
@@ -63,27 +91,37 @@ ApplicationWindow {
         function showToolTip(text) {
             ToolTip.show(text)
         }
-        ToolButton {
-            id: drawerToolButton
+        RowLayout {
+            id: toolBarRowLayout
             anchors.left: parent.left
             anchors.top: parent.top
             height: 55
-            visible: root.portraitMode
-            icon.source: "/icons/overview.svg"
-            Material.foreground: "white"
-            action: Action {
-                onTriggered: {
-                    drawer.open()
+            ToolButton {
+                visible: root.portraitMode
+                icon.source: "/icons/overview.svg"
+                Material.foreground: "white"
+                action: Action {
+                    onTriggered: {
+                        drawer.open()
+                    }
+                }
+            }
+            ToolButton {
+                icon.source: refreshTimer.running ? "/icons/sync.svg" : "/icons/unsync.svg"
+                Material.foreground: "white"
+                action: Action {
+                    onTriggered: {
+                        refreshPopup.open()
+                    }
                 }
             }
         }
         RowLayout {
             anchors.right: parent.right
             anchors.top: parent.top
-            height: drawerToolButton.height
+            height: toolBarRowLayout.height
 
             ToolButton {
-                id: discoverToolButton
                 Material.foreground: "white"
                 icon.source: "/icons/bluetooth.svg"
                 action: Action {
@@ -95,6 +133,11 @@ ApplicationWindow {
             ToolButton {
                 Material.foreground: "white"
                 icon.source: "/icons/qr.svg"
+                action: Action {
+                    onTriggered: {
+                        fileDialog.open()
+                    }
+                }
             }
             ToolButton {
                 Material.foreground: "white"
@@ -110,7 +153,7 @@ ApplicationWindow {
         TabBar {
             id: bar
             width: toolBar.width - (root.portraitMode ? 0 : drawer.width)
-            height: toolBar.height - drawerToolButton.height
+            height: toolBar.height - toolBarRowLayout.height
             anchors.right: parent.right
             anchors.bottom: parent.bottom
             contentHeight: height
@@ -294,34 +337,57 @@ ApplicationWindow {
     }
 
     C.Popup {
+        id: hashPopup
+        title: qsTr("Unsynchronized")
+        standardButtons: Dialog.Ok
+        onAccepted: {
+            refreshPopup.open()
+        }
+        onOpened: {
+            refreshTimer.stop()
+        }
+
+        ColumnLayout {
+            anchors.fill: parent
+            spacing: root.commonSpacing
+
+            Label {
+                text: qsTr("Press OK to refresh, and then redo what you want.")
+                wrapMode: Text.Wrap
+                Layout.fillWidth: true
+            }
+        }
+    }
+
+    C.Popup {
         id: refreshPopup
         title: qsTr("Refresh")
         property var xhrs: []
         property int count
 
-        function onDownloadConfigsComplete(list) {
-            root.furnitures = list
+        function updateCount() {
             ++count
             if (count === 3) {
                 close()
-            }
-        }
-        function onDownloadViewsComplete(list) {
-            root.views = list
-            ++count
-            if (count === 3) {
-                close()
-            }
-        }
-        function onDownloadAutosComplete(list) {
-            root.autos = list
-            ++count
-            if (count === 3) {
-                close()
+                refreshTimer.start()
             }
         }
 
+        function onDownloadConfigsComplete(list) {
+            root.furnitures = list
+            updateCount()
+        }
+        function onDownloadViewsComplete(list) {
+            root.views = list
+            updateCount()
+        }
+        function onDownloadAutosComplete(list) {
+            root.autos = list
+            updateCount()
+        }
+
         onOpened: {
+            refreshTimer.stop()
             xhrs = []
             count = 0
             J.downloadModelData(settings.host, "config", "address", onDownloadConfigsComplete, root.xhrErrorHandle, xhrs)
@@ -347,5 +413,24 @@ ApplicationWindow {
                 Layout.fillWidth: true
             }
         }
+        Timer {
+            id: refreshTimer
+            interval: 8 * 1000
+            onTriggered: {
+                var onPostJsonComplete = function(rsp) {
+                    if (rsp["hash"] !== root.get_hash()) {
+                        refreshPopup.open()
+                    } else {
+                        start()
+                    }
+                }
+                J.postJSON(settings.host + "/ping", onPostJsonComplete, root.xhrErrorHandle, {}, false)
+            }
+        }
     }
+    FileDialog {
+        id: fileDialog
+        currentFolder: StandardPaths.standardLocations(StandardPaths.PicturesLocation)[0]
+    }
+
 }

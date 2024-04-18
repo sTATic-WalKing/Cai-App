@@ -219,7 +219,7 @@ C.List {
                     if (autoCreatePopup.every > 0) {
                         content["every"] = autoCreatePopup.every
                     }
-
+                    content["hash"] = root.get_hash()
                     J.postJSON(settings.host + "/auto", onPostJsonComplete, root.xhrErrorHandle, content)
                 }
 

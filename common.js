@@ -116,7 +116,7 @@ function postJSON(url, onComplete, onError, body={}, async=true, xhrs=[]) {
             onError(xhr)
             return
         }
-        // console.log(xhr.responseURL, xhr.responseText.toString())
+        console.log(xhr.responseURL, xhr.responseText.toString())
         onComplete(JSON.parse(xhr.responseText.toString()))
     }
     xhr.open("POST", url, async)

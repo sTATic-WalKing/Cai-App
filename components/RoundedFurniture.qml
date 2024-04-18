@@ -20,8 +20,10 @@ C.Rounded {
     Material.accent: furnitureIndex === -1 || !root.furnitures[furnitureIndex]["connected"] ?
                          root.pink :
                          root.stateIcons[root.furnitures[furnitureIndex]["type"]][furniture["state"]]
+    onClicked: {
+        ToolTip.visible = true
+    }
 
-    ToolTip.visible: down
     ToolTip.text: {
         if (furnitureIndex === -1) {
             return qsTr("Deleted")

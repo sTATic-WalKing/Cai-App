@@ -36,6 +36,7 @@ C.List {
                         var content = {}
                         content["state"] = furniture["state"] > 0 ? 0 : 1
                         content["address"] = furniture["address"]
+                        content["hash"] = root.get_hash()
                         J.postJSON(settings.host + "/state", onPostJsonComplete, root.xhrErrorHandle, content)
                     }
                 }
