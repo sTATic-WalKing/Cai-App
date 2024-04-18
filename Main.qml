@@ -55,17 +55,6 @@ ApplicationWindow {
     }
 
     readonly property bool portraitMode: !landscapeCheckBox.checked || root.width < root.height
-    property var currentDate
-    Timer {
-        repeat: true
-        triggeredOnStart: true
-        onTriggered: {
-            currentDate = new Date()
-        }
-        Component.onCompleted: {
-            start()
-        }
-    }
 
     header: ToolBar {
         id: toolBar
@@ -265,10 +254,6 @@ ApplicationWindow {
                         } else {
                             discoverColumnLayout.count = -11
                             var onInnerPostJSONComplete = function(rsp) {
-                                var onStatePostJSONComplete  = function(innerRsp) {
-                                    rsp["state"] = innerRsp["state"]
-                                }
-                                J.postJSON(settings.host + "/state", onStatePostJSONComplete, discoverPopup.onXHRError, { address: rsp["address"] }, false, discoverPopup.xhrs)
                                 J.updateAndNotify(root, "furnitures", "address", rsp)
                                 discoverPopup.close()
                             }
@@ -321,19 +306,6 @@ ApplicationWindow {
                 close()
             }
         }
-        function downloadConfigs(list) {
-            for (var i = 0; i < list.length; ++i) {
-                var current = list[i]
-                if (!current["connected"]) {
-                    continue
-                }
-                var onInnerPostJsonComplete = function(rsp) {
-                    list[J.find(list, "address", current["address"])]["state"] = rsp["state"]
-                }
-                J.postJSON(settings.host + "/state", onInnerPostJsonComplete, root.xhrErrorHandle, { address: current["address"] }, false, xhrs)
-            }
-            onDownloadConfigsComplete(list)
-        }
         function onDownloadViewsComplete(list) {
             root.views = list
             ++count
@@ -352,7 +324,7 @@ ApplicationWindow {
         onOpened: {
             xhrs = []
             count = 0
-            J.downloadModelData(settings.host, "config", "address", downloadConfigs, root.xhrErrorHandle, xhrs)
+            J.downloadModelData(settings.host, "config", "address", onDownloadConfigsComplete, root.xhrErrorHandle, xhrs)
             J.downloadModelData(settings.host, "view", "uid", onDownloadViewsComplete, root.xhrErrorHandle, xhrs)
             J.downloadModelData(settings.host, "auto", "uid", onDownloadAutosComplete, root.xhrErrorHandle, xhrs)
         }

@@ -14,7 +14,6 @@
         <file>icons/down.svg</file>
         <file>icons/refresh.svg</file>
         <file>i18n/qml_en.ts</file>
-        <file>i18n/qml_zh.ts</file>
         <file>icons/autos.svg</file>
         <file>icons/furnitures.svg</file>
         <file>icons/views.svg</file>
@@ -28,5 +27,6 @@
         <file>icons/interval.svg</file>
         <file>icons/watch.svg</file>
         <file>icons/app.svg</file>
+        <file>i18n/qml_zh.ts</file>
     </qresource>
 </RCC>

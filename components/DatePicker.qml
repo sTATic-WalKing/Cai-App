@@ -11,7 +11,7 @@ ColumnLayout {
 
     property int selectedDate
     function reset() {
-        grid.clicked(root.currentDate)
+        grid.clicked(new Date())
     }
 
     readonly property real delegateSize: 32

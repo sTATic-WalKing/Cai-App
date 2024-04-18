@@ -64,10 +64,10 @@ C.List {
                     text: {
                         if (viewsListTouch.autoIndexes.length > 0) {
                             var autoStart = root.autos[viewsListTouch.autoIndexes[0]]["start"] * 1000
-                            return "<font color=\"grey\">" + qsTr("Will be applied at ") + "</font>" + J.date2ShortText(new Date(autoStart), root.currentDate)
+                            return "<font color=\"grey\">" + qsTr("Will be executed at ") + "</font>" + J.date2ShortText(new Date(autoStart))
                         }
 
-                        return "<font color=\"grey\">" + qsTr("No Associated Autos") + "</font>"
+                        return "<font color=\"grey\">" + qsTr("No arranged execution") + "</font>"
                     }
                 }
                 RowLayout {
@@ -104,7 +104,7 @@ C.List {
                     return
                 }
                 autosTimer.auto = root.autos[viewsListTouch.autoIndexes[0]]
-                autosTimer.interval = Math.max((autosTimer.auto["start"] + 1) * 1000 - root.currentDate.getTime(), 1000)
+                autosTimer.interval = Math.max((autosTimer.auto["start"] + 1) * 1000 - new Date().getTime(), 1000)
                 autosTimer.start()
             }
             function abortAutos(onComplete=undefined, xhrs=[]) {
@@ -153,19 +153,10 @@ C.List {
                     }
                     var states = view["states"]
                     for (var i = 0; i < states.length; ++i) {
-                        var local_i = i
                         var onInnerPostJsonComplete = function(rsp) {
-                            var index = J.find(root.furnitures, "address", states[local_i]["address"])
-                            if (index === -1) {
-                                return
-                            }
-                            var data = root.furnitures[index]
-                            data["state"] = rsp["state"]
-                            J.updateAndNotify(root, "furnitures", "address", data)
+                            J.updateAndNotify(root, "furnitures", "address", rsp)
                         }
-                        var content = {}
-                        content["address"] = states[i]["address"]
-                        J.postJSON(settings.host + "/state", onInnerPostJsonComplete, root.xhrErrorHandle, content)
+                        J.postJSON(settings.host + "/config", onInnerPostJsonComplete, root.xhrErrorHandle, { "address": states[i]["address"] })
                     }
                 }
             }
@@ -210,7 +201,7 @@ C.List {
                 id: autoCreatePopup
                 title: qsTr("Auto")
                 standardButtons: Dialog.Ok
-                readonly property int start: datePicker.selectedDate + timePicker.selectedTime + root.currentDate.getTimezoneOffset() * 60
+                readonly property int start: datePicker.selectedDate + timePicker.selectedTime + new Date().getTimezoneOffset() * 60
                 readonly property int every: everyPicker.selectedTime
                 onAboutToShow: {
                     datePicker.reset()
@@ -222,7 +213,7 @@ C.List {
                     }
                     var content = {}
                     content["view"] = view["uid"]
-                    if (autoCreatePopup.start * 1000 > root.currentDate.getTime()) {
+                    if (autoCreatePopup.start * 1000 > new Date().getTime()) {
                         content["start"] = autoCreatePopup.start
                     }
                     if (autoCreatePopup.every > 0) {
@@ -237,9 +228,9 @@ C.List {
                     spacing: root.commonSpacing
                     Label {
                         text: {
-                            var ret = "<font color=\"grey\">" + qsTr("Start At") + qsTr(": ") + "</font>"
+                            var ret = "<font color=\"grey\">" + qsTr("Start") + qsTr(": ") + "</font>"
                             var start = autoCreatePopup.start * 1000
-                            if (start <= root.currentDate.getTime()) {
+                            if (start <= new Date().getTime()) {
                                 ret += qsTr("Now")
                             } else {
                                 ret += new Date(start).toLocaleString()
@@ -249,7 +240,7 @@ C.List {
                     }
                     Label {
                         text: {
-                            var ret = "<font color=\"grey\">" + qsTr("Repeat Every") + qsTr(": ") + "</font>"
+                            var ret = "<font color=\"grey\">" + qsTr("Interval") + qsTr(": ") + "</font>"
                             if (autoCreatePopup.every === 0) {
                                 ret += qsTr("Not Repeated")
                             } else {
@@ -324,7 +315,7 @@ C.List {
             }
             C.Popup {
                 id: autosAbortPopup
-                title: qsTr("Abort Autos")
+                title: qsTr("Stop Autos")
                 standardButtons: Dialog.Ok
                 onAccepted: {
                     viewsListTouch.abortAutos()
@@ -333,7 +324,7 @@ C.List {
                     anchors.fill: parent
                     spacing: root.commonSpacing
                     Label {
-                        text: qsTr("Abort all associated autos, are you sure?")
+                        text: qsTr("Stop all arranged execution, are you sure?")
                         wrapMode: Text.Wrap
                         Layout.fillWidth: true
                     }
@@ -393,21 +384,19 @@ C.List {
                     header: Component {
                         C.VFit {
                             height: autosListView.count > 0 ? 0 : extraColumnLayout.rowHeight
-                            text: "<font color=\"grey\">" + qsTr("No associated Autos") + "</font>"
+                            text: "<font color=\"grey\">" + qsTr("No arranged execution") + "</font>"
                         }
                     }
                     delegate: Component {
                         C.VFit {
                             height: extraColumnLayout.rowHeight
                             text: {
-                                var ret = "<font color=\"grey\">" + qsTr("Auto") + qsTr(": ") + "</font>" + auto["uid"] + "<font color=\"grey\">" + qsTr(", ") +
-                                          qsTr("Start") + qsTr(": ") + "</font>" + new Date(auto["start"] * 1000).toLocaleString()
+                                var ret = "<font color=\"grey\">" + qsTr("Start") + qsTr(": ") + "</font>" + new Date(auto["start"] * 1000).toLocaleString()
                                 var every = auto["every"]
                                 if (every !== undefined) {
                                     ret += "<font color=\"grey\">" + qsTr(", ") + qsTr("Interval") + qsTr(": ") +  "</font>" + J.stamp2SpanText(every, root.unitsOfTime)
                                 }
                                 return ret
-
                             }
                         }
                     }
@@ -473,7 +462,7 @@ C.List {
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.left: parent.left
                     font.italic: true
-                    text: qsTr("Create a View")
+                    text: qsTr("Create an Auto")
                 }
                 IconLabel {
                     height: createLabel.height
@@ -487,7 +476,7 @@ C.List {
 
             C.Popup {
                 id: viewCreatePopup
-                title: qsTr("Create a View")
+                title: qsTr("Create an Auto")
                 standardButtons: Dialog.Ok
                 clip: true
                 contentHeight: createFlickable.contentHeight

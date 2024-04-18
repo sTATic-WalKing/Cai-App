@@ -77,10 +77,10 @@ C.List {
                             var auto = root.autos[associatedAutos[0]]
                             var states = root.views[J.find(root.views, "uid", auto["view"])]["states"]
                             associated = true
-                            return "<font color=\"grey\">" + qsTr("Will be") + "</font> " + root.stateTexts[states[J.find(states, "address", furniture["address"])]["state"]] + "<font color=\"grey\"> " + qsTr("at") + " </font>" + J.date2ShortText(new Date(auto["start"] * 1000) , root.currentDate)
+                            return "<font color=\"grey\">" + qsTr("Will be") + "</font> " + root.stateTexts[states[J.find(states, "address", furniture["address"])]["state"]] + "<font color=\"grey\"> " + qsTr("at") + " </font>" + J.date2ShortText(new Date(auto["start"] * 1000))
                         } else {
                             associated = false
-                            return "<font color=\"grey\">" + qsTr("No Associated Autos") + "</font>"
+                            return "<font color=\"grey\">" + qsTr("No arranged execution") + "</font>"
                         }
 
                     }
@@ -265,14 +265,14 @@ C.List {
                     header: Component {
                         C.VFit {
                             height: viewsListView.count > 0 ? 0 : extraColumnLayout.rowHeight
-                            text: "<font color=\"grey\">" + qsTr("No associated Views") + "</font>"
+                            text: "<font color=\"grey\">" + qsTr("No associated Autos") + "</font>"
                         }
                     }
                     delegate: Component {
                         C.VFit {
                             height: extraColumnLayout.rowHeight
                             text: {
-                                var ret = "<font color=\"grey\">" + qsTr("View") + "</font>" + qsTr(": ")
+                                var ret = "<font color=\"grey\">" + qsTr("Auto") + "</font>" + qsTr(": ")
                                 var viewAlias = view["alias"]
                                 if (viewAlias === undefined) {
                                     ret += view["uid"]
@@ -281,11 +281,11 @@ C.List {
                                 }
                                 var associatedAutos = J.viewFindAssociatedAutos(view["uid"], root.autos)
                                 if (associatedAutos.length === 0) {
-                                    ret += "<font color=\"grey\">" + qsTr(", ") + qsTr("No associated Autos") + "</font>"
+                                    ret += "<font color=\"grey\">" + qsTr(", ") + qsTr("No arranged execution") + "</font>"
                                 } else {
                                     associatedAutos.sort(function(a, b) { return root.autos[a]["start"] - root.autos[b]["start"] })
                                     var autoStart = root.autos[associatedAutos[0]]["start"] * 1000
-                                    ret += "<font color=\"grey\">" + qsTr(", ") + qsTr("Will be applied at ") + "</font>" + J.date2ShortText(new Date(autoStart), root.currentDate)
+                                    ret += "<font color=\"grey\">" + qsTr(", ") + qsTr("Will be executed at") + qsTr(": ") + "</font>" + J.date2ShortText(new Date(autoStart))
                                 }
                                 return ret
                             }

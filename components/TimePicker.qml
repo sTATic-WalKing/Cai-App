@@ -11,10 +11,11 @@ RowLayout {
                                         secondTumbler.currentIndex
 
     function reset() {
+        var now = new Date()
         dayTumbler.currentIndex = 0
-        hourTumbler.currentIndex = root.currentDate.getHours()
-        minuteTumbler.currentIndex = root.currentDate.getMinutes()
-        secondTumbler.currentIndex = root.currentDate.getSeconds()
+        hourTumbler.currentIndex = now.getHours()
+        minuteTumbler.currentIndex = now.getMinutes()
+        secondTumbler.currentIndex = now.getSeconds()
     }
 
     spacing: 0
@@ -23,7 +24,7 @@ RowLayout {
         model: 100
         visible: daySpinBoxVisible
 
-        ToolTip.text: qsTr("Day")
+        ToolTip.text: root.unitsOfTime[4]
         ToolTip.visible: moving
     }
     IconLabel {
@@ -36,7 +37,7 @@ RowLayout {
         id: hourTumbler
         model: 24
 
-        ToolTip.text: qsTr("Hour")
+        ToolTip.text: root.unitsOfTime[3]
         ToolTip.visible: moving
     }
     IconLabel {
@@ -48,7 +49,7 @@ RowLayout {
         id: minuteTumbler
         model: 60
 
-        ToolTip.text: qsTr("Minute")
+        ToolTip.text: root.unitsOfTime[2]
         ToolTip.visible: moving
     }
     IconLabel {
@@ -60,7 +61,7 @@ RowLayout {
         id: secondTumbler
         model: 60
 
-        ToolTip.text: qsTr("Second")
+        ToolTip.text: root.unitsOfTime[1]
         ToolTip.visible: moving
     }
 }

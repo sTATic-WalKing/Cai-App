@@ -175,8 +175,8 @@ function sameDate(a, b) {
     return a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate()
 }
 
-function date2ShortText(date, now) {
-    if (sameDate(date, now)) {
+function date2ShortText(date) {
+    if (sameDate(date, new Date())) {
         return date.toLocaleTimeString()
     } else {
         return date.toLocaleDateString()
