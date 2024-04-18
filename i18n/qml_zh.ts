@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
 <TS version="2.1" language="zh_CN">
 <context>
@@ -120,10 +120,8 @@
         <translation>开始</translation>
     </message>
     <message>
-        <location filename="../Autos.qml" line="67"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Autos.qml" line="67"/>
         <source>Will be executed at</source>
-        <translation>将被执行于</translation>
+        <translation type="vanished">将被执行于</translation>
     </message>
     <message>
         <location filename="../Autos.qml" line="318"/>
@@ -144,6 +142,12 @@
         <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Autos.qml" line="397"/>
         <source>Interval</source>
         <translation>间隔</translation>
+    </message>
+    <message>
+        <location filename="../Autos.qml" line="67"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Autos.qml" line="67"/>
+        <source>Will be executed at </source>
+        <translation type="unfinished">将被执行于</translation>
     </message>
     <message>
         <location filename="../Autos.qml" line="420"/>
@@ -298,7 +302,7 @@
         <location filename="../Furnitures.qml" line="288"/>
         <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Furnitures.qml" line="288"/>
         <source>Will be executed at</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">将被执行于</translation>
     </message>
     <message>
         <source>Will be executed at </source>
