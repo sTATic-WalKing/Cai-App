@@ -415,7 +415,7 @@ ApplicationWindow {
         }
         Timer {
             id: refreshTimer
-            interval: 8 * 1000
+            interval: 6 * 1000
             onTriggered: {
                 var onPostJsonComplete = function(rsp) {
                     if (rsp["hash"] !== root.get_hash()) {
