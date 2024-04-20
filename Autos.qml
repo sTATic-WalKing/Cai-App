@@ -47,11 +47,21 @@ C.List {
                     height: 16
                     clip: true
                     text: {
-                        var viewAlias = view["alias"]
-                        if (viewAlias !== undefined) {
-                            return viewAlias
+                        var ret = ""
+                        var entries = Object.entries(view)
+                        for (var i = 0; i < entries.length; ++i) {
+                            if (entries[i][0] === "uid" || entries[i][0] === "states") {
+                                continue
+                            }
+                            if (ret !== "") {
+                                ret += qsTr(", ")
+                            }
+                            ret += entries[i][1]
                         }
-                        return view["uid"]
+                        if (ret === "") {
+                            ret = view["uid"]
+                        }
+                        return ret
                     }
                 }
 
@@ -107,6 +117,18 @@ C.List {
                 autosTimer.interval = Math.max((autosTimer.auto["start"] + 1) * 1000 - new Date().getTime(), 1000)
                 autosTimer.start()
             }
+            function abortAuto(uid, last, onComplete=undefined, xhrs=[]) {
+                var onPostJsonComplete = function(rsp) {
+                    J.removeAndNotify(root, "autos", "uid", uid)
+                    if (onComplete !== undefined && uid === last) {
+                        onComplete()
+                    }
+                }
+                var content = {}
+                content["uid"] = uid
+                J.postJSON(settings.host + "/abort", onPostJsonComplete, root.xhrErrorHandle, content, true, xhrs)
+            }
+
             function abortAutos(onComplete=undefined, xhrs=[]) {
                 var uids = []
                 for (var i = 0; i < viewsListTouch.autoIndexes.length; ++i) {
@@ -115,18 +137,8 @@ C.List {
                 if (uids.length === 0 && onComplete !== undefined) {
                     onComplete()
                 }
-
                 for (i = 0; i < uids.length; ++i) {
-                    var local_i = i
-                    var onPostJsonComplete = function(rsp) {
-                        J.removeAndNotify(root, "autos", "uid", uids[local_i])
-                        if (onComplete !== undefined && local_i === uids.length - 1) {
-                            onComplete()
-                        }
-                    }
-                    var content = {}
-                    content["uid"] = uids[i]
-                    J.postJSON(settings.host + "/abort", onPostJsonComplete, root.xhrErrorHandle, content, true, xhrs)
+                    abortAuto(uids[i], uids[uids.length - 1], onComplete, xhrs)
                 }
             }
             onAutoIndexesChanged: {
@@ -181,9 +193,14 @@ C.List {
                         placeholderText: qsTr("Alias")
                         Layout.fillWidth: true
                     }
+                    TextField {
+                        id: locTextField
+                        placeholderText: qsTr("Location")
+                        Layout.fillWidth: true
+                    }
                 }
                 onAccepted: {
-                    if (aliasTextField.text === "") {
+                    if (aliasTextField.text === "" && locTextField.text === "") {
                         root.toolBarShowToolTip(qsTr("Inputs cannot all be empty! "))
                         return
                     }
@@ -193,7 +210,12 @@ C.List {
                     }
                     var content = {}
                     content["uid"] = view["uid"]
-                    content["alias"] = aliasTextField.text
+                    if (aliasTextField.text !== "") {
+                        content["alias"] = aliasTextField.text
+                    }
+                    if (locTextField.text !== "") {
+                        content["loc"] = locTextField.text
+                    }
                     J.postJSON(settings.host + "/view", onPostJsonComplete, root.xhrErrorHandle, content)
                 }
             }
@@ -493,6 +515,9 @@ C.List {
                     if (aliasTextField.text !== "") {
                         content["alias"] = aliasTextField.text
                     }
+                    if (locTextField.text !== "") {
+                        content["loc"] = locTextField.text
+                    }
                     var states = []
                     for (var i = 0; i < createListModel.count; ++i) {
                         states.push(createListModel.get(i)["furniture"])
@@ -517,6 +542,11 @@ C.List {
                         TextField {
                             id: aliasTextField
                             placeholderText: qsTr("Alias")
+                            Layout.fillWidth: true
+                        }
+                        TextField {
+                            id: locTextField
+                            placeholderText: qsTr("Location")
                             Layout.fillWidth: true
                         }
                         C.Rounded {

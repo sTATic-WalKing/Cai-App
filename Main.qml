@@ -369,7 +369,7 @@ ApplicationWindow {
             ++count
             if (count === 3) {
                 close()
-                refreshTimer.start()
+                // refreshTimer.start()
             }
         }
 
@@ -424,7 +424,7 @@ ApplicationWindow {
                         start()
                     }
                 }
-                J.postJSON(settings.host + "/ping", onPostJsonComplete, root.xhrErrorHandle, {}, false)
+                J.postJSON(settings.host + "/ping", onPostJsonComplete, root.xhrErrorHandle)
             }
         }
     }
