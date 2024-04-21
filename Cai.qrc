@@ -30,5 +30,6 @@
         <file>i18n/qml_zh.ts</file>
         <file>icons/sync.svg</file>
         <file>icons/unsync.svg</file>
+        <file>icons/fan.svg</file>
     </qresource>
 </RCC>

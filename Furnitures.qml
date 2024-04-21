@@ -34,7 +34,16 @@ C.List {
                             J.updateAndNotify(root, "furnitures", "address", data)
                         }
                         var content = {}
-                        content["state"] = furniture["state"] > 0 ? 0 : 1
+                        if (furniture["type"] === 0) {
+                            content["state"] = furniture["state"] > 0 ? 0 : 1
+                        } else if (furniture["type"] === 1) {
+                            content["state"] = furniture["state"]
+                            ++content["state"]
+                            if (content["state"] === 3) {
+                                content["state"] = 0
+                            }
+                        }
+
                         content["address"] = furniture["address"]
                         content["hash"] = root.get_hash()
                         J.postJSON(settings.host + "/state", onPostJsonComplete, root.xhrErrorHandle, content)

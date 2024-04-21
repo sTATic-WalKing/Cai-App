@@ -59,11 +59,12 @@ ApplicationWindow {
         property string host: hostTextField.text
     }
 
-    readonly property var typeTexts: [ qsTr("Light") ]
-    readonly property var typeIcons: [ "/icons/bulb.svg" ]
-    readonly property var stateTexts: [ qsTr("Off"), qsTr("On") ]
+    readonly property var typeTexts: [ qsTr("Light"), qsTr("Fan") ]
+    readonly property var typeIcons: [ "/icons/bulb.svg", "/icons/fan.svg" ]
+    readonly property var stateTexts: [ qsTr("Off"), qsTr("On"), qsTr("Powerful") ]
     readonly property var stateIcons: [
-        [ Material.accent, "orange" ]
+        [ Material.accent, "orange" ],
+        [ Material.accent, "lightskyblue", "deepskyblue" ]
     ]
     readonly property var monthsText: [ qsTr("January"), qsTr("February"), qsTr("March"), qsTr("April"), qsTr("May"), qsTr("June"), qsTr("July"), qsTr("August"), qsTr("September"), qsTr("October"), qsTr("November"), qsTr("December") ]
     readonly property var unitsOfTime: [ qsTr("Millisecond"), qsTr("Second"), qsTr("Minute"), qsTr("Hour"), qsTr("Day"), qsTr("Week"), qsTr("Month"), qsTr("Year") ]
@@ -369,7 +370,7 @@ ApplicationWindow {
             ++count
             if (count === 3) {
                 close()
-                // refreshTimer.start()
+                refreshTimer.start()
             }
         }
 
