@@ -5,9 +5,9 @@
     <name>Autos</name>
     <message>
         <location filename="../Autos.qml" line="80"/>
-        <location filename="../Autos.qml" line="409"/>
+        <location filename="../Autos.qml" line="408"/>
         <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Autos.qml" line="80"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Autos.qml" line="409"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Autos.qml" line="408"/>
         <source>No arranged execution</source>
         <translation>未被安排执行</translation>
     </message>
@@ -19,21 +19,21 @@
     </message>
     <message>
         <location filename="../Autos.qml" line="193"/>
-        <location filename="../Autos.qml" line="377"/>
-        <location filename="../Autos.qml" line="544"/>
+        <location filename="../Autos.qml" line="376"/>
+        <location filename="../Autos.qml" line="543"/>
         <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Autos.qml" line="193"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Autos.qml" line="377"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Autos.qml" line="544"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Autos.qml" line="376"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Autos.qml" line="543"/>
         <source>Alias</source>
         <translation>别称</translation>
     </message>
     <message>
         <location filename="../Autos.qml" line="198"/>
-        <location filename="../Autos.qml" line="549"/>
+        <location filename="../Autos.qml" line="548"/>
         <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Autos.qml" line="198"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Autos.qml" line="549"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Autos.qml" line="548"/>
         <source>Location</source>
-        <translation type="unfinished">地点</translation>
+        <translation>地点</translation>
     </message>
     <message>
         <location filename="../Autos.qml" line="204"/>
@@ -50,16 +50,16 @@
     <message>
         <location filename="../Autos.qml" line="253"/>
         <location filename="../Autos.qml" line="265"/>
-        <location filename="../Autos.qml" line="368"/>
-        <location filename="../Autos.qml" line="377"/>
-        <location filename="../Autos.qml" line="416"/>
-        <location filename="../Autos.qml" line="419"/>
+        <location filename="../Autos.qml" line="367"/>
+        <location filename="../Autos.qml" line="376"/>
+        <location filename="../Autos.qml" line="415"/>
+        <location filename="../Autos.qml" line="418"/>
         <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Autos.qml" line="253"/>
         <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Autos.qml" line="265"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Autos.qml" line="368"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Autos.qml" line="377"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Autos.qml" line="416"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Autos.qml" line="419"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Autos.qml" line="367"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Autos.qml" line="376"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Autos.qml" line="415"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Autos.qml" line="418"/>
         <source>: </source>
         <translation>：</translation>
     </message>
@@ -94,38 +94,38 @@
         <translation>选择间隔</translation>
     </message>
     <message>
-        <location filename="../Autos.qml" line="487"/>
-        <location filename="../Autos.qml" line="501"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Autos.qml" line="487"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Autos.qml" line="501"/>
+        <location filename="../Autos.qml" line="486"/>
+        <location filename="../Autos.qml" line="500"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Autos.qml" line="486"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Autos.qml" line="500"/>
         <source>Create an Auto</source>
         <translation>创建新的任务</translation>
     </message>
     <message>
-        <location filename="../Autos.qml" line="368"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Autos.qml" line="368"/>
+        <location filename="../Autos.qml" line="367"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Autos.qml" line="367"/>
         <source>UID</source>
         <translation>标识</translation>
     </message>
     <message>
-        <location filename="../Autos.qml" line="375"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Autos.qml" line="375"/>
+        <location filename="../Autos.qml" line="374"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Autos.qml" line="374"/>
         <source>Not configured</source>
         <translation>未配置</translation>
     </message>
     <message>
         <location filename="../Autos.qml" line="57"/>
-        <location filename="../Autos.qml" line="419"/>
+        <location filename="../Autos.qml" line="418"/>
         <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Autos.qml" line="57"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Autos.qml" line="419"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Autos.qml" line="418"/>
         <source>, </source>
         <translation>，</translation>
     </message>
     <message>
         <location filename="../Autos.qml" line="253"/>
-        <location filename="../Autos.qml" line="416"/>
+        <location filename="../Autos.qml" line="415"/>
         <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Autos.qml" line="253"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Autos.qml" line="416"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Autos.qml" line="415"/>
         <source>Start</source>
         <translation>开始</translation>
     </message>
@@ -147,9 +147,9 @@
     </message>
     <message>
         <location filename="../Autos.qml" line="265"/>
-        <location filename="../Autos.qml" line="419"/>
+        <location filename="../Autos.qml" line="418"/>
         <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Autos.qml" line="265"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Autos.qml" line="419"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Autos.qml" line="418"/>
         <source>Interval</source>
         <translation>间隔</translation>
     </message>
@@ -157,29 +157,29 @@
         <location filename="../Autos.qml" line="77"/>
         <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Autos.qml" line="77"/>
         <source>Will be executed at </source>
-        <translation type="unfinished">将被执行于</translation>
+        <translation>将被执行于</translation>
     </message>
     <message>
-        <location filename="../Autos.qml" line="442"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Autos.qml" line="442"/>
+        <location filename="../Autos.qml" line="441"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Autos.qml" line="441"/>
         <source>Aborting...</source>
         <translation>删除中……</translation>
     </message>
     <message>
-        <location filename="../Autos.qml" line="507"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Autos.qml" line="507"/>
+        <location filename="../Autos.qml" line="506"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Autos.qml" line="506"/>
         <source>No associated Furnitures! </source>
         <translation>未关联家具！</translation>
     </message>
     <message>
-        <location filename="../Autos.qml" line="579"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Autos.qml" line="579"/>
+        <location filename="../Autos.qml" line="578"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Autos.qml" line="578"/>
         <source>Associate</source>
         <translation>关联</translation>
     </message>
     <message>
-        <location filename="../Autos.qml" line="608"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Autos.qml" line="608"/>
+        <location filename="../Autos.qml" line="607"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Autos.qml" line="607"/>
         <source>No selected Furnitures! </source>
         <translation>未选择家具！</translation>
     </message>
@@ -188,13 +188,13 @@
     <name>Furnitures</name>
     <message>
         <location filename="../Furnitures.qml" line="66"/>
-        <location filename="../Furnitures.qml" line="294"/>
-        <location filename="../Furnitures.qml" line="298"/>
-        <location filename="../Furnitures.qml" line="392"/>
+        <location filename="../Furnitures.qml" line="293"/>
+        <location filename="../Furnitures.qml" line="297"/>
+        <location filename="../Furnitures.qml" line="391"/>
         <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Furnitures.qml" line="66"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Furnitures.qml" line="294"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Furnitures.qml" line="298"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Furnitures.qml" line="392"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Furnitures.qml" line="293"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Furnitures.qml" line="297"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Furnitures.qml" line="391"/>
         <source>, </source>
         <translation>，</translation>
     </message>
@@ -212,9 +212,9 @@
     </message>
     <message>
         <location filename="../Furnitures.qml" line="93"/>
-        <location filename="../Furnitures.qml" line="294"/>
+        <location filename="../Furnitures.qml" line="293"/>
         <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Furnitures.qml" line="93"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Furnitures.qml" line="294"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Furnitures.qml" line="293"/>
         <source>No arranged execution</source>
         <translation>未被安排执行</translation>
     </message>
@@ -226,21 +226,21 @@
     </message>
     <message>
         <location filename="../Furnitures.qml" line="148"/>
-        <location filename="../Furnitures.qml" line="253"/>
-        <location filename="../Furnitures.qml" line="448"/>
+        <location filename="../Furnitures.qml" line="252"/>
+        <location filename="../Furnitures.qml" line="447"/>
         <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Furnitures.qml" line="148"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Furnitures.qml" line="253"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Furnitures.qml" line="448"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Furnitures.qml" line="252"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Furnitures.qml" line="447"/>
         <source>Alias</source>
         <translation>别称</translation>
     </message>
     <message>
         <location filename="../Furnitures.qml" line="153"/>
-        <location filename="../Furnitures.qml" line="263"/>
-        <location filename="../Furnitures.qml" line="452"/>
+        <location filename="../Furnitures.qml" line="262"/>
+        <location filename="../Furnitures.qml" line="451"/>
         <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Furnitures.qml" line="153"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Furnitures.qml" line="263"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Furnitures.qml" line="452"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Furnitures.qml" line="262"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Furnitures.qml" line="451"/>
         <source>Location</source>
         <translation>地点</translation>
     </message>
@@ -269,84 +269,84 @@
         <translation>不支持连接到指定的家具，请尝试使用上边栏的发现按钮。</translation>
     </message>
     <message>
-        <location filename="../Furnitures.qml" line="244"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Furnitures.qml" line="244"/>
+        <location filename="../Furnitures.qml" line="243"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Furnitures.qml" line="243"/>
         <source>Address</source>
         <translation>地址</translation>
     </message>
     <message>
-        <location filename="../Furnitures.qml" line="244"/>
-        <location filename="../Furnitures.qml" line="253"/>
-        <location filename="../Furnitures.qml" line="263"/>
-        <location filename="../Furnitures.qml" line="285"/>
-        <location filename="../Furnitures.qml" line="298"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Furnitures.qml" line="244"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Furnitures.qml" line="253"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Furnitures.qml" line="263"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Furnitures.qml" line="285"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Furnitures.qml" line="298"/>
+        <location filename="../Furnitures.qml" line="243"/>
+        <location filename="../Furnitures.qml" line="252"/>
+        <location filename="../Furnitures.qml" line="262"/>
+        <location filename="../Furnitures.qml" line="284"/>
+        <location filename="../Furnitures.qml" line="297"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Furnitures.qml" line="243"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Furnitures.qml" line="252"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Furnitures.qml" line="262"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Furnitures.qml" line="284"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Furnitures.qml" line="297"/>
         <source>: </source>
         <translation>：</translation>
     </message>
     <message>
-        <location filename="../Furnitures.qml" line="251"/>
-        <location filename="../Furnitures.qml" line="261"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Furnitures.qml" line="251"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Furnitures.qml" line="261"/>
+        <location filename="../Furnitures.qml" line="250"/>
+        <location filename="../Furnitures.qml" line="260"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Furnitures.qml" line="250"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Furnitures.qml" line="260"/>
         <source>Not configured</source>
         <translation>未配置</translation>
     </message>
     <message>
-        <location filename="../Furnitures.qml" line="278"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Furnitures.qml" line="278"/>
+        <location filename="../Furnitures.qml" line="277"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Furnitures.qml" line="277"/>
         <source>No associated Autos</source>
         <translation>没有关联的任务</translation>
     </message>
     <message>
-        <location filename="../Furnitures.qml" line="285"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Furnitures.qml" line="285"/>
+        <location filename="../Furnitures.qml" line="284"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Furnitures.qml" line="284"/>
         <source>Auto</source>
         <translation>任务</translation>
     </message>
     <message>
-        <location filename="../Furnitures.qml" line="298"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Furnitures.qml" line="298"/>
+        <location filename="../Furnitures.qml" line="297"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Furnitures.qml" line="297"/>
         <source>Will be executed at</source>
-        <translation type="unfinished">将被执行于</translation>
+        <translation>将被执行于</translation>
     </message>
     <message>
         <source>Will be executed at </source>
         <translation type="vanished">将被执行于</translation>
     </message>
     <message>
-        <location filename="../Furnitures.qml" line="340"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Furnitures.qml" line="340"/>
+        <location filename="../Furnitures.qml" line="339"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Furnitures.qml" line="339"/>
         <source>Aborting...</source>
         <translation>删除中……</translation>
     </message>
     <message>
-        <location filename="../Furnitures.qml" line="385"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Furnitures.qml" line="385"/>
+        <location filename="../Furnitures.qml" line="384"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Furnitures.qml" line="384"/>
         <source>Nothing here, and Pull to Refresh.</source>
         <translation>这里空空的，尝试下拉刷新。</translation>
     </message>
     <message>
-        <location filename="../Furnitures.qml" line="401"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Furnitures.qml" line="401"/>
+        <location filename="../Furnitures.qml" line="400"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Furnitures.qml" line="400"/>
         <source>No filter</source>
         <translation>未配置过滤</translation>
     </message>
     <message>
-        <location filename="../Furnitures.qml" line="421"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Furnitures.qml" line="421"/>
+        <location filename="../Furnitures.qml" line="420"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Furnitures.qml" line="420"/>
         <source>Filter</source>
         <translation>过滤</translation>
     </message>
     <message>
-        <location filename="../Furnitures.qml" line="431"/>
-        <location filename="../Furnitures.qml" line="441"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Furnitures.qml" line="431"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Furnitures.qml" line="441"/>
+        <location filename="../Furnitures.qml" line="430"/>
+        <location filename="../Furnitures.qml" line="440"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Furnitures.qml" line="430"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Furnitures.qml" line="440"/>
         <source>Void</source>
         <translation>略</translation>
     </message>
@@ -375,248 +375,248 @@
         <translation>不知道服务器说了啥</translation>
     </message>
     <message>
-        <location filename="../Main.qml" line="62"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Main.qml" line="62"/>
+        <location filename="../Main.qml" line="63"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Main.qml" line="63"/>
         <source>Light</source>
         <translation>灯具</translation>
     </message>
     <message>
-        <location filename="../Main.qml" line="62"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Main.qml" line="62"/>
+        <location filename="../Main.qml" line="63"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Main.qml" line="63"/>
         <source>Fan</source>
-        <translation type="unfinished"></translation>
+        <translation>风扇</translation>
     </message>
     <message>
-        <location filename="../Main.qml" line="64"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Main.qml" line="64"/>
+        <location filename="../Main.qml" line="65"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Main.qml" line="65"/>
         <source>Off</source>
         <translation>关闭</translation>
     </message>
     <message>
-        <location filename="../Main.qml" line="64"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Main.qml" line="64"/>
+        <location filename="../Main.qml" line="65"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Main.qml" line="65"/>
         <source>On</source>
         <translation>开启</translation>
     </message>
     <message>
-        <location filename="../Main.qml" line="64"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Main.qml" line="64"/>
+        <location filename="../Main.qml" line="65"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Main.qml" line="65"/>
         <source>Powerful</source>
-        <translation type="unfinished"></translation>
+        <translation>增强</translation>
     </message>
     <message>
-        <location filename="../Main.qml" line="69"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Main.qml" line="69"/>
+        <location filename="../Main.qml" line="70"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Main.qml" line="70"/>
         <source>January</source>
         <translation>一月</translation>
     </message>
     <message>
-        <location filename="../Main.qml" line="69"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Main.qml" line="69"/>
+        <location filename="../Main.qml" line="70"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Main.qml" line="70"/>
         <source>February</source>
         <translation>二月</translation>
     </message>
     <message>
-        <location filename="../Main.qml" line="69"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Main.qml" line="69"/>
+        <location filename="../Main.qml" line="70"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Main.qml" line="70"/>
         <source>March</source>
         <translation>三月</translation>
     </message>
     <message>
-        <location filename="../Main.qml" line="69"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Main.qml" line="69"/>
+        <location filename="../Main.qml" line="70"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Main.qml" line="70"/>
         <source>April</source>
         <translation>四月</translation>
     </message>
     <message>
-        <location filename="../Main.qml" line="69"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Main.qml" line="69"/>
+        <location filename="../Main.qml" line="70"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Main.qml" line="70"/>
         <source>May</source>
         <translation>五月</translation>
     </message>
     <message>
-        <location filename="../Main.qml" line="69"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Main.qml" line="69"/>
+        <location filename="../Main.qml" line="70"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Main.qml" line="70"/>
         <source>June</source>
         <translation>六月</translation>
     </message>
     <message>
-        <location filename="../Main.qml" line="69"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Main.qml" line="69"/>
+        <location filename="../Main.qml" line="70"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Main.qml" line="70"/>
         <source>July</source>
         <translation>七月</translation>
     </message>
     <message>
-        <location filename="../Main.qml" line="69"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Main.qml" line="69"/>
+        <location filename="../Main.qml" line="70"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Main.qml" line="70"/>
         <source>August</source>
         <translation>八月</translation>
     </message>
     <message>
-        <location filename="../Main.qml" line="69"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Main.qml" line="69"/>
+        <location filename="../Main.qml" line="70"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Main.qml" line="70"/>
         <source>September</source>
         <translation>九月</translation>
     </message>
     <message>
-        <location filename="../Main.qml" line="69"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Main.qml" line="69"/>
+        <location filename="../Main.qml" line="70"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Main.qml" line="70"/>
         <source>October</source>
         <translation>十月</translation>
     </message>
     <message>
-        <location filename="../Main.qml" line="69"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Main.qml" line="69"/>
+        <location filename="../Main.qml" line="70"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Main.qml" line="70"/>
         <source>November</source>
         <translation>十一月</translation>
     </message>
     <message>
-        <location filename="../Main.qml" line="69"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Main.qml" line="69"/>
+        <location filename="../Main.qml" line="70"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Main.qml" line="70"/>
         <source>December</source>
         <translation>十二月</translation>
     </message>
     <message>
-        <location filename="../Main.qml" line="70"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Main.qml" line="70"/>
+        <location filename="../Main.qml" line="71"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Main.qml" line="71"/>
         <source>Millisecond</source>
         <translation>毫秒</translation>
     </message>
     <message>
-        <location filename="../Main.qml" line="70"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Main.qml" line="70"/>
+        <location filename="../Main.qml" line="71"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Main.qml" line="71"/>
         <source>Second</source>
         <translation>秒</translation>
     </message>
     <message>
-        <location filename="../Main.qml" line="70"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Main.qml" line="70"/>
+        <location filename="../Main.qml" line="71"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Main.qml" line="71"/>
         <source>Minute</source>
         <translation>分</translation>
     </message>
     <message>
-        <location filename="../Main.qml" line="70"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Main.qml" line="70"/>
+        <location filename="../Main.qml" line="71"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Main.qml" line="71"/>
         <source>Hour</source>
         <translation>小时</translation>
     </message>
     <message>
-        <location filename="../Main.qml" line="70"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Main.qml" line="70"/>
+        <location filename="../Main.qml" line="71"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Main.qml" line="71"/>
         <source>Day</source>
         <translation>天</translation>
     </message>
     <message>
-        <location filename="../Main.qml" line="70"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Main.qml" line="70"/>
+        <location filename="../Main.qml" line="71"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Main.qml" line="71"/>
         <source>Week</source>
         <translation>周</translation>
     </message>
     <message>
-        <location filename="../Main.qml" line="70"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Main.qml" line="70"/>
+        <location filename="../Main.qml" line="71"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Main.qml" line="71"/>
         <source>Month</source>
         <translation>月</translation>
     </message>
     <message>
-        <location filename="../Main.qml" line="70"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Main.qml" line="70"/>
+        <location filename="../Main.qml" line="71"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Main.qml" line="71"/>
         <source>Year</source>
         <translation>年</translation>
     </message>
     <message>
-        <location filename="../Main.qml" line="169"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Main.qml" line="169"/>
+        <location filename="../Main.qml" line="170"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Main.qml" line="170"/>
         <source>FURNITURES</source>
         <translation>家具</translation>
     </message>
     <message>
-        <location filename="../Main.qml" line="170"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Main.qml" line="170"/>
+        <location filename="../Main.qml" line="171"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Main.qml" line="171"/>
         <source>AUTOS</source>
         <translation>任务</translation>
     </message>
     <message>
-        <location filename="../Main.qml" line="238"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Main.qml" line="238"/>
+        <location filename="../Main.qml" line="239"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Main.qml" line="239"/>
         <source>Settings</source>
         <translation>设置</translation>
     </message>
     <message>
-        <location filename="../Main.qml" line="246"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Main.qml" line="246"/>
+        <location filename="../Main.qml" line="247"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Main.qml" line="247"/>
         <source>Landscape</source>
         <translation>宽屏</translation>
     </message>
     <message>
-        <location filename="../Main.qml" line="252"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Main.qml" line="252"/>
+        <location filename="../Main.qml" line="253"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Main.qml" line="253"/>
         <source>Host</source>
         <translation>主机</translation>
     </message>
     <message>
-        <location filename="../Main.qml" line="263"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Main.qml" line="263"/>
+        <location filename="../Main.qml" line="264"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Main.qml" line="264"/>
         <source>Discover</source>
         <translation>发现</translation>
     </message>
     <message>
-        <location filename="../Main.qml" line="297"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Main.qml" line="297"/>
+        <location filename="../Main.qml" line="298"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Main.qml" line="298"/>
         <source>No new furnitures found.</source>
         <translation>未发现新家具</translation>
     </message>
     <message>
-        <location filename="../Main.qml" line="322"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Main.qml" line="322"/>
+        <location filename="../Main.qml" line="323"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Main.qml" line="323"/>
         <source>Downloading the config...</source>
         <translation>正在下载配置……</translation>
     </message>
     <message>
-        <location filename="../Main.qml" line="325"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Main.qml" line="325"/>
+        <location filename="../Main.qml" line="326"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Main.qml" line="326"/>
         <source>Sending discover request...</source>
         <translation>正在发送发现请求……</translation>
     </message>
     <message>
-        <location filename="../Main.qml" line="328"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Main.qml" line="328"/>
+        <location filename="../Main.qml" line="329"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Main.qml" line="329"/>
         <source>Checking the result and </source>
         <translation>正在检查结果，</translation>
     </message>
     <message>
-        <location filename="../Main.qml" line="328"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Main.qml" line="328"/>
+        <location filename="../Main.qml" line="329"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Main.qml" line="329"/>
         <source> times checked.</source>
         <translation>次已被检查。</translation>
     </message>
     <message>
-        <location filename="../Main.qml" line="330"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Main.qml" line="330"/>
+        <location filename="../Main.qml" line="331"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Main.qml" line="331"/>
         <source>We have checked the result too many times.</source>
         <translation>我们尝试了太多次了。</translation>
     </message>
     <message>
-        <location filename="../Main.qml" line="342"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Main.qml" line="342"/>
+        <location filename="../Main.qml" line="343"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Main.qml" line="343"/>
         <source>Unsynchronized</source>
-        <translation type="unfinished"></translation>
+        <translation>失去同步</translation>
     </message>
     <message>
-        <location filename="../Main.qml" line="356"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Main.qml" line="356"/>
+        <location filename="../Main.qml" line="357"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Main.qml" line="357"/>
         <source>Press OK to refresh, and then redo what you want.</source>
-        <translation type="unfinished"></translation>
+        <translation>刷新，然后重试。</translation>
     </message>
     <message>
-        <location filename="../Main.qml" line="365"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Main.qml" line="365"/>
+        <location filename="../Main.qml" line="366"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Main.qml" line="366"/>
         <source>Refresh</source>
         <translation>刷新</translation>
     </message>
     <message>
-        <location filename="../Main.qml" line="410"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Main.qml" line="410"/>
+        <location filename="../Main.qml" line="411"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Debug/Cai/Main.qml" line="411"/>
         <source>We are refreshing all the data.</source>
         <translation>我们正在重新拉取所有数据。</translation>
     </message>

@@ -230,7 +230,6 @@ C.List {
             }
 
             extraHeight: extraColumnLayout.height + extraColumnLayout.spacing
-            extraWidth: extraColumnLayout.width
             ColumnLayout {
                 id: extraColumnLayout
                 anchors.top: button.bottom
