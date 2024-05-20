@@ -1,6 +1,8 @@
 ﻿#include <QGuiApplication>
 #include <QQmlApplicationEngine>
 
+#include "qrsa.h"
+
 int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
@@ -8,6 +10,8 @@ int main(int argc, char *argv[])
     app.setOrganizationName("CQUPT");
     app.setOrganizationDomain("www.cqupt.edu.cn");
     app.setApplicationName("Cai");
+
+    qmlRegisterType<QRSA>("Cpp", 0, 8, "RSA");
 
     QQmlApplicationEngine engine;
     const QUrl url(QStringLiteral("qrc:/qt/qml/Cai/Main.qml"));

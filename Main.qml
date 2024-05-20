@@ -7,6 +7,7 @@ import "." as App
 import "qrc:/common.js" as J
 import "components" as C
 import QtQuick.Dialogs
+import Cpp as P
 
 ApplicationWindow {
     id: root
@@ -85,6 +86,17 @@ ApplicationWindow {
     }
 
     readonly property bool portraitMode: !landscapeCheckBox.checked || root.width < root.height
+
+    P.RSA {
+        id: rsa
+    }
+    Component.onCompleted: {
+        rsa.generate()
+        var keys = rsa.get()
+        var c = rsa.encrypt(keys[0], "江南style")
+        var r = rsa.decrypt(keys[1], c)
+        console.log(r)
+    }
 
     header: ToolBar {
         id: toolBar
