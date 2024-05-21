@@ -10,6 +10,10 @@ C.List {
 
     Component.onCompleted: {
         var en = function(plainText) {
+            if (!rsa.c_pk.length) {
+                return
+            }
+
             return rsa.encrypt(rsa.c_pk, plainText)
         }
         var de = function(cipherText) {

@@ -23,7 +23,7 @@ ApplicationWindow {
             hashPopup.open()
             return
         } else if (xhr.status === 403) {
-            toolTipText = qsTr("Unsafe Mode Required")
+            toolTipText = qsTr("Security Check Failed.")
         } else if (xhr.status === 404) {
             toolTipText = qsTr("Not Found")
         } else {
@@ -153,7 +153,6 @@ ApplicationWindow {
 
         var en = function(plainText) {
             if (!rsa.c_pk.length) {
-                toolBarShowToolTip(qsTr("Key Required."))
                 return
             }
 
@@ -378,7 +377,7 @@ ApplicationWindow {
                         var latest = rsp["latest"]
                         if (latest === "") {
                             discoverPopup.close()
-                            toolBarShowToolTip(qsTr("No new furnitures found."))
+                            toolBarShowToolTip(qsTr("No new furnitures found! "))
                         } else {
                             discoverColumnLayout.count = -11
                             var onInnerPostJSONComplete = function(rsp) {
@@ -526,10 +525,9 @@ ApplicationWindow {
             var res = qrCode.process(selectedFile)
             if (res.length) {
                 rsa.c_pk = res
-                console.log(rsa.c_pk)
                 wihtePopup.open()
             } else {
-                root.toolBarShowToolTip(qsTr("QRCode Not Found"))
+                root.toolBarShowToolTip(qsTr("QRCode Not Found! "))
             }
         }
 
@@ -545,6 +543,7 @@ ApplicationWindow {
             var onPostJSONComplete = function(rsp) {
                 console.log(rsp)
                 rsa.pk_uid = rsp["uid"]
+                toolBarShowToolTip(qsTr("Pass! "))
             }
             var content = {}
             content["pk"] = rsa.pk
