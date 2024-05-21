@@ -3,7 +3,13 @@
 #include <QStandardPaths>
 #include <QDir>
 
+#include <openssl/err.h>
+#include <openssl/pem.h>
+#include <openssl/rsa.h>
+
+#ifdef Q_OS_WIN
 #include <openssl/applink.c>
+#endif
 
 QRSA::QRSA(QObject *parent)
     : QObject{parent}

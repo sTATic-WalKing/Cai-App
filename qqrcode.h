@@ -7,10 +7,8 @@ class QQRCode : public QObject
 {
     Q_OBJECT
 
-    void* reader;
 public:
     explicit QQRCode(QObject *parent = nullptr);
-    virtual ~QQRCode();
     Q_INVOKABLE QString process(const QUrl& url);
 
 signals:

@@ -4,10 +4,6 @@
 #include <QObject>
 #include <QFile>
 
-#include <openssl/err.h>
-#include <openssl/pem.h>
-#include <openssl/rsa.h>
-
 class QRSA : public QObject
 {
     Q_OBJECT
