@@ -16,9 +16,10 @@ public:
     explicit QRSA(QObject *parent = nullptr);
 
     Q_INVOKABLE void generate() const;
-    Q_INVOKABLE QList<QByteArray> get() const;
-    Q_INVOKABLE QByteArray encrypt(const QByteArray& pk, const QByteArray& plainText) const;
-    Q_INVOKABLE QByteArray decrypt(const QByteArray& sk, const QByteArray& cipherText) const;
+    Q_INVOKABLE QString get_pk() const;
+    Q_INVOKABLE QString get_sk() const;
+    Q_INVOKABLE QString encrypt(const QString& pk, const QString& plainText) const;
+    Q_INVOKABLE QString decrypt(const QString& sk, const QString& cipherText) const;
 
 signals:
 };

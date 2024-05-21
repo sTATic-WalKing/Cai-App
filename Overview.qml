@@ -7,6 +7,19 @@ Item {
     id: overview
     opacity: 0.2
     anchors.margins: root.commonSpacing
+    Component.onCompleted: {
+        var en = function(plainText) {
+            return rsa.encrypt(rsa.c_pk, plainText)
+        }
+        var de = function(cipherText) {
+            return rsa.decrypt(rsa.sk, cipherText)
+        }
+        var pre = function(content) {
+            content["pk_uid"] = rsa.pk_uid
+        }
+
+        J.setSecurity(en, de, pre)
+    }
 
     IconLabel {
         id: appIconLabel

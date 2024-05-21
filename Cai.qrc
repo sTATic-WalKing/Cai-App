@@ -31,5 +31,7 @@
         <file>icons/sync.svg</file>
         <file>icons/unsync.svg</file>
         <file>icons/fan.svg</file>
+        <file>icons/rain.svg</file>
+        <file>icons/state.svg</file>
     </qresource>
 </RCC>

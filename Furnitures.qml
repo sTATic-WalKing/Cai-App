@@ -8,6 +8,20 @@ C.List {
     id: furnituresList
     property var filters: ({})
 
+    Component.onCompleted: {
+        var en = function(plainText) {
+            return rsa.encrypt(rsa.c_pk, plainText)
+        }
+        var de = function(cipherText) {
+            return rsa.decrypt(rsa.sk, cipherText)
+        }
+        var pre = function(content) {
+            content["pk_uid"] = rsa.pk_uid
+        }
+
+        J.setSecurity(en, de, pre)
+    }
+
     delegate: Component {
         C.Touch {
             buttonWidth: furnituresList.width
@@ -59,7 +73,7 @@ C.List {
                         var ret = ""
                         var entries = Object.entries(furniture)
                         for (var i = 0; i < entries.length; ++i) {
-                            if (entries[i][0] === "address" || entries[i][0] === "type" || entries[i][0] === "connected" || entries[i][0] === "state") {
+                            if (entries[i][0] === "address" || entries[i][0] === "type" || entries[i][0] === "connected" || entries[i][0] === "state" || entries[i][0] === "pk_uid") {
                                 continue
                             }
                             if (ret !== "") {
@@ -82,12 +96,19 @@ C.List {
                     property bool associated
                     text: {
                         var associatedAutos = J.furnitureFindAssociatedAutos(furniture["address"], root.views, root.autos)
-                        associatedAutos.sort(function(a, b) { return root.autos[a]["start"] - root.autos[b]["start"] })
+                        associatedAutos.sort(root.autoSort)
                         if (associatedAutos.length > 0) {
                             var auto = root.autos[associatedAutos[0]]
                             var states = root.views[J.find(root.views, "uid", auto["view"])]["states"]
                             associated = true
-                            return "<font color=\"grey\">" + qsTr("Will be") + "</font> " + root.stateTexts[states[J.find(states, "address", furniture["address"])]["state"]] + "<font color=\"grey\"> " + qsTr("at") + " </font>" + J.date2ShortText(new Date(auto["start"] * 1000))
+                            var ret = "<font color=\"grey\">" + qsTr("Will be") + "</font> " + root.stateTexts[furniture["type"]][states[J.find(states, "address", furniture["address"])]["state"]] + "<font color=\"grey\"> "
+                            var autoState = auto["state"]
+                            if (autoState === undefined) {
+                                ret += qsTr("at") + " </font>" + J.date2ShortText(new Date(auto["start"] * 1000))
+                            } else {
+                                ret += qsTr("when") + " </font>" + root.getAutoStateText(autoState)
+                            }
+                            return ret
                         } else {
                             associated = false
                             return "<font color=\"grey\">" + qsTr("No arranged execution") + "</font>"
@@ -292,9 +313,15 @@ C.List {
                                 if (associatedAutos.length === 0) {
                                     ret += "<font color=\"grey\">" + qsTr(", ") + qsTr("No arranged execution") + "</font>"
                                 } else {
-                                    associatedAutos.sort(function(a, b) { return root.autos[a]["start"] - root.autos[b]["start"] })
-                                    var autoStart = root.autos[associatedAutos[0]]["start"] * 1000
-                                    ret += "<font color=\"grey\">" + qsTr(", ") + qsTr("Will be executed at") + qsTr(": ") + "</font>" + J.date2ShortText(new Date(autoStart))
+                                    associatedAutos.sort(root.autoSort)
+                                    var first = root.autos[associatedAutos[0]]
+                                    var autoState = first["state"]
+                                    if (autoState === undefined) {
+                                        var autoStart = first["start"] * 1000
+                                        ret += "<font color=\"grey\">" + qsTr(", ") + qsTr("Will be executed at") + qsTr(": ") + "</font>" + J.date2ShortText(new Date(autoStart))
+                                    } else {
+                                        ret += "<font color=\"grey\">" + qsTr(", ") + qsTr("Will be executed when") + qsTr(": ") + "</font>" + root.getAutoStateText(autoState)
+                                    }
                                 }
                                 return ret
                             }
@@ -435,12 +462,8 @@ C.List {
                 Layout.fillWidth: true
             }
             ComboBox {
-                model: {
-                    var ret = root.stateTexts.concat()
-                    ret.push(qsTr("Void"))
-                    return ret
-                }
-                currentIndex: model.length - 1
+                // TODO
+                // currentIndex: model.length - 1
                 Layout.fillWidth: true
             }
             TextField {

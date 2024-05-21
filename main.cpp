@@ -2,6 +2,7 @@
 #include <QQmlApplicationEngine>
 
 #include "qrsa.h"
+#include "qqrcode.h"
 
 int main(int argc, char *argv[])
 {
@@ -12,6 +13,7 @@ int main(int argc, char *argv[])
     app.setApplicationName("Cai");
 
     qmlRegisterType<QRSA>("Cpp", 0, 8, "RSA");
+    qmlRegisterType<QQRCode>("Cpp", 0, 8, "QRCode");
 
     QQmlApplicationEngine engine;
     const QUrl url(QStringLiteral("qrc:/qt/qml/Cai/Main.qml"));

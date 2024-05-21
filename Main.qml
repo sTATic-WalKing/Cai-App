@@ -21,6 +21,11 @@ ApplicationWindow {
             toolTipText = qsTr("Network Error")
         } else if (xhr.status === 412) {
             hashPopup.open()
+            return
+        } else if (xhr.status === 403) {
+            toolTipText = qsTr("Unsafe Mode Required")
+        } else if (xhr.status === 404) {
+            toolTipText = qsTr("Not Found")
         } else {
             toolTipText = qsTr("Server Error")
         }
@@ -50,23 +55,48 @@ ApplicationWindow {
             auto_uids.push(root.autos[i]["uid"])
         }
         auto_uids.sort()
-        var str = JSON.stringify([ related_configs, view_uids, auto_uids ]).replace(" ", "")
+        var white_uids = []
+        for (i = 0; i < root.whites.length; ++i) {
+            white_uids.push(root.whites[i]["uid"])
+        }
+        white_uids.sort()
+        var str = JSON.stringify([ related_configs, view_uids, auto_uids, white_uids, root.unsafe ]).replace(" ", "")
         console.log(str)
         var hashed = Qt.md5(str)
         return hashed
     }
 
+    P.RSA {
+        id: rsa
+        property var pk
+        property var sk
+        property string c_pk
+        property int pk_uid
+
+        Component.onCompleted: {
+            rsa.pk_uid = settings.pk_uid
+            rsa.c_pk = settings.c_pk
+        }
+    }
     Settings {
         id: settings
         property string host: hostTextField.text
+        property int pk_uid: rsa.pk_uid
+        property string c_pk: rsa.c_pk
     }
 
-    readonly property var typeTexts: [ qsTr("Light"), qsTr("Fan") ]
-    readonly property var typeIcons: [ "/icons/bulb.svg", "/icons/fan.svg" ]
-    readonly property var stateTexts: [ qsTr("Off"), qsTr("On"), qsTr("Powerful") ]
+    readonly property var typeTexts: [ qsTr("Light"), qsTr("Fan"), qsTr("Rain") ]
+    readonly property var typeIcons: [ "/icons/bulb.svg", "/icons/fan.svg", "/icons/rain.svg" ]
+    readonly property var stateTexts: [
+        [ qsTr("Off"), qsTr("On") ],
+        [ qsTr("Off"), qsTr("On"), qsTr("Powerful") ],
+        [ qsTr("Clear"), qsTr("Rainy") ]
+    ]
+
     readonly property var stateIcons: [
         [ Material.accent, "orange" ],
-        [ Material.accent, "lightskyblue", "deepskyblue" ]
+        [ Material.accent, "lightskyblue", "deepskyblue" ],
+        [ Material.accent, "gray" ]
     ]
     readonly property var monthsText: [ qsTr("January"), qsTr("February"), qsTr("March"), qsTr("April"), qsTr("May"), qsTr("June"), qsTr("July"), qsTr("August"), qsTr("September"), qsTr("October"), qsTr("November"), qsTr("December") ]
     readonly property var unitsOfTime: [ qsTr("Millisecond"), qsTr("Second"), qsTr("Minute"), qsTr("Hour"), qsTr("Day"), qsTr("Week"), qsTr("Month"), qsTr("Year") ]
@@ -78,24 +108,65 @@ ApplicationWindow {
     property var furnitures: []
     property var views: []
     property var autos: []
+    property var whites: []
+    property bool unsafe: false
     onFurnituresChanged: {
         J.updateModelData(furnituresListModel, root.furnitures, "furniture", "address")
     }
     onViewsChanged: {
         J.updateModelData(autosListModel, root.views, "view", "uid")
     }
+    function autoSort(a, b) {
+        if (root.autos[a]["state"] !== undefined) {
+            return 1
+        }
+        if (root.autos[b]["state"] !== undefined) {
+            return -1
+        }
+        return root.autos[a]["start"] - root.autos[b]["start"]
+    }
+    function getAutoStateText(autoState) {
+        var ret
+        var config = root.furnitures[J.find(root.furnitures, "address", autoState["address"])]
+        var configAlias = config["alias"]
+        if (configAlias === undefined) {
+            ret = config["address"]
+        } else {
+            ret = configAlias
+        }
+        ret += qsTr(" ")
+        ret += root.stateTexts[config["type"]][autoState["state"]]
+        return ret
+    }
 
     readonly property bool portraitMode: !landscapeCheckBox.checked || root.width < root.height
 
-    P.RSA {
-        id: rsa
-    }
     Component.onCompleted: {
         rsa.generate()
-        var keys = rsa.get()
-        var c = rsa.encrypt(keys[0], "江南style")
-        var r = rsa.decrypt(keys[1], c)
-        console.log(r)
+        rsa.pk = rsa.get_pk()
+        rsa.sk = rsa.get_sk()
+
+        var plainText = '{"pk":"-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAvyEefkgD+rnrI22x42bD\nKOO1RJKIj3YZTLWAUR2N/1TAx8IH+gMEG/97HKTxspXOElBQuALfVPpJN4LesVfi\nTiJHHtzcqoD6LXJn7Jg0dk5LskvcnVzWtc0ZZqMiV9W6HtmtnGhEfLT5M6PIA23e\nukmwhsv+Kg04lCPej8kSKnMs7ftUxSIXV9eTsH5cZL98OiHj9FJ/w1gPedOmAdnz\na43PvlowZnTJU8rtL204MSDXtW5cnKWrk8dQYHXkFUgasHKLgVusvAGffExw7cAo\no50EKlTkExQ+Xoj48HcWzeK/jeKXe0WvpWwJqGDPf70guGhVsHuDC2fPaHOh63uZ\nfwIDAQAB\n-----END PUBLIC KEY-----\n","pk_uid":0}'
+        var base64 = rsa.encrypt(rsa.pk, plainText)
+        var plain = rsa.decrypt(rsa.sk, base64)
+        console.log(plain)
+
+        var en = function(plainText) {
+            if (!rsa.c_pk.length) {
+                toolBarShowToolTip(qsTr("Key Required."))
+                return
+            }
+
+            return rsa.encrypt(rsa.c_pk, plainText)
+        }
+        var de = function(cipherText) {
+            return rsa.decrypt(rsa.sk, cipherText)
+        }
+        var pre = function(content) {
+            content["pk_uid"] = rsa.pk_uid
+        }
+
+        J.setSecurity(en, de, pre)
     }
 
     header: ToolBar {
@@ -381,7 +452,7 @@ ApplicationWindow {
 
         function updateCount() {
             ++count
-            if (count === 3) {
+            if (count === 4) {
                 close()
                 refreshTimer.start()
             }
@@ -399,6 +470,11 @@ ApplicationWindow {
             root.autos = list
             updateCount()
         }
+        function onDownloadWhitesComplete(list) {
+            root.whites = list
+            console.log(list)
+            updateCount()
+        }
 
         onOpened: {
             refreshTimer.stop()
@@ -407,6 +483,7 @@ ApplicationWindow {
             J.downloadModelData(settings.host, "config", "address", onDownloadConfigsComplete, root.xhrErrorHandle, xhrs)
             J.downloadModelData(settings.host, "view", "uid", onDownloadViewsComplete, root.xhrErrorHandle, xhrs)
             J.downloadModelData(settings.host, "auto", "uid", onDownloadAutosComplete, root.xhrErrorHandle, xhrs)
+            J.downloadModelData(settings.host, "white", "uid", onDownloadWhitesComplete, root.xhrErrorHandle, xhrs)
         }
         onClosed: {
             for (var i = 0; i < xhrs.length; ++i) {
@@ -445,6 +522,45 @@ ApplicationWindow {
     FileDialog {
         id: fileDialog
         currentFolder: StandardPaths.standardLocations(StandardPaths.PicturesLocation)[0]
+        onAccepted: {
+            var res = qrCode.process(selectedFile)
+            if (res.length) {
+                rsa.c_pk = res
+                console.log(rsa.c_pk)
+                wihtePopup.open()
+            } else {
+                root.toolBarShowToolTip(qsTr("QRCode Not Found"))
+            }
+        }
+
+        P.QRCode {
+            id: qrCode
+        }
+    }
+    C.Popup {
+        id: wihtePopup
+        title: qsTr("White")
+        standardButtons: Dialog.Ok
+        onAccepted: {
+            var onPostJSONComplete = function(rsp) {
+                console.log(rsp)
+                rsa.pk_uid = rsp["uid"]
+            }
+            var content = {}
+            content["pk"] = rsa.pk
+            J.postJSON(settings.host + "/white", onPostJSONComplete, root.xhrErrorHandle, content)
+        }
+
+        ColumnLayout {
+            anchors.fill: parent
+            spacing: root.commonSpacing
+
+            Label {
+                text: qsTr("Ensure the Controller is in Unsafe mode, then Press OK to add a whitelist.")
+                wrapMode: Text.Wrap
+                Layout.fillWidth: true
+            }
+        }
     }
 
 }

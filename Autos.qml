@@ -6,6 +6,19 @@ import "qrc:/common.js" as J
 
 C.List {
     id: viewsList
+    Component.onCompleted: {
+        var en = function(plainText) {
+            return rsa.encrypt(rsa.c_pk, plainText)
+        }
+        var de = function(cipherText) {
+            return rsa.decrypt(rsa.sk, cipherText)
+        }
+        var pre = function(content) {
+            content["pk_uid"] = rsa.pk_uid
+        }
+
+        J.setSecurity(en, de, pre)
+    }
     delegate: Component {
         C.Touch {
             id: viewsListTouch
@@ -13,7 +26,7 @@ C.List {
             buttonHeight: 87
             property var autoIndexes: {
                 var ret = J.viewFindAssociatedAutos(view["uid"], root.autos)
-                ret.sort(function(a, b) { return root.autos[a]["start"] - root.autos[b]["start"] })
+                ret.sort(root.autoSort)
                 return ret
             }
             buttonContentItem: Item {
@@ -50,7 +63,7 @@ C.List {
                         var ret = ""
                         var entries = Object.entries(view)
                         for (var i = 0; i < entries.length; ++i) {
-                            if (entries[i][0] === "uid" || entries[i][0] === "states") {
+                            if (entries[i][0] === "uid" || entries[i][0] === "states" ||  entries[i][0] === "pk_uid") {
                                 continue
                             }
                             if (ret !== "") {
@@ -73,8 +86,13 @@ C.List {
                     enabled: viewsListTouch.autoIndexes.length !== 0
                     text: {
                         if (viewsListTouch.autoIndexes.length > 0) {
-                            var autoStart = root.autos[viewsListTouch.autoIndexes[0]]["start"] * 1000
-                            return "<font color=\"grey\">" + qsTr("Will be executed at ") + "</font>" + J.date2ShortText(new Date(autoStart))
+                            var auto = root.autos[viewsListTouch.autoIndexes[0]]
+                            var autoState = auto["state"]
+                            if (autoState === undefined) {
+                                var autoStart = auto["start"] * 1000
+                                return "<font color=\"grey\">" + qsTr("Will be executed at ") + "</font>" + J.date2ShortText(new Date(autoStart))
+                            }
+                            return "<font color=\"grey\">" + qsTr("Will be executed when ") + "</font>" + root.getAutoStateText(autoState)
                         }
 
                         return "<font color=\"grey\">" + qsTr("No arranged execution") + "</font>"
@@ -114,6 +132,9 @@ C.List {
                     return
                 }
                 autosTimer.auto = root.autos[viewsListTouch.autoIndexes[0]]
+                if (autosTimer.auto["state"] !== undefined) {
+                    return
+                }
                 autosTimer.interval = Math.max((autosTimer.auto["start"] + 1) * 1000 - new Date().getTime(), 1000)
                 autosTimer.start()
             }
@@ -225,9 +246,12 @@ C.List {
                 standardButtons: Dialog.Ok
                 readonly property int start: datePicker.selectedDate + timePicker.selectedTime + new Date().getTimezoneOffset() * 60
                 readonly property int every: everyPicker.selectedTime
+                property var address
+                property int state
                 onAboutToShow: {
                     datePicker.reset()
                     timePicker.reset()
+                    autoCreatePopup.address = undefined
                 }
                 onAccepted: {
                     var onPostJsonComplete = function(rsp) {
@@ -235,11 +259,17 @@ C.List {
                     }
                     var content = {}
                     content["view"] = view["uid"]
-                    if (autoCreatePopup.start * 1000 > new Date().getTime()) {
-                        content["start"] = autoCreatePopup.start
-                    }
-                    if (autoCreatePopup.every > 0) {
-                        content["every"] = autoCreatePopup.every
+                    if (autoCreatePopup.address === undefined) {
+                        if (autoCreatePopup.start * 1000 > new Date().getTime()) {
+                            content["start"] = autoCreatePopup.start
+                        }
+                        if (autoCreatePopup.every > 0) {
+                            content["every"] = autoCreatePopup.every
+                        }
+                    } else {
+                        content["state"] = {}
+                        content["state"]["address"] = autoCreatePopup.address
+                        content["state"]["state"] = autoCreatePopup.state
                     }
                     content["hash"] = root.get_hash()
                     J.postJSON(settings.host + "/auto", onPostJsonComplete, root.xhrErrorHandle, content)
@@ -252,7 +282,9 @@ C.List {
                         text: {
                             var ret = "<font color=\"grey\">" + qsTr("Start") + qsTr(": ") + "</font>"
                             var start = autoCreatePopup.start * 1000
-                            if (start <= new Date().getTime()) {
+                            if (autoCreatePopup.address !== undefined) {
+                                ret += "<font color=\"grey\">" + qsTr("Omit") + "</font>"
+                            } else if (start <= new Date().getTime()) {
                                 ret += qsTr("Now")
                             } else {
                                 ret += new Date(start).toLocaleString()
@@ -263,10 +295,23 @@ C.List {
                     Label {
                         text: {
                             var ret = "<font color=\"grey\">" + qsTr("Interval") + qsTr(": ") + "</font>"
-                            if (autoCreatePopup.every === 0) {
+                            if (autoCreatePopup.address !== undefined) {
+                                ret += "<font color=\"grey\">" + qsTr("Omit") + "</font>"
+                            } else if (autoCreatePopup.every === 0) {
                                 ret += qsTr("Not Repeated")
                             } else {
                                 ret += J.stamp2SpanText(autoCreatePopup.every, root.unitsOfTime)
+                            }
+                            return ret
+                        }
+                    }
+                    Label {
+                        text: {
+                            var ret = "<font color=\"grey\">" + qsTr("State") + qsTr(": ") + "</font>"
+                            if (autoCreatePopup.address !== undefined) {
+                                ret += root.getAutoStateText({ "address": autoCreatePopup.address, "state": autoCreatePopup.state })
+                            } else {
+                                ret += "<font color=\"grey\">" + qsTr("Omit") + "</font>"
                             }
                             return ret
                         }
@@ -296,7 +341,68 @@ C.List {
                                 everyPickerPopup.open()
                             }
                         }
+                        C.Rounded {
+                            highlighted: true
+                            icon.source: "/icons/state.svg"
+                            onClicked: {
+                                stateAssociatePopup.open()
+                            }
+                        }
                     }
+                }
+                C.Popup {
+                    id: stateAssociatePopup
+                    title: qsTr("Associate")
+                    standardButtons: Dialog.Ok
+                    onAccepted: {
+                        autoCreatePopup.address = stateAssociateFurnitureComboBox.currentValue
+                        autoCreatePopup.state = stateAssociateStateComboBox.currentIndex
+                    }
+                    onAboutToShow: {
+                        var res = []
+                        for (var i = 0; i < root.furnitures.length; ++i) {
+                            var furniture = root.furnitures[i]
+                            var tmp = {}
+                            tmp["address"] = furniture["address"]
+                            tmp["type"] = furniture["type"]
+                            var furnitureAlias = furniture["alias"]
+                            console.log(furnitureAlias)
+                            if (furnitureAlias === undefined) {
+                                tmp["alias"] = furniture["address"]
+                            } else {
+                                tmp["alias"] = furniture["alias"]
+                            }
+                            res.push(tmp)
+                        }
+                        stateAssociatePopupColumnLayout.modelData = res
+                    }
+
+                    ColumnLayout {
+                        id: stateAssociatePopupColumnLayout
+                        property var modelData: []
+                        anchors.fill: parent
+                        spacing: root.commonSpacing
+                        ComboBox {
+                            id: stateAssociateFurnitureComboBox
+                            Layout.fillWidth: true
+                            textRole: "alias"
+                            valueRole: "address"
+                            model: stateAssociatePopupColumnLayout.modelData
+                        }
+
+                        ComboBox {
+                            id: stateAssociateStateComboBox
+                            Layout.fillWidth: true
+
+                            Connections {
+                                target: stateAssociateFurnitureComboBox
+                                function onCurrentIndexChanged() {
+                                    stateAssociateStateComboBox.model = root.stateTexts[stateAssociatePopupColumnLayout.modelData[stateAssociateFurnitureComboBox.currentIndex]["type"]]
+                                }
+                            }
+                        }
+                    }
+
                 }
             }
             C.Popup {
@@ -412,10 +518,16 @@ C.List {
                         C.VFit {
                             height: extraColumnLayout.rowHeight
                             text: {
-                                var ret = "<font color=\"grey\">" + qsTr("Start") + qsTr(": ") + "</font>" + new Date(auto["start"] * 1000).toLocaleString()
-                                var every = auto["every"]
-                                if (every !== undefined) {
-                                    ret += "<font color=\"grey\">" + qsTr(", ") + qsTr("Interval") + qsTr(": ") +  "</font>" + J.stamp2SpanText(every, root.unitsOfTime)
+                                var ret
+                                var autoState = auto["state"]
+                                if (autoState === undefined) {
+                                    ret = "<font color=\"grey\">" + qsTr("Start") + qsTr(": ") + "</font>" + new Date(auto["start"] * 1000).toLocaleString()
+                                    var every = auto["every"]
+                                    if (every !== undefined) {
+                                        ret += "<font color=\"grey\">" + qsTr(", ") + qsTr("Interval") + qsTr(": ") +  "</font>" + J.stamp2SpanText(every, root.unitsOfTime)
+                                    }
+                                } else {
+                                    ret = "<font color=\"grey\">" + qsTr("State") + qsTr(": ") + "</font>" + root.getAutoStateText(autoState)
                                 }
                                 return ret
                             }
@@ -592,6 +704,7 @@ C.List {
                             var furniture = root.furnitures[J.find(root.furnitures, "address", toAdd[i])]
                             var tmp = {}
                             tmp["address"] = furniture["address"]
+                            tmp["type"] = furniture["type"]
                             var furnitureAlias = furniture["alias"]
                             if (furnitureAlias === undefined) {
                                 tmp["alias"] = furniture["address"]
@@ -600,7 +713,7 @@ C.List {
                             }
                             res.push(tmp)
                         }
-                        associateFurnitureComboBox.model = res
+                        associatePopupColumnLayout.modelData = res
                     }
                     onAccepted: {
                         if (associateFurnitureComboBox.currentValue === undefined) {
@@ -612,6 +725,8 @@ C.List {
                     }
 
                     ColumnLayout {
+                        id: associatePopupColumnLayout
+                        property var modelData: []
                         anchors.fill: parent
                         spacing: root.commonSpacing
                         ComboBox {
@@ -619,12 +734,19 @@ C.List {
                             Layout.fillWidth: true
                             textRole: "alias"
                             valueRole: "address"
+                            model: associatePopupColumnLayout.modelData
                         }
 
                         ComboBox {
                             id: associateStateComboBox
-                            model: root.stateTexts
                             Layout.fillWidth: true
+
+                            Connections {
+                                target: associateFurnitureComboBox
+                                function onCurrentIndexChanged() {
+                                    associateStateComboBox.model = root.stateTexts[associatePopupColumnLayout.modelData[associateFurnitureComboBox.currentIndex]["type"]]
+                                }
+                            }
                         }
                     }
 

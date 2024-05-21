@@ -1,4 +1,12 @@
-﻿.pragma library
+﻿var encrypt
+var decrypt
+var preprocess
+
+function setSecurity(en, de, pre) {
+    encrypt = en
+    decrypt = de
+    preprocess = pre
+}
 
 function difference(a, b) {
     var ret = []
@@ -106,21 +114,25 @@ function updateModelData(listModel, objs, mod, key) {
 function postJSON(url, onComplete, onError, body={}, async=true, xhrs=[]) {
     var xhr = new XMLHttpRequest()
     xhrs.push(xhr)
-    var bodyJSON = JSON.stringify(body)
+    var content = body
+    preprocess(body)
+    content = JSON.stringify(body)
+    var encrypted = encrypt(content)
     xhr.onreadystatechange = function() {
         if(xhr.readyState !== 4) {
             return
         }
         if (xhr.status !== 200) {
-            console.log(xhr.responseURL, bodyJSON, xhr.status)
+            console.log(xhr.responseURL, content, xhr.status)
             onError(xhr)
             return
         }
-        console.log(xhr.responseURL, xhr.responseText.toString())
-        onComplete(JSON.parse(xhr.responseText.toString()))
+        var plainText = decrypt(xhr.responseText.toString())
+        console.log(xhr.responseURL, plainText)
+        onComplete(JSON.parse(plainText))
     }
     xhr.open("POST", url, async)
-    xhr.send(bodyJSON);
+    xhr.send(encrypted);
 }
 
 function downloadModelData(host, mod, key, onComplete, onError, xhrs) {
@@ -152,6 +164,7 @@ function downloadModelData(host, mod, key, onComplete, onError, xhrs) {
 }
 
 function removeAndNotify(root, mod, key, value) {
+    console.log("TODO", "removeAndNotify")
     var copy = root[mod].concat()
     var index = find(copy, key, value)
     if (index !== -1) {
