@@ -33,5 +33,6 @@
         <file>icons/fan.svg</file>
         <file>icons/rain.svg</file>
         <file>icons/state.svg</file>
+        <file>icons/security.svg</file>
     </qresource>
 </RCC>

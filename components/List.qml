@@ -5,6 +5,7 @@ import "." as C
 ListView {
     id: listView
     headerPositioning: ListView.PullBackHeader
+    property string headerText: qsTr("Nothing here, and Pull to Refresh.")
 
     readonly property real duration: 150
     add: Transition {
@@ -71,7 +72,7 @@ ListView {
                 anchors.left: parent.left
                 anchors.leftMargin: 10
                 font.italic: true
-                text: qsTr("Nothing here, and Pull to Refresh.")
+                text: listView.headerText
                 enabled: false
             }
         }

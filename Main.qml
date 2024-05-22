@@ -18,16 +18,16 @@ ApplicationWindow {
     function xhrErrorHandle(xhr) {
         var toolTipText
         if (xhr.status === 0) {
-            toolTipText = qsTr("Network Error")
+            toolTipText = qsTr("Network Error! ")
         } else if (xhr.status === 412) {
             hashPopup.open()
             return
         } else if (xhr.status === 403) {
-            toolTipText = qsTr("Security Check Failed.")
+            toolTipText = qsTr("Security Check Failed! ")
         } else if (xhr.status === 404) {
-            toolTipText = qsTr("Not Found")
+            toolTipText = qsTr("Not Found! ")
         } else {
-            toolTipText = qsTr("Server Error")
+            toolTipText = qsTr("Server Error! ")
         }
         toolBar.showToolTip(toolTipText)
     }
@@ -70,19 +70,15 @@ ApplicationWindow {
         id: rsa
         property var pk
         property var sk
-        property string c_pk
-        property int pk_uid
+        // property string c_pk
+        // property int pk_uid
 
-        Component.onCompleted: {
-            rsa.pk_uid = settings.pk_uid
-            rsa.c_pk = settings.c_pk
-        }
     }
     Settings {
         id: settings
-        property string host: hostTextField.text
-        property int pk_uid: rsa.pk_uid
-        property string c_pk: rsa.c_pk
+        property string host
+        property int pk_uid
+        property string c_pk
     }
 
     readonly property var typeTexts: [ qsTr("Light"), qsTr("Fan"), qsTr("Rain") ]
@@ -100,7 +96,7 @@ ApplicationWindow {
     ]
     readonly property var monthsText: [ qsTr("January"), qsTr("February"), qsTr("March"), qsTr("April"), qsTr("May"), qsTr("June"), qsTr("July"), qsTr("August"), qsTr("September"), qsTr("October"), qsTr("November"), qsTr("December") ]
     readonly property var unitsOfTime: [ qsTr("Millisecond"), qsTr("Second"), qsTr("Minute"), qsTr("Hour"), qsTr("Day"), qsTr("Week"), qsTr("Month"), qsTr("Year") ]
-    readonly property color pink: "#E91E63"
+    readonly property string pink: "#E91E63"
     readonly property real commonSpacing: 10
     readonly property real headerHeight: 100
     readonly property real roundedSize: 32
@@ -116,6 +112,10 @@ ApplicationWindow {
     onViewsChanged: {
         J.updateModelData(autosListModel, root.views, "view", "uid")
     }
+    onWhitesChanged: {
+        J.updateModelData(overviewListModel, root.whites, "white", "uid")
+    }
+
     function autoSort(a, b) {
         if (root.autos[a]["state"] !== undefined) {
             return 1
@@ -134,7 +134,7 @@ ApplicationWindow {
         } else {
             ret = configAlias
         }
-        ret += qsTr(" ")
+        ret +=" "
         ret += root.stateTexts[config["type"]][autoState["state"]]
         return ret
     }
@@ -152,17 +152,17 @@ ApplicationWindow {
         console.log(plain)
 
         var en = function(plainText) {
-            if (!rsa.c_pk.length) {
+            if (!settings.c_pk.length) {
                 return
             }
 
-            return rsa.encrypt(rsa.c_pk, plainText)
+            return rsa.encrypt(settings.c_pk, plainText)
         }
         var de = function(cipherText) {
             return rsa.decrypt(rsa.sk, cipherText)
         }
         var pre = function(content) {
-            content["pk_uid"] = rsa.pk_uid
+            content["pk_uid"] = settings.pk_uid
         }
 
         J.setSecurity(en, de, pre)
@@ -219,7 +219,11 @@ ApplicationWindow {
                 icon.source: "/icons/qr.svg"
                 action: Action {
                     onTriggered: {
-                        fileDialog.open()
+                        if (settings.pk_uid) {
+                            whiteEnsurePopup.open()
+                        } else {
+                            fileDialog.open()
+                        }
                     }
                 }
             }
@@ -286,6 +290,12 @@ ApplicationWindow {
 
         App.Overview {
             anchors.fill: parent
+            onRefresh: {
+                refreshPopup.open()
+            }
+            model: ListModel {
+                id: overviewListModel
+            }
         }
     }
 
@@ -329,14 +339,6 @@ ApplicationWindow {
                 text: qsTr("Landscape")
                 checked: false
                 Layout.fillWidth: true
-            }
-            TextField {
-                id: hostTextField
-                placeholderText: qsTr("Host")
-                Layout.fillWidth: true
-                Component.onCompleted: {
-                    text = settings.host
-                }
             }
         }
     }
@@ -471,7 +473,6 @@ ApplicationWindow {
         }
         function onDownloadWhitesComplete(list) {
             root.whites = list
-            console.log(list)
             updateCount()
         }
 
@@ -483,6 +484,11 @@ ApplicationWindow {
             J.downloadModelData(settings.host, "view", "uid", onDownloadViewsComplete, root.xhrErrorHandle, xhrs)
             J.downloadModelData(settings.host, "auto", "uid", onDownloadAutosComplete, root.xhrErrorHandle, xhrs)
             J.downloadModelData(settings.host, "white", "uid", onDownloadWhitesComplete, root.xhrErrorHandle, xhrs)
+            var onPostJSONComplete = function(rsp) {
+                root.unsafe = rsp["unsafe"]
+            }
+            J.postJSON(settings.host + "/peek", onPostJSONComplete, root.xhrErrorHandle, {}, true, xhrs)
+
         }
         onClosed: {
             for (var i = 0; i < xhrs.length; ++i) {
@@ -522,10 +528,11 @@ ApplicationWindow {
         id: fileDialog
         currentFolder: StandardPaths.standardLocations(StandardPaths.PicturesLocation)[0]
         onAccepted: {
-            var res = qrCode.process(selectedFile)
-            if (res.length) {
-                rsa.c_pk = res
-                wihtePopup.open()
+            var res = JSON.parse(qrCode.process(selectedFile))
+            if (res !== undefined) {
+                settings.c_pk = res["pk"]
+                settings.host = res["host"]
+                whitePopup.open()
             } else {
                 root.toolBarShowToolTip(qsTr("QRCode Not Found! "))
             }
@@ -536,17 +543,21 @@ ApplicationWindow {
         }
     }
     C.Popup {
-        id: wihtePopup
-        title: qsTr("White")
+        id: whitePopup
+        title: qsTr("Pair")
         standardButtons: Dialog.Ok
         onAccepted: {
             var onPostJSONComplete = function(rsp) {
-                console.log(rsp)
-                rsa.pk_uid = rsp["uid"]
-                toolBarShowToolTip(qsTr("Pass! "))
+                settings.pk_uid = rsp["uid"]
+                J.updateAndNotify(root, "whites", "uid", rsp)
+                drawer.open()
+                refreshPopup.open()
             }
             var content = {}
             content["pk"] = rsa.pk
+            if (whitePopupTextField.text.length) {
+                content["alias"] = whitePopupTextField.text
+            }
             J.postJSON(settings.host + "/white", onPostJSONComplete, root.xhrErrorHandle, content)
         }
 
@@ -555,11 +566,35 @@ ApplicationWindow {
             spacing: root.commonSpacing
 
             Label {
-                text: qsTr("Ensure the Controller is in Unsafe mode, then Press OK to add a whitelist.")
+                text: qsTr("Ensure the Controller is in Unsafe mode, then Press OK to pair with. You can set an Alias for your device.")
                 wrapMode: Text.Wrap
+                Layout.fillWidth: true
+            }
+            TextField {
+                id: whitePopupTextField
+                placeholderText: qsTr("Alias")
                 Layout.fillWidth: true
             }
         }
     }
 
+    C.Popup {
+        id: whiteEnsurePopup
+        title: qsTr("Pair? ")
+        standardButtons: Dialog.Ok | Dialog.Cancel
+        onAccepted: {
+            fileDialog.open()
+        }
+
+        ColumnLayout {
+            anchors.fill: parent
+            spacing: root.commonSpacing
+
+            Label {
+                text: qsTr("We have paired with one Controller before, and Press OK to continue pairing with another one.")
+                wrapMode: Text.Wrap
+                Layout.fillWidth: true
+            }
+        }
+    }
 }

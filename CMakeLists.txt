@@ -1,6 +1,6 @@
 ﻿cmake_minimum_required(VERSION 3.16)
 
-project(Cai VERSION 1.3)
+project(Cai VERSION 1.4)
 
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_AUTORCC on)
@@ -26,69 +26,8 @@ qt_add_qml_module(${TARGET_NAME}
     SOURCES ${ZXing} qrsa.h qrsa.cpp qqrcode.h qqrcode.cpp
 )
 
-# include_directories("${PROJECT_SOURCE_DIR}/include/")
-# # Platform-specific configurations
-# if(WIN32)
-#     if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
-#         target_link_libraries(${TARGET_NAME} PRIVATE "${PROJECT_SOURCE_DIR}/libs/windows/DynamsoftBarcodeReaderx64.dll")
-#     else() # Assuming MSVC or other non-GNU compilers
-#         target_link_libraries(${TARGET_NAME} PRIVATE "DBRx64")
-#     endif()
-
-#     # Copy DLLs to build directory after build
-#     add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
-#         COMMAND ${CMAKE_COMMAND} -E copy_directory
-#         "${PROJECT_SOURCE_DIR}/libs/windows/"
-#         $<TARGET_FILE_DIR:${TARGET_NAME}>)
-# elseif(ANDROID)
-#     add_library(native-lib SHARED IMPORTED)
-#     set_target_properties(native-lib PROPERTIES IMPORTED_LOCATION "${PROJECT_SOURCE_DIR}/libs/android/libDynamsoftBarcodeReaderAndroid.so")
-#     target_link_libraries(${TARGET_NAME} PRIVATE native-lib)
-# elseif(APPLE)
-#     set_target_properties(${TARGET_NAME} PROPERTIES
-#         XCODE_ATTRIBUTE_CODE_SIGN_IDENTITY "iPhone Developer"
-#         MACOSX_BUNDLE TRUE
-#         XCODE_ATTRIBUTE_LD_RUNPATH_SEARCH_PATHS "@executable_path/Frameworks"
-#     )
-
-#     # target_link_libraries(${TARGET_NAME} PRIVATE "${PROJECT_SOURCE_DIR}/libs/ios/libcryptoarm64.a" "${PROJECT_SOURCE_DIR}/libs/ios/libsslarm64.a" "${PROJECT_SOURCE_DIR}/libs/ios/libdbrarm64.a")
-#     target_link_libraries(${TARGET_NAME} PRIVATE "${PROJECT_SOURCE_DIR}/libs/ios/bridge.framework/bridge" PUBLIC "${PROJECT_SOURCE_DIR}/libs/ios/DynamsoftBarcodeReader.framework/DynamsoftBarcodeReader")
-#     # target_link_libraries(${TARGET_NAME} PRIVATE "${PROJECT_SOURCE_DIR}/libs/ios/libBridgeProject.dylib" PUBLIC "${PROJECT_SOURCE_DIR}/libs/ios/DynamsoftBarcodeReader.framework/DynamsoftBarcodeReader")
-
-#     # System frameworks
-#     find_library(UIKIT_FRAMEWORK UIKit)
-#     if(NOT UIKIT_FRAMEWORK)
-#         message(FATAL_ERROR "UIKit framework not found")
-#     endif()
-
-#     target_link_libraries(${TARGET_NAME} PRIVATE "${UIKIT_FRAMEWORK}")
-
-#     add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
-#         # COMMAND ${CMAKE_COMMAND} -E make_directory "$<TARGET_FILE_DIR:${TARGET_NAME}>/Frameworks/"
-#         COMMAND ${CMAKE_COMMAND} -E copy_directory
-#         "${PROJECT_SOURCE_DIR}/libs/ios/DynamsoftBarcodeReader.framework"
-#         "$<TARGET_FILE_DIR:${TARGET_NAME}>/Frameworks/DynamsoftBarcodeReader.framework"
-#         COMMAND ls "$<TARGET_FILE_DIR:${TARGET_NAME}>/Frameworks/DynamsoftBarcodeReader.framework"
-#     )
-
-#     add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
-#         COMMAND ${CMAKE_COMMAND} -E copy_directory
-#         "${PROJECT_SOURCE_DIR}/libs/ios/bridge.framework"
-#         "$<TARGET_FILE_DIR:${TARGET_NAME}>/Frameworks/bridge.framework"
-#     )
-# endif()
 
 if (ANDROID)
-    # include(FetchContent)
-    # FetchContent_Declare(
-    #     android_openssl
-    #     DOWNLOAD_EXTRACT_TIMESTAMP true
-    #     URL https://github.com/KDAB/android_openssl/archive/refs/heads/master.zip
-    # )
-    # FetchContent_MakeAvailable(android_openssl)
-    # include(${android_openssl_SOURCE_DIR}/android_openssl.cmake)
-    # add_android_openssl_libraries(${TARGET_NAME})
-
     find_package(Qt6 REQUIRED COMPONENTS Network)
     target_link_libraries(${TARGET_NAME} PRIVATE Qt6::Network)
 
@@ -97,18 +36,16 @@ if (ANDROID)
     else()
         set(SSL_ROOT_PATH D:/.projects/Cai/android_openssl)
     endif()
-    if(NOT OPENSSL_ROOT_DIR)
-      set(OPENSSL_ROOT_DIR ${SSL_ROOT_PATH}/ssl_3/${CMAKE_ANDROID_ARCH_ABI})
-    endif()
+    set(OPENSSL_ROOT_DIR ${SSL_ROOT_PATH}/ssl_3/${CMAKE_ANDROID_ARCH_ABI})
     list(APPEND android_extra_libs
         ${SSL_ROOT_PATH}/ssl_3/${CMAKE_ANDROID_ARCH_ABI}/libcrypto_3.so
         ${SSL_ROOT_PATH}/ssl_3/${CMAKE_ANDROID_ARCH_ABI}/libssl_3.so)
     set_target_properties(${TARGET_NAME} PROPERTIES QT_ANDROID_EXTRA_LIBS "${android_extra_libs}")
 
-    target_include_directories(${TARGET_NAME} PRIVATE D:/.projects/Cai/android_openssl/ssl_3/include)
+    target_include_directories(${TARGET_NAME} PRIVATE ${SSL_ROOT_PATH}/ssl_3/include)
     target_link_libraries(${TARGET_NAME}
-        PRIVATE D:/.projects/Cai/android_openssl/ssl_3/arm64-v8a/libcrypto_3.so
-        PRIVATE D:/.projects/Cai/android_openssl/ssl_3/arm64-v8a/libssl_3.so
+        PRIVATE ${SSL_ROOT_PATH}/ssl_3/${CMAKE_ANDROID_ARCH_ABI}/libcrypto_3.so
+        PRIVATE ${SSL_ROOT_PATH}/ssl_3/${CMAKE_ANDROID_ARCH_ABI}/libssl_3.so
     )
 elseif (WIN32)
     target_include_directories(${TARGET_NAME} PRIVATE D:/Qt/Tools/OpenSSLv3/Win_x64/include)

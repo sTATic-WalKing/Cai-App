@@ -10,17 +10,17 @@ C.List {
 
     Component.onCompleted: {
         var en = function(plainText) {
-            if (!rsa.c_pk.length) {
+            if (!settings.c_pk.length) {
                 return
             }
 
-            return rsa.encrypt(rsa.c_pk, plainText)
+            return rsa.encrypt(settings.c_pk, plainText)
         }
         var de = function(cipherText) {
             return rsa.decrypt(rsa.sk, cipherText)
         }
         var pre = function(content) {
-            content["pk_uid"] = rsa.pk_uid
+            content["pk_uid"] = settings.pk_uid
         }
 
         J.setSecurity(en, de, pre)
