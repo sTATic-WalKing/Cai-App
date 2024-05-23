@@ -23,7 +23,7 @@ qt_add_executable(${TARGET_NAME}
 qt_add_qml_module(${TARGET_NAME}
     URI Cai
     QML_FILES Main.qml Furnitures.qml Autos.qml Overview.qml components/List.qml components/Rounded.qml components/Touch.qml components/Popup.qml components/VFit.qml components/DatePicker.qml components/TimePicker.qml components/RoundedFurniture.qml
-    SOURCES ${ZXing} qrsa.h qrsa.cpp qqrcode.h qqrcode.cpp
+    SOURCES ${ZXing} qrsa.h qrsa.cpp qqrcode.h qqrcode.cpp qdevtools.h qdevtools.cpp
 )
 
 

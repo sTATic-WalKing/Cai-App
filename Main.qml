@@ -15,6 +15,12 @@ ApplicationWindow {
     height: 600
     visible: true
 
+    Shortcut {
+        sequence: "Ctrl+S"
+        context: Qt.ApplicationShortcut
+        onActivated: function() { devTools.screenshot() }
+    }
+
     function xhrErrorHandle(xhr) {
         var toolTipText
         if (xhr.status === 0) {
@@ -178,6 +184,7 @@ ApplicationWindow {
         RowLayout {
             id: toolBarRowLayout
             anchors.left: parent.left
+            anchors.leftMargin: root.portraitMode ? 0 : drawer.width
             anchors.top: parent.top
             height: 55
             ToolButton {

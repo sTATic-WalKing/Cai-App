@@ -293,6 +293,7 @@ C.List {
                     Layout.preferredWidth: extraColumnLayout.width
                     interactive: false
                     Layout.preferredHeight: contentHeight
+                    spacing: extraColumnLayout.spacing
                     model: ListModel {
                         id: viewsListModel
                     }

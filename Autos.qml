@@ -493,6 +493,7 @@ C.List {
                     model: ListModel {
                         id: autosListModel
                     }
+                    spacing: extraColumnLayout.spacing
                     Layout.preferredHeight: contentHeight
                     function updateAutos() {
                         var autos = []
