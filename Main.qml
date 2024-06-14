@@ -134,6 +134,10 @@ ApplicationWindow {
     function getAutoStateText(autoState) {
         var ret
         var config = root.furnitures[J.find(root.furnitures, "address", autoState["address"])]
+        if (config === undefined) {
+            return "<font color=\"" + root.pink + "\">" + qsTr("Deleted") + "</font>"
+        }
+
         var configAlias = config["alias"]
         if (configAlias === undefined) {
             ret = config["address"]
@@ -535,7 +539,9 @@ ApplicationWindow {
         id: fileDialog
         currentFolder: StandardPaths.standardLocations(StandardPaths.PicturesLocation)[0]
         onAccepted: {
-            var res = JSON.parse(qrCode.process(selectedFile))
+            var content = qrCode.process(selectedFile)
+            console.log(content)
+            var res = JSON.parse(content)
             if (res !== undefined) {
                 settings.c_pk = res["pk"]
                 settings.host = res["host"]

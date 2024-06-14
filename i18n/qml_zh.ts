@@ -595,20 +595,26 @@
         <translation>年</translation>
     </message>
     <message>
-        <location filename="../Main.qml" line="576"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Release/Cai/Main.qml" line="576"/>
+        <location filename="../Main.qml" line="138"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Release/Cai/Main.qml" line="138"/>
+        <source>Deleted</source>
+        <translation type="unfinished">已删除</translation>
+    </message>
+    <message>
+        <location filename="../Main.qml" line="582"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Release/Cai/Main.qml" line="582"/>
         <source>Ensure the Controller is in Unsafe mode, then Press OK to pair with. You can set an Alias for your device.</source>
         <translation>确定控制中心处于维护模式，然后点OK以继续配对。建议给你的设备取一个别名。</translation>
     </message>
     <message>
-        <location filename="../Main.qml" line="590"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Release/Cai/Main.qml" line="590"/>
+        <location filename="../Main.qml" line="596"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Release/Cai/Main.qml" line="596"/>
         <source>Pair? </source>
         <translation>配对？</translation>
     </message>
     <message>
-        <location filename="../Main.qml" line="601"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Release/Cai/Main.qml" line="601"/>
+        <location filename="../Main.qml" line="607"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Release/Cai/Main.qml" line="607"/>
         <source>We have paired with one Controller before, and Press OK to continue pairing with another one.</source>
         <translation>我们已经与某个控制中心配对了，确定继续吗？</translation>
     </message>
@@ -617,8 +623,8 @@
         <translation type="obsolete">：</translation>
     </message>
     <message>
-        <location filename="../Main.qml" line="389"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Release/Cai/Main.qml" line="389"/>
+        <location filename="../Main.qml" line="393"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Release/Cai/Main.qml" line="393"/>
         <source>No new furnitures found! </source>
         <translation>未发现新家具！</translation>
     </message>
@@ -647,32 +653,32 @@
         <translation>不知道服务器说了啥！</translation>
     </message>
     <message>
-        <location filename="../Main.qml" line="263"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Release/Cai/Main.qml" line="263"/>
+        <location filename="../Main.qml" line="267"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Release/Cai/Main.qml" line="267"/>
         <source>FURNITURES</source>
         <translation>家具</translation>
     </message>
     <message>
-        <location filename="../Main.qml" line="264"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Release/Cai/Main.qml" line="264"/>
+        <location filename="../Main.qml" line="268"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Release/Cai/Main.qml" line="268"/>
         <source>AUTOS</source>
         <translation>任务</translation>
     </message>
     <message>
-        <location filename="../Main.qml" line="338"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Release/Cai/Main.qml" line="338"/>
+        <location filename="../Main.qml" line="342"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Release/Cai/Main.qml" line="342"/>
         <source>Settings</source>
         <translation>设置</translation>
     </message>
     <message>
-        <location filename="../Main.qml" line="346"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Release/Cai/Main.qml" line="346"/>
+        <location filename="../Main.qml" line="350"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Release/Cai/Main.qml" line="350"/>
         <source>Landscape</source>
         <translation>宽屏</translation>
     </message>
     <message>
-        <location filename="../Main.qml" line="554"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Release/Cai/Main.qml" line="554"/>
+        <location filename="../Main.qml" line="560"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Release/Cai/Main.qml" line="560"/>
         <source>Pair</source>
         <translation>配对</translation>
     </message>
@@ -681,8 +687,8 @@
         <translation type="vanished">确定控制中心处于维护模式，然后点OK以继续配对。</translation>
     </message>
     <message>
-        <location filename="../Main.qml" line="582"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Release/Cai/Main.qml" line="582"/>
+        <location filename="../Main.qml" line="588"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Release/Cai/Main.qml" line="588"/>
         <source>Alias</source>
         <translation>别称</translation>
     </message>
@@ -691,8 +697,8 @@
         <translation type="vanished">主机</translation>
     </message>
     <message>
-        <location filename="../Main.qml" line="355"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Release/Cai/Main.qml" line="355"/>
+        <location filename="../Main.qml" line="359"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Release/Cai/Main.qml" line="359"/>
         <source>Discover</source>
         <translation>发现</translation>
     </message>
@@ -701,62 +707,62 @@
         <translation type="vanished">未发现新家具</translation>
     </message>
     <message>
-        <location filename="../Main.qml" line="414"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Release/Cai/Main.qml" line="414"/>
+        <location filename="../Main.qml" line="418"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Release/Cai/Main.qml" line="418"/>
         <source>Downloading the config...</source>
         <translation>正在下载配置……</translation>
     </message>
     <message>
-        <location filename="../Main.qml" line="417"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Release/Cai/Main.qml" line="417"/>
+        <location filename="../Main.qml" line="421"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Release/Cai/Main.qml" line="421"/>
         <source>Sending discover request...</source>
         <translation>正在发送发现请求……</translation>
     </message>
     <message>
-        <location filename="../Main.qml" line="420"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Release/Cai/Main.qml" line="420"/>
+        <location filename="../Main.qml" line="424"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Release/Cai/Main.qml" line="424"/>
         <source>Checking the result and </source>
         <translation>正在检查结果，</translation>
     </message>
     <message>
-        <location filename="../Main.qml" line="420"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Release/Cai/Main.qml" line="420"/>
+        <location filename="../Main.qml" line="424"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Release/Cai/Main.qml" line="424"/>
         <source> times checked.</source>
         <translation>次已被检查。</translation>
     </message>
     <message>
-        <location filename="../Main.qml" line="422"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Release/Cai/Main.qml" line="422"/>
+        <location filename="../Main.qml" line="426"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Release/Cai/Main.qml" line="426"/>
         <source>We have checked the result too many times.</source>
         <translation>我们尝试了太多次了。</translation>
     </message>
     <message>
-        <location filename="../Main.qml" line="434"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Release/Cai/Main.qml" line="434"/>
+        <location filename="../Main.qml" line="438"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Release/Cai/Main.qml" line="438"/>
         <source>Unsynchronized</source>
         <translation>失去同步</translation>
     </message>
     <message>
-        <location filename="../Main.qml" line="448"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Release/Cai/Main.qml" line="448"/>
+        <location filename="../Main.qml" line="452"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Release/Cai/Main.qml" line="452"/>
         <source>Press OK to refresh, and then redo what you want.</source>
         <translation>刷新，然后重试。</translation>
     </message>
     <message>
-        <location filename="../Main.qml" line="457"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Release/Cai/Main.qml" line="457"/>
+        <location filename="../Main.qml" line="461"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Release/Cai/Main.qml" line="461"/>
         <source>Refresh</source>
         <translation>刷新</translation>
     </message>
     <message>
-        <location filename="../Main.qml" line="512"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Release/Cai/Main.qml" line="512"/>
+        <location filename="../Main.qml" line="516"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Release/Cai/Main.qml" line="516"/>
         <source>We are refreshing all the data.</source>
         <translation>我们正在重新拉取所有数据。</translation>
     </message>
     <message>
-        <location filename="../Main.qml" line="544"/>
-        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Release/Cai/Main.qml" line="544"/>
+        <location filename="../Main.qml" line="550"/>
+        <location filename="../../build-Cai-Desktop_Qt_6_7_0_MinGW_64_bit-Release/Cai/Main.qml" line="550"/>
         <source>QRCode Not Found! </source>
         <translation>未识别到二维码！</translation>
     </message>
