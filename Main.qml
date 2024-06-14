@@ -55,17 +55,17 @@ ApplicationWindow {
         for (i = 0; i < root.views.length; ++i) {
             view_uids.push(root.views[i]["uid"])
         }
-        view_uids.sort()
+        view_uids.sort(function(a, b){ return a - b })
         var auto_uids = []
         for (i = 0; i < root.autos.length; ++i) {
             auto_uids.push(root.autos[i]["uid"])
         }
-        auto_uids.sort()
+        auto_uids.sort(function(a, b){ return a - b })
         var white_uids = []
         for (i = 0; i < root.whites.length; ++i) {
             white_uids.push(root.whites[i]["uid"])
         }
-        white_uids.sort()
+        white_uids.sort(function(a, b){ return  a - b })
         var str = JSON.stringify([ related_configs, view_uids, auto_uids, white_uids, root.unsafe ]).replace(" ", "")
         console.log(str)
         var hashed = Qt.md5(str)
